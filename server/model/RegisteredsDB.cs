@@ -4,7 +4,7 @@ public class RegisteredsDB
     string name;
     int option;
     int numPlace;
-    boolean baby;
+    bool baby;
     int conditions;
     
 }
