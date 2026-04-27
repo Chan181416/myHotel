@@ -2295,19 +2295,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\blizinsky\\.nuget\\packages\\": {}
+    "C:\\Users\\helfgot\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\chanyBlizinsky\\myHotel\\server\\server.csproj",
+      "projectUniqueName": "D:\\ChanyH\\myHotel\\server\\server.csproj",
       "projectName": "server",
-      "projectPath": "D:\\chanyBlizinsky\\myHotel\\server\\server.csproj",
-      "packagesPath": "C:\\Users\\blizinsky\\.nuget\\packages\\",
-      "outputPath": "D:\\chanyBlizinsky\\myHotel\\server\\obj\\",
+      "projectPath": "D:\\ChanyH\\myHotel\\server\\server.csproj",
+      "packagesPath": "C:\\Users\\helfgot\\.nuget\\packages\\",
+      "outputPath": "D:\\ChanyH\\myHotel\\server\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\blizinsky\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\helfgot\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net10.0"

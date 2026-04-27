@@ -1,6 +1,6 @@
 public class enumOptions
 {
-    string options;
-    int price;
-    int num;
+    string options { get; set; }
+    int numO { get; set; }
+    int price { get; set; }
 }

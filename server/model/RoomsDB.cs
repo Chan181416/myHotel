@@ -6,7 +6,11 @@ public class RoomsDB
     // int big;
     // int orginal;
 
-    int num ;
-    int amountRoom;
-    
+    int roomNum { get; set; }
+    int amountRoom { get; set; }
+    bool extra { get; set; }
+    bool multy { get; set; }
+    int amountBeds { get; set; }
+    int numOption { get; set; }
+
 }
