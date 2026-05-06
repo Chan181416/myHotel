@@ -1,5 +1,6 @@
 public class RegisteredsDB
 {
+     int Guid {get; set;}
     string code { get; set; }
     string name { get; set; }
     int option { get; set; }
