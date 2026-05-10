@@ -1,10 +1,10 @@
 public class RegisteredsDB
 {
-    string code;
-    string name;
-    int option;
-    int numPlace;
-    bool baby;
-    int conditions;
-    
+     int Guid {get; set;}
+    string code { get; set; }
+    string name { get; set; }
+    int option { get; set; }
+    int sumPlace { get; set; }
+    int conditions { get; set; }
+    int totalPrice { get; set; }
 }

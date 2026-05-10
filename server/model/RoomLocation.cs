@@ -1,6 +1,8 @@
 public class RoomLocation
 {
-    int memberId;
-    int roomId;
-    int floor;
+    int Guid {get; set;}
+
+    int memberId { get; set; }
+    int roomId { get; set; }
+    int floor { get; set; }
 }
