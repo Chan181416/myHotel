@@ -1,14 +1,17 @@
-namespace server.model {
-public class RoomsDB
-{
-    int Guid {get; set;}
-    int roomNum { get; set; }
-    int amountRoom { get; set; }
-    bool extra { get; set; }
-    bool multy { get; set; }
-    int amountBeds { get; set; }
-    int numOption { get; set; }
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-}
+
+namespace server.model
+{
+    public class RoomsDB
+    {
+        [Key]
+        public int RoomNum { get; set; }
+        public int Floor { get; set; }
+        public bool OnSea { get; set; }
+        public bool Extrta { get; set; }
+        public string? Occupied { get; set; }
+    }
 
 }
