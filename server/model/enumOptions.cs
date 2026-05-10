@@ -1,6 +1,12 @@
-public class enumOptions
+using System.ComponentModel.DataAnnotations;
+namespace server.model
 {
-    string options { get; set; }
-    int Guid {get; set;}
-    int price { get; set; }
+    public class EnumOptions
+    {
+        [Key]
+        public Guid Id { get; set; }
+        [Required]
+        public string Events { get; set; }
+    }
+
 }
