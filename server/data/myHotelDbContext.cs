@@ -11,7 +11,7 @@ public class myHotelDbContext : DbContext
     public DbSet<RoomsDB> RoomsDBs { get; set; }
     public DbSet<RegisteredsDB> registeredsDBs { get; set; }
     public DbSet<condition> conditions { get; set; }
-    public DbSet<enumOptions> enumOptions { get; set; }
+    public DbSet<EnumOptions> enumOptions { get; set; }
 
 }
 
