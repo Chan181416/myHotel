@@ -8,7 +8,7 @@ public class myHotelDbContext : DbContext
     public DbSet<RegisteredsDB> RegisteredsDBs { get; set; }
     public DbSet<RoomsDB> RoomsDBs { get; set; }
     public DbSet<RegisteredsDB> registeredsDBs { get; set; }
-    public DbSet<enumRoom> enumRooms { get; set; }
+    public DbSet<condition> conditions { get; set; }
     public DbSet<enumOptions> enumOptions { get; set; }
 
 }
