@@ -5,8 +5,9 @@ namespace server.model
 {
     public class PricesList
     {
-        [ForeignKey("EnumOptions")]
+       
         public int IdPrice { get; set; }
-        public string? Price { get; set; }
+        public string? Events { get; set; }
+        public int Price { get; set; }
     }
 }

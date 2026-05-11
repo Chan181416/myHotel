@@ -9,8 +9,7 @@ namespace server.model
         {
             public Guid Id { get; set; }
 
-            [ForeignKey("ConditionEnum")]
-            public int Num { get; set; }
+            public string? Name { get; set; }
 
             public int price { get; set; }
         }
