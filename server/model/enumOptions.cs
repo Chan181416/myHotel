@@ -6,7 +6,7 @@ namespace server.model
         [Key]
         public Guid Id { get; set; }
         [Required]
-        public string Events { get; set; }
+        public string? Events { get; set; }
     }
 
 }
