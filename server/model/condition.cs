@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace server.ConditionEnum
+namespace server.model
 {
     namespace server.Model
     {

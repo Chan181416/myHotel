@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace server.ConditionEnum
+namespace server.model
 {
     public class ConditionEnum
     {
