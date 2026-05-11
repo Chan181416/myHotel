@@ -1,10 +1,15 @@
-	using Microsoft.OpenApi.Models;
+
+// using Microsoft.OpenApi.Models;
+using server.model;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<myHotelDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); // עדכן כאן
+builder.Services.AddSwaggerGen();
+builder.Services.AddControllers();
+
+builder.Services.AddDbContext<MyHotelDbContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("MyHotelDbContext"))); // עדכן כאן
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

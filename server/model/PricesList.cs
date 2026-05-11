@@ -1,12 +1,13 @@
- using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace server.model
 {
     public class PricesList
     {
-        [ForeignKey("EnumOptions")]
+        [Key]
         public int IdPrice { get; set; }
-        public string? Price { get; set; }
+        public int Price { get; set; }
+        public string? Event { get; set; }
     }
 }

@@ -2,16 +2,18 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 using server.model;
+using server.Model;
 
 
-public class myHotelDbContext : DbContext
+public class MyHotelDbContext : DbContext
 {
     public DbSet<Registereds> Registereds { get; set; }
-    public DbSet<PricesList> pricesLists { get; set;}
+    public DbSet<PricesList> PricesLists { get; set; }
+
     public DbSet<RoomsDB> RoomsDBs { get; set; }
-    public DbSet<RegisteredsDB> registeredsDBs { get; set; }
-    public DbSet<condition> conditions { get; set; }
-    public DbSet<EnumOptions> enumOptions { get; set; }
+    public DbSet<Condition> Conditions { get; set; }
+    public DbSet<RoomLocation> RoomLocations { get; set; }
+
 
 }
 

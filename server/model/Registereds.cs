@@ -1,20 +1,20 @@
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using server.Model;
 
 namespace server.model
 {
     public class Registereds
     {
         [Key]
-        public Guid Id {get; set;}
+        public Guid Id { get; set; }
         public string? NumberId { get; set; }
-        public string? name { get; set; }
-        [ForeignKey("PricesList")]
-        public int Options { get; set; }
-        public int sumPlace { get; set; }
-        [ForeignKey("Condition")]
-        public int conditions { get; set; }
-        public int totalPrice { get; set; }
+        public string? Name { get; set; }
+        public int SumPlace { get; set; }
+        public int TotalPrice { get; set; }
+
+        virtual public List<PricesList> ListOptions { get; set; } = [];
+        virtual public List<Condition> ListConditions { get; set; } = [];
     }
 }
