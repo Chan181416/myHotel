@@ -20,4 +20,9 @@ namespace server.model
         public List<PricesList> ListPricesList { get; set; }
         public List<Condition> ListCondition { get; set; }
     }
+
+    public class RegisteredsDTO
+    {
+        
+    }
 }

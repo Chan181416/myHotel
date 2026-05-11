@@ -10,4 +10,10 @@ namespace server.model
         public string? Events { get; set; }
         public int Price { get; set; }
     }
+
+    public class PricesListDTO
+    {
+        public string? Events { get; set; }
+        public int Price { get; set; }
+    }
 }
