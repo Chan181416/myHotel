@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration.Json;
 using server.model;
 using server.Model;
 
-
+namespace server.Data{
 public class MyHotelDbContext : DbContext
 {
     public DbSet<Registereds> Registereds { get; set; }
@@ -14,6 +14,15 @@ public class MyHotelDbContext : DbContext
     public DbSet<Condition> Conditions { get; set; }
     public DbSet<RoomLocation> RoomLocations { get; set; }
 
+ public MyHotelDbContext(DbContextOptions<MyHotelDbContext> options)
+            : base(options)
 
+        {
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+        optionsBuilder.UseSqlServer("Server=localhost, 1434;Database=Hotel;User Id=SA;Password=1234567,Cb;MultipleActiveResultSets=true;TrustServerCertificate=True;");
+        }
+}
 }
 

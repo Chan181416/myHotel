@@ -12,6 +12,12 @@ namespace server.Model
 
         public int Price { get; set; }
     }
+     public class ConditionDTO
+    {
+        public int Num { get; set; }
+
+        public int Price { get; set; }
+    }
 }
 
 

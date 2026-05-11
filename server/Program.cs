@@ -1,38 +1,45 @@
 
 // using Microsoft.OpenApi.Models;
 using server.model;
+using server.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<MyHotelDbContext>(options =>options.UseSqlServer(
+    builder.Configuration.GetConnectionString("MyHotelDbContext")));
 
-builder.Services.AddSwaggerGen();
+// חובה להוסיף Controllers
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<MyHotelDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("MyHotelDbContext"))); // עדכן כאן
-
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+// Swagger
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
 
+app.UseAuthorization();
+
+// חשוב גם זה בדרך כלל בפרויקטים אמיתיים
+app.MapControllers();
+
+// Minimal API (זה בסדר להשאיר)
 var summaries = new[]
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+    "Freezing", "Bracing", "Chilly", "Cool", "Mild",
+    "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
 
 app.MapGet("/weatherforecast", () =>
 {
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
+    var forecast = Enumerable.Range(1, 5).Select(index =>
         new WeatherForecast
         (
             DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
@@ -40,6 +47,7 @@ app.MapGet("/weatherforecast", () =>
             summaries[Random.Shared.Next(summaries.Length)]
         ))
         .ToArray();
+
     return forecast;
 })
 .WithName("GetWeatherForecast");
