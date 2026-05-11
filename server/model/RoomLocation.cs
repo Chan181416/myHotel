@@ -7,12 +7,9 @@ namespace server.model
     {
         [Key]
         public Guid Id { get; set; }
-
-        [ForeignKey("RoomsDB")]
-        public int RoomNum { get; set; }
-
-        [ForeignKey("Registereds")]
-        public int  NumberId { get; set; }
         
+        
+        public List<RoomsDB> ListRoom { get; set; }
+        public List<Registereds> ListRegistereds { get; set; }
     }
 }

@@ -14,5 +14,6 @@ namespace server.model
             public int price { get; set; }
         }
     }
+       
 }
 
