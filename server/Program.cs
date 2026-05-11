@@ -5,6 +5,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<myHotelDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("myHotelDbContext"))); // עדכן כאן
+builder.Services.AddSwaggerGen();
+builder.Services.AddControllers();
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

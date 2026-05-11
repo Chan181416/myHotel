@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Ns2TAgS6j0Q=",
+  "dgSpecHash": "5CgbTN+Ndxk=",
   "success": true,
   "projectFilePath": "D:\\ChanyH\\myHotel\\server\\server.csproj",
   "expectedPackageFiles": [
@@ -26,6 +26,7 @@
     "C:\\Users\\helfgot\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\10.0.0-preview.1.25081.1\\microsoft.entityframeworkcore.relational.10.0.0-preview.1.25081.1.nupkg.sha512",
     "C:\\Users\\helfgot\\.nuget\\packages\\microsoft.entityframeworkcore.sqlserver\\10.0.0-preview.1.25081.1\\microsoft.entityframeworkcore.sqlserver.10.0.0-preview.1.25081.1.nupkg.sha512",
     "C:\\Users\\helfgot\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\10.0.0-preview.1.25081.1\\microsoft.entityframeworkcore.tools.10.0.0-preview.1.25081.1.nupkg.sha512",
+    "C:\\Users\\helfgot\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\helfgot\\.nuget\\packages\\microsoft.extensions.dependencymodel\\10.0.0-preview.1.25080.5\\microsoft.extensions.dependencymodel.10.0.0-preview.1.25080.5.nupkg.sha512",
     "C:\\Users\\helfgot\\.nuget\\packages\\microsoft.identity.client\\4.61.3\\microsoft.identity.client.4.61.3.nupkg.sha512",
     "C:\\Users\\helfgot\\.nuget\\packages\\microsoft.identity.client.extensions.msal\\4.61.3\\microsoft.identity.client.extensions.msal.4.61.3.nupkg.sha512",
@@ -38,6 +39,10 @@
     "C:\\Users\\helfgot\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512",
     "C:\\Users\\helfgot\\.nuget\\packages\\microsoft.sqlserver.server\\1.0.0\\microsoft.sqlserver.server.1.0.0.nupkg.sha512",
     "C:\\Users\\helfgot\\.nuget\\packages\\mono.texttemplating\\3.0.0\\mono.texttemplating.3.0.0.nupkg.sha512",
+    "C:\\Users\\helfgot\\.nuget\\packages\\swashbuckle.aspnetcore\\6.5.0\\swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
+    "C:\\Users\\helfgot\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.5.0\\swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
+    "C:\\Users\\helfgot\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.5.0\\swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",
+    "C:\\Users\\helfgot\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.5.0\\swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512",
     "C:\\Users\\helfgot\\.nuget\\packages\\system.clientmodel\\1.0.0\\system.clientmodel.1.0.0.nupkg.sha512",
     "C:\\Users\\helfgot\\.nuget\\packages\\system.codedom\\6.0.0\\system.codedom.6.0.0.nupkg.sha512",
     "C:\\Users\\helfgot\\.nuget\\packages\\system.composition\\7.0.0\\system.composition.7.0.0.nupkg.sha512",
