@@ -14,4 +14,12 @@ namespace server.model
         public string? Occupied { get; set; }
     }
 
+    public class RoomsDBDTO
+    {
+        public int Floor { get; set; }
+        public bool OnSea { get; set; }
+        public bool Extrta { get; set; }
+    }
+
+
 }
