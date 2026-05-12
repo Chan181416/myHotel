@@ -6,7 +6,7 @@ namespace server.model
     public class PricesList
     {
        
-        public int IdPrice { get; set; }
+        public Guid IdPrice { get; set; }
         public string? Events { get; set; }
         public int Price { get; set; }
     }
