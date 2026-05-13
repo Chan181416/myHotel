@@ -1,6 +1,8 @@
-import { useState } from 'react'
 import Home from '../Home/Home'
 import './Basis.css'
+import React from "react";
+import { Link } from "react-router-dom";
+
 
 function Basis() {
 
@@ -62,8 +64,8 @@ function Basis() {
                             <input type="number" min="1" max="5" />
                         </div>
 
-                        <button>שמור רישום</button>
-                    </div>
+                        <button><Link to="/about">עבור לאודות</Link></button>                    </div>
+
                 </div>
             </div>
         </>
