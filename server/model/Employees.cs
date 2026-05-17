@@ -15,6 +15,6 @@ namespace server.model
     {
         public string? Name { get; set; }
         public int NumberId { get; set; }
-        public List<EnumRoles> ז { get; set; }
+        public List<EnumRoles> ListEnumRoles { get; set; }
     }
 }
