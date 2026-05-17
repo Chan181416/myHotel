@@ -65,7 +65,7 @@ function Basis() {
                         </div>
 
                         <button><Link to="/about">עבור לאודות</Link></button>                    </div>
-
+                    <button><Link to="/about">לאישור</Link></button>
                 </div>
             </div>
         </>

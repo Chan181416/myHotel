@@ -2,34 +2,42 @@ import React, { Children } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Basis from './component/Basis/Basis';
 import Home from './component/Home/Home';
-// import Root from './root';
+import About from './component/About/About';
 
-// const router = createBrowserRouter([{
-//   path: "/",
-//   element: <Root />,
-//   children: [
+import Root from './root';
 
-//     { index: true, element: <Basis /> },  // / → Basis
+const router = createBrowserRouter([{
+  path: "/",
+  element: <Root />,
+  children: [
 
-
-//     {
-//       path: "/home",
-//       element: <Home />,
-//     },
-//   ]
-// }
+    { index: true, element: <Basis /> },  // / → Basis
 
 
+    {
+      path: "/home",
+      element: <Home />,
+    },
 
-// ]);
+    {
+      path: "/about",
+      element: <About />
+    }
+
+  ]
+}
+
+
+
+]);
 export default function App() {
-  // return  <RouterProvider router={router} />
-  return(
-    <>
-    <Basis></Basis>
-    </>
- 
-  )
- 
-   
+  return <RouterProvider router={router} />
+  // return(
+  //   <>
+  //   <Basis></Basis>
+  //   </>
+
+  // )
+
+
 }

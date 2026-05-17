@@ -1,27 +1,51 @@
+using Microsoft.EntityFrameworkCore;
 
 using Microsoft.AspNetCore.Mvc;
 using server.Data;
 using server.Controller;
 using server.model;
+using server.Model;
 
-namespace server.Controller;
-
-[ApiController]
-[Route("[controller]")]
-public class ConditionController : ControllerBase
+namespace server.Controller
 {
-    private readonly MyHotelDbContext _Context;
-
-    public ConditionController(MyHotelDbContext context)
+    [ApiController]
+    [Route("[controller]")]
+    public class ConditionController : ControllerBase
     {
-        _Context = context;
-    }
+        private readonly MyHotelDbContext _Context;
 
-    [HttpGet]
-    public async ActionResult Get(int take = 10, int skip = 0)
-    {
-        return await(_Context.Condition.OrderBy(p => p.ProductId).Skip(skip).Take(take));
-    }
-}  
+        public ConditionController(MyHotelDbContext context)
+        {
+            _Context = context;
+        }[HttpGet]
+        public async Task<ActionResult<IEnumerable<Condition>>> GetConditions(int skip = 0, int take = 10)
+        {
+            return await _Context.Conditions.Skip(skip).Take(take).ToListAsync();
+        }
 
+
+        [HttpPost]
+        public async Task<ActionResult<Condition>> CreateCondition(ConditionDTO condition)
+        
+            {
+                if (condition.Num < 0 )
+                {
+                     return BadRequest("The num is required.");
+                }
+
+                    var newcondition = new Condition
+                    {
+                        Num = condition.Num,
+                        Price = condition.Price,
+
+                    };
+                _Context.Conditions.Add(newcondition);
+                await _Context.SaveChangesAsync();
+
+                return CreatedAtAction(nameof(GetConditions), new { id = newcondition.Id }, newcondition);
+            }
+        }
+
+
+    }
 

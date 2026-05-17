@@ -10,7 +10,7 @@ function Home() {
         <>
             <div>
                 <h1>Welcome to Home Page</h1>
-                <Link to="/Basis">Go to Basis Page</Link>
+                <Link to="/">Go to Basis Page</Link>
             </div>
 
 
