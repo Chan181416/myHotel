@@ -3,12 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace server.model
 {
-    public class RoomDB
+    public enum EnumRoles
     {
-        [Key]
-        public Guid Id { get; set; }
-        
-        
-        
+        Maneger = 0,
+        Employee = 1
     }
 }

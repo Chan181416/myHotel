@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace server.ConditionEnum
+namespace server.model
 {
     namespace server.Model
     {
@@ -9,11 +9,17 @@ namespace server.ConditionEnum
         {
             public Guid Id { get; set; }
 
-            [ForeignKey("ConditionEnum")]
-            public int Num { get; set; }
+            public string? Name { get; set; }
 
-            public int price { get; set; }
+            public int Price { get; set; }
         }
     }
+     public class ConditionDTO
+        {
+            public string? Name { get; set; }
+
+            public int Price { get; set; }
+        }
+       
 }
 
