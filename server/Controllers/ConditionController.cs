@@ -17,7 +17,8 @@ namespace server.Controller
         public ConditionController(MyHotelDbContext context)
         {
             _Context = context;
-        }[HttpGet]
+        }
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<Condition>>> GetConditions(int skip = 0, int take = 10)
         {
             return await _Context.Conditions.Skip(skip).Take(take).ToListAsync();
@@ -26,26 +27,30 @@ namespace server.Controller
 
         [HttpPost]
         public async Task<ActionResult<Condition>> CreateCondition(ConditionDTO condition)
-        
+
+        {
+            if (condition.Price < 0)
             {
-                if (condition.Num < 0 )
-                {
-                     return BadRequest("The num is required.");
-                }
-
-                    var newcondition = new Condition
-                    {
-                        Num = condition.Num,
-                        Price = condition.Price,
-
-                    };
-                _Context.Conditions.Add(newcondition);
-                await _Context.SaveChangesAsync();
-
-                return CreatedAtAction(nameof(GetConditions), new { id = newcondition.Id }, newcondition);
+                return BadRequest("The price is required.");
             }
+            if (condition.Option == " ")
+            {
+                return BadRequest("The condition is required.");
+            }
+
+            var newcondition = new Condition
+            {
+                Price = condition.Price,
+                Option = condition.Option,
+
+            };
+            _Context.Conditions.Add(newcondition);
+            await _Context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetConditions), new { id = newcondition.Id }, newcondition);
         }
-
-
     }
+
+
+}
 

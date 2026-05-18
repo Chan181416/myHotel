@@ -1,8 +1,9 @@
 import React, { Children } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import Basis from './component/Basis/Basis';
-import Home from './component/Home/Home';
-import About from './component/About/About';
+import Basis from './component/Basis/Basis.tsx';
+import Home from './component/Home/Home.tsx';
+import About from './component/About/About.tsx';
+import Login from './component/Login/Login.tsx';
 
 import Root from './root';
 
@@ -11,14 +12,18 @@ const router = createBrowserRouter([{
   element: <Root />,
   children: [
 
-    { index: true, element: <Basis /> },  // / → Basis
+    { index: true, element: <Login /> },  // / → Basis
 
 
+ 
     {
       path: "/home",
       element: <Home />,
     },
-
+    {
+      path: "/basis",
+      element: <Basis />,
+    },
     {
       path: "/about",
       element: <About />

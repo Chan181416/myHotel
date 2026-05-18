@@ -7,15 +7,12 @@ namespace server.Model
     public class Condition
     {
         public Guid Id { get; set; }
-
-        public int Num { get; set; }
-
+        public string? Option { get; set; }
         public int Price { get; set; }
     }
      public class ConditionDTO
     {
-        public int Num { get; set; }
-
+        public string? Option { get; set; }
         public int Price { get; set; }
     }
 }
