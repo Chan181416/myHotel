@@ -9,7 +9,7 @@ namespace server.model
         public Guid Id { get; set; }
         
         
-        public List<RoomsDB> ListRoom { get; set; }
+        public List<RoomDB> ListRoom { get; set; }
         public List<Registereds> ListRegistereds { get; set; }
     }
 }
