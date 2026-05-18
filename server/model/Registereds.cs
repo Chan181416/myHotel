@@ -10,11 +10,11 @@ namespace server.model
         [Key]
         public Guid Id {get; set;}
         public string? NumberId { get; set; }
-        public string? name { get; set; }
+        public string? Name { get; set; }
        
-        public int sumPlace { get; set; }
+        public int SumPlace { get; set; }
         
-        public int totalPrice { get; set; }
+        public int TotalPrice { get; set; }
 
 
         public List<PricesList> ListPricesList { get; set; }

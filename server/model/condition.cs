@@ -11,14 +11,14 @@ namespace server.model
 
             public string? Name { get; set; }
 
-            public int price { get; set; }
+            public int Price { get; set; }
         }
     }
      public class ConditionDTO
         {
             public string? Name { get; set; }
 
-            public int price { get; set; }
+            public int Price { get; set; }
         }
        
 }

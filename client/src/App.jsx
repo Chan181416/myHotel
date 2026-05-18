@@ -5,6 +5,7 @@ import heroImg from './assets/hero.png'
 import './App.css'
 import Basis from './component/Basis/Basis'
 import React  from 'react'
+import Login from './component/Login/Login'
 
 import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
@@ -14,7 +15,7 @@ function App() {
 
     const router = createBrowserRouter([
   {
-    path: "/", element: <Basis></Basis>,
+    path: "/", element: <Login></Login>,
   },
   {
     path: "/Home", element: <Home></Home>,
