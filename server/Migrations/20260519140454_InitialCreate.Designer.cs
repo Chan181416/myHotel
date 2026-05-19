@@ -12,8 +12,8 @@ using server.Data;
 namespace server.Migrations
 {
     [DbContext(typeof(MyHotelDbContext))]
-    [Migration("20260518132403_initialCreate")]
-    partial class initialCreate
+    [Migration("20260519140454_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -69,6 +69,31 @@ namespace server.Migrations
                     b.HasIndex("RegisteredsId");
 
                     b.ToTable("PricesLists");
+                });
+
+            modelBuilder.Entity("server.model.PricesListHistory", b =>
+                {
+                    b.Property<int>("IdHistory")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdHistory"));
+
+                    b.Property<DateTime>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Event")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IdPrice")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdHistory");
+
+                    b.ToTable("PricesListHistories");
                 });
 
             modelBuilder.Entity("server.model.Registereds", b =>

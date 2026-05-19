@@ -16,4 +16,13 @@ namespace server.model
         public int Price { get; set; }
         public string? Event { get; set; }
     }
+     public class PricesListHistory
+    {
+        [Key]
+        public int IdHistory { get; set; }
+        public int IdPrice { get; set; }
+        public int Price { get; set; }
+        public string? Event { get; set; }
+        public DateTime DeletedAt { get; set; }
+    }
 }

@@ -68,6 +68,31 @@ namespace server.Migrations
                     b.ToTable("PricesLists");
                 });
 
+            modelBuilder.Entity("server.model.PricesListHistory", b =>
+                {
+                    b.Property<int>("IdHistory")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdHistory"));
+
+                    b.Property<DateTime>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Event")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IdPrice")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdHistory");
+
+                    b.ToTable("PricesListHistories");
+                });
+
             modelBuilder.Entity("server.model.Registereds", b =>
                 {
                     b.Property<Guid>("Id")

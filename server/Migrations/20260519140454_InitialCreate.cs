@@ -6,11 +6,27 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace server.Migrations
 {
     /// <inheritdoc />
-    public partial class initialCreate : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "PricesListHistories",
+                columns: table => new
+                {
+                    IdHistory = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdPrice = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<int>(type: "int", nullable: false),
+                    Event = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PricesListHistories", x => x.IdHistory);
+                });
+
             migrationBuilder.CreateTable(
                 name: "RoomLocations",
                 columns: table => new
@@ -130,6 +146,9 @@ namespace server.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Conditions");
+
+            migrationBuilder.DropTable(
+                name: "PricesListHistories");
 
             migrationBuilder.DropTable(
                 name: "PricesLists");
