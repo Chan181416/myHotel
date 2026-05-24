@@ -6,7 +6,7 @@ namespace server.model
     public class PricesList
     {
         [Key]
-        public int IdPrice { get; set; }
+        public Guid IdPrice { get; set; }
         public int Price { get; set; }
         public string? Event { get; set; }
     }
@@ -19,8 +19,8 @@ namespace server.model
      public class PricesListHistory
     {
         [Key]
-        public int IdHistory { get; set; }
-        public int IdPrice { get; set; }
+        public Guid IdHistory { get; set; }
+        public Guid IdPrice { get; set; }
         public int Price { get; set; }
         public string? Event { get; set; }
         public DateTime DeletedAt { get; set; }

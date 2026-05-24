@@ -11,8 +11,8 @@ builder.Services.AddDbContext<MyHotelDbContext>(options =>
 builder.Services.AddControllers();
 
 // Swagger
-builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 

@@ -44,7 +44,7 @@ namespace server.Controller
             );
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePrice(int id, [FromBody] PricesListDTO dto)
+        public async Task<IActionResult> UpdatePrice(Guid id, [FromBody] PricesListDTO dto)
         {
             var price = await _context.PricesLists.FindAsync(id);
             if (price == null) return NotFound();
@@ -79,32 +79,30 @@ namespace server.Controller
         [HttpGet("idbyevent/{eventName}")]
         public async Task<IActionResult> GetIdByEvent(string eventName)
         {
-            var id = await _context.PricesLists
+            var item = await _context.PricesLists
                                    .Where(p => p.Event == eventName)
-                                   .Select(p => p.IdPrice)
                                    .FirstOrDefaultAsync();
 
-            if (id == 0) return NotFound();
-            return Ok(id);
+            if (item == null) return NotFound();
+            return Ok(item.IdPrice);
         }
         [HttpGet("price/{id}")]
-        public async Task<IActionResult> GetPriceById(int id)
+        public async Task<IActionResult> GetPriceById(Guid id)
         {
             // מחפש את הרשומה לפי IdPrice
             var price = await _context.PricesLists
                                       .Where(p => p.IdPrice == id)
-                                      .Select(p => p.Price)   // בוחר רק את השדה Price
                                       .FirstOrDefaultAsync();
 
             // אם הרשומה לא קיימת מחזירים 404
-            if (price == default(int))
+            if (price == null)
                 return NotFound();
 
             // מחזיר את הערך של Price בלבד
-            return Ok(price);
+            return Ok(price.Price);
         }
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePrice(int id)
+        public async Task<IActionResult> DeletePrice(Guid id)
         {
             var price = await _context.PricesLists.FindAsync(id);
             if (price == null) return NotFound();

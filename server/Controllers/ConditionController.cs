@@ -49,6 +49,7 @@ namespace server.Controller
 
             return CreatedAtAction(nameof(GetConditions), new { id = newcondition.Id }, newcondition);
         }
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetPriceById(int id)
         {
             // מחפש את הרשומה לפי IdPrice
