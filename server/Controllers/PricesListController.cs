@@ -1,18 +1,18 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using server.controllers;
 using server.model;
 
 namespace server.controllers
 {
+    using Data;
     [ApiController]
     [Route("api/[controller]")]
 
     public class PricesListController : ControllerBase
     {
-        private readonly myHotelDbContext _context;
+        private readonly MyHotelDbContext _context;
 
-        public PricesListController(myHotelDbContext context)
+        public PricesListController(MyHotelDbContext context)
         {
             _context = context;
         }
@@ -26,18 +26,18 @@ namespace server.controllers
         [HttpPost]
         public async Task<ActionResult<PricesList>> CreatePriceList(PricesListDTO priceList)
         {
-            if(priceList.Price < 0 || priceList.Price == null)
+            if(priceList.Price <= 0 )
             {
                 return BadRequest("The price event is required.");
             }
-            if (string.IsNullOrWhiteSpace(priceList.Events))
+            if (string.IsNullOrWhiteSpace(priceList.Event))
             {
                 return BadRequest("The event title is required.");
             }
             var newPrice = new PricesList
             {
                 IdPrice = Guid.NewGuid(),
-                Events = priceList.Events,
+                Event = priceList.Event,
                 Price = priceList.Price,
             };
             _context.PricesLists.Add(newPrice);

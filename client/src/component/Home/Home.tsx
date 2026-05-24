@@ -1,6 +1,6 @@
 
 import "./Home.css"
-import { useState } from 'react'
+import { Link } from 'react-router-dom';
 
 
 
@@ -8,17 +8,12 @@ function Home() {
 
     return (
         <>
-        {/* <h3>שם נופשת</h3>
-        <input type="text" placeholder="הכנס שם נופשת"></input>        */}
-          <div id="enter">              
+            <div>
+                <h1>Welcome to Home Page</h1>
+                <Link to="/">Go to Basis Page</Link>
+            </div>
 
-               <div className="space">שם נופשת</div>
-               <div className="space">הכנס ת.ז. </div>
-               <div className="space">סוג מסלול</div>
-               <div className="space">מספר מקומות</div>
-               <div className="space">תנאים מיוחדים</div>
-         </div> 
-         
+
         </>
 
     )
