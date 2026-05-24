@@ -6,7 +6,7 @@ namespace server.Model
 {
     public class Condition
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string? Option { get; set; }
         public int Price { get; set; }
     }
