@@ -30,7 +30,7 @@ namespace server.Controller
             // if (exists)
             //     return BadRequest($"Room number {dto.RoomNum} כבר קיים במערכת.");
 
-            var room = new RoomsDB
+            var room = new RoomDB
             {
                 RoomNum = dto.RoomNum,
                 Floor = dto.Floor,

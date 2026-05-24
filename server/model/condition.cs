@@ -15,6 +15,8 @@ namespace server.Model
         public string? Option { get; set; }
         public int Price { get; set; }
     }
+    
+       
 }
 
 

@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
+
 using server.model;
 using server.Model;
 
@@ -12,7 +13,7 @@ namespace server.Data
         public DbSet<PricesList> PricesLists { get; set; }
 
         public DbSet<PricesListHistory> PricesListHistories { get; set; }
-        public DbSet<RoomsDB> RoomsDBs { get; set; }
+        public DbSet<RoomDB> RoomsDBs { get; set; }
         public DbSet<Condition> Conditions { get; set; }
         public DbSet<RoomLocation> RoomLocations { get; set; }
 

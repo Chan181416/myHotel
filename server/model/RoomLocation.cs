@@ -7,7 +7,7 @@ namespace server.model
     {
         [Key]
         public Guid Id { get; set; }
-        virtual public List<RoomsDB> ListRooms {get;set;} = [];
+        virtual public List<RoomDB> ListRooms {get;set;} = [];
         virtual public List<Registereds> ListRegistereds {get;set;} = [];
 
     }
