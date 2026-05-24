@@ -1,4 +1,3 @@
-
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -15,19 +14,19 @@ const initialState = {
 const guestSlice = createSlice({
   name: "guest",
   initialState,
-  reducers: {
-        setGuestData: (state, action) => {
-            Object.assign (state, ...action.payload );
-            },
-            clearGuestData:  (state) => {
-            Object.assign(state, initialState);
-        },
-    },
-});
-addGuest(state, action)
-updateGuest(state, action)
-removeGuest(state, action)
-clearGuests(state)
 
-export const { setGuestData, clearGuestData } = guestSlice.actions;
+  reducers: {
+    setGuestData: (state, action) => {
+      Object.assign(state, action.payload);
+    },
+
+    clearGuestData: (state) => {
+      Object.assign(state, initialState);
+    },
+  },
+});
+
+export const { setGuestData, clearGuestData } =
+  guestSlice.actions;
+
 export default guestSlice.reducer;
