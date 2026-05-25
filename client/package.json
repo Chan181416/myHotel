@@ -1,6 +1,6 @@
 {
   "name": "client",
-  "private": true,
+  "private": "true",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -35,3 +35,4 @@
     "vite": "^8.0.9"
   }
 }
+
