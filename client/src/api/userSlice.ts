@@ -1,46 +1,73 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-// כאן loginFunction היא פונקציה חיצונית שתבצע את הבקשה לשרת
-// היא צריכה לקבל { username, password } ולהחזיר Promise עם הנתונים
+// login async thunk
 export const loginUser = createAsyncThunk(
-    'user/loginUser', async () => {
-        const response = await fetch('https:בקשת שרת שמביאה את סוג העובד');
-        // מניחים שה-response מכיל שדה type
-        return await response.type;
-        //   catch (error) {
-        //   return thunkAPI.rejectWithValue(error);
-    });
+  "user/loginUser",
+  async ({ username, idNumber }, thunkAPI) => {
+    try {
+      const response = await fetch("https://your-api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, idNumber }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Login failed");
+      }
+
+      const data = await response.json();
+
+      // מצפים שיחזור: { type, username, idNumber }
+      return data;
+    }
+     catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 
 const userSlice = createSlice({
-    name: 'user',
-    initialState: {
-        type: null,
-        status: 'idle',
-        error: null,
+  name: "user",
+  initialState: {
+    username: "",
+    idNumber: "",
+    type: null,
+    status: "idle", // idle | loading | succeeded | failed
+    error: null,
+  },
+
+  reducers: {
+    logout: (state) => {
+      state.username = "";
+      state.idNumber = "";
+      state.type = null;
+      state.status = "idle";
+      state.error = null;
     },
-    reducers: {
-        logout: (state) => {
-            state.type = null;
-            state.status = 'idle';
-            state.error = null;
-        },
-    },
-    extraReducers: (builder) => {
-        builder
-            .addCase(loginUser.pending, (state) => {
-                state.status = 'loading';
-                state.error = null;
-            })
-            .addCase(loginUser.fulfilled, (state, action) => {
-                state.status = 'succeeded';
-                
-                state.type = action.payload;
-            })
-            .addCase(loginUser.rejected, (state, action) => {
-                state.status = 'failed';
-                state.error = action.payload || action.error.message;
-            });
-    },
+  },
+
+  extraReducers: (builder) => {
+    builder
+      .addCase(loginUser.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.status = "succeeded";
+
+        state.username = action.payload.username;
+        state.idNumber = action.payload.idNumber;
+        state.type = action.payload.type;
+      })
+
+      .addCase(loginUser.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload || action.error.message;
+      });
+  },
 });
 
 export const { logout } = userSlice.actions;
