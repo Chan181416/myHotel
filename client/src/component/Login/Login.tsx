@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { loginUser, logout } from "../../api/userSlice";
 import "./login.css";
 
-export default function LoginSystem() {
+export default function Login() {
   const [username, setUsername] = useState("");
   const [idNumber, setIdNumber] = useState("");
 

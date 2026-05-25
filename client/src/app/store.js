@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import userReducer from "../api/userSlice";
-import guestReducer from "../api/registerdsSlice";
+import userSlice from "../api/userSlice";
+import registerdsSlice from "../api/registerdsSlice";
 
-export const Store = configureStore({
+export const store = configureStore({
   reducer: {
-    user: userReducer,
-    guest: guestReducer,
+    user: userSlice,
+    guest: registerdsSlice,
   },
 });
 
-export default Store;
+export default store;

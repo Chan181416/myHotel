@@ -79,8 +79,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import './Basis.css';
 
-function Basis() {
-    const navigate = useNavigate();
+function Basis() {   
 
     // סטייט לכל השדות
     const [formData, setFormData] = useState({
