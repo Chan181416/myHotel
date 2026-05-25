@@ -55,15 +55,15 @@ namespace server.Controller
             // מחפש את הרשומה לפי IdPrice
             var price = await _Context.Conditions
                                       .Where(p => p.Id == id)
-                                      .Select(p => p.Price)   // בוחר רק את השדה Price
+                                     
                                       .FirstOrDefaultAsync();
 
             // אם הרשומה לא קיימת מחזירים 404
-            if (price == default(int))
+            if (price == null)
                 return NotFound();
 
             // מחזיר את הערך של Price בלבד
-            return Ok(price);
+            return Ok(price.Price);
         }
     }
 
