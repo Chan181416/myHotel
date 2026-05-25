@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loginUser, logout } from "../../api/userSlice";
@@ -11,9 +11,17 @@ export default function LoginSystem() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // לפי הסלייס החדש
   const user = useSelector((state) => state?.user);
   const { status, error } = user;
+
+  // ניווט אוטומטי לפי סוג משתמש אם כבר מחובר
+  useEffect(() => {
+    if (user?.type === 1) {
+      navigate("/basis");
+    } else if (user?.type === 2) {
+      navigate("/allComponents");
+    }
+  }, [user?.type, navigate]);
 
   const handleLogin = async () => {
     if (!username.trim() || !idNumber.trim()) {
@@ -26,13 +34,9 @@ export default function LoginSystem() {
         loginUser({ username, idNumber })
       );
 
-      // אם הצליח
       if (loginUser.fulfilled.match(resultAction)) {
-        alert("התחברת בהצלחה!");
-
         const type = resultAction.payload.type;
 
-        // ניווט לפי סוג משתמש
         if (type === 1) {
           navigate("/basis");
         } else if (type === 2) {
@@ -92,40 +96,20 @@ export default function LoginSystem() {
               className="loginBtn"
               disabled={status === "loading"}
             >
-              {status === "loading"
-                ? "מתחבר..."
-                : "כניסה למערכת"}
+              {status === "loading" ? "מתחבר..." : "כניסה למערכת"}
             </button>
 
-            {error && (
-              <p className="errorText">{error}</p>
-            )}
+            {error && <p className="errorText">{error}</p>}
           </>
         ) : (
           <div className="userBox">
-            <h3 style={{ marginBottom: "15px" }}>
-              משתמש מחובר
-            </h3>
+            <h3 style={{ marginBottom: "15px" }}>משתמש מחובר</h3>
 
-            <p>
-              <strong>שם משתמש:</strong>{" "}
-              {user.username}
-            </p>
+            <p><strong>שם משתמש:</strong> {user.username}</p>
+            <p><strong>תעודת זהות:</strong> {user.idNumber}</p>
+            <p><strong>סוג משתמש:</strong> {user.type}</p>
 
-            <p>
-              <strong>תעודת זהות:</strong>{" "}
-              {user.idNumber}
-            </p>
-
-            <p>
-              <strong>סוג משתמש:</strong>{" "}
-              {user.type}
-            </p>
-
-            <button
-              onClick={handleLogout}
-              className="logoutBtn"
-            >
+            <button onClick={handleLogout} className="logoutBtn">
               התנתקות
             </button>
           </div>
