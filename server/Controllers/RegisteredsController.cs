@@ -7,8 +7,8 @@ namespace server.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-  
-    public class  RegisteredsController: ControllerBase
+
+    public class RegisteredsController : ControllerBase
     {
         private readonly MyHotelDbContext _context;
 
@@ -55,19 +55,5 @@ namespace server.Controllers
             return Ok(registered);
         }
 
-        // החזרת NumberId לפי ID
-        [HttpGet("{id}/numberid")]
-        public async Task<IActionResult> GetNumberId(Guid id)
-        {
-            var numberId = await _context.Registereds
-                .Where(x => x.Id == id)
-                .Select(x => x.NumberId)
-                .FirstOrDefaultAsync();
-
-            if (numberId == null)
-                return NotFound();
-
-            return Ok(numberId);
-        }
     }
 }

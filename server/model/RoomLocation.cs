@@ -11,4 +11,12 @@ namespace server.model
         virtual public List<Registereds> ListRegistereds {get;set;} = [];
 
     }
+     public class RoomLocationDTO
+    {
+       
+       
+        virtual public List<RoomDB> ListRooms {get;set;} = [];
+        virtual public List<Registereds> ListRegistereds {get;set;} = [];
+
+    }
 }

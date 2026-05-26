@@ -11,12 +11,11 @@ namespace server.Data
     {
         public DbSet<Registereds> Registereds { get; set; }
         public DbSet<PricesList> PricesLists { get; set; }
-
         public DbSet<PricesListHistory> PricesListHistories { get; set; }
         public DbSet<RoomDB> RoomsDBs { get; set; }
         public DbSet<Condition> Conditions { get; set; }
         public DbSet<RoomLocation> RoomLocations { get; set; }
-
+        public DbSet<Role> Roles { get; set; }
         public MyHotelDbContext(DbContextOptions<MyHotelDbContext> options)
                    : base(options)
 

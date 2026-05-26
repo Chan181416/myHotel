@@ -17,4 +17,15 @@ namespace server.model
         virtual public List<PricesList> ListOptions { get; set; } = [];
         virtual public List<Condition> ListConditions { get; set; } = [];
     }
+
+    public class RegisteredsCreateDTO
+    {
+        public string? NumberId { get; set; }
+        public string? Name { get; set; }
+        public int SumPlace { get; set; }
+        public int TotalPrice { get; set; }
+
+        public string? Event { get; set; }
+        public string? Condition { get; set; }
+    }
 }
