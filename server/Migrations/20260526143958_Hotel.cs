@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace server.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Hotel : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,9 +15,8 @@ namespace server.Migrations
                 name: "PricesListHistories",
                 columns: table => new
                 {
-                    IdHistory = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    IdPrice = table.Column<int>(type: "int", nullable: false),
+                    IdHistory = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IdPrice = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false),
                     Event = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -25,6 +24,20 @@ namespace server.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PricesListHistories", x => x.IdHistory);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Roles",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    idNumber = table.Column<int>(type: "int", nullable: false),
+                    Num = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Roles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -63,8 +76,8 @@ namespace server.Migrations
                 name: "RoomsDBs",
                 columns: table => new
                 {
-                    RoomNum = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RoomNum = table.Column<int>(type: "int", nullable: false),
                     Floor = table.Column<int>(type: "int", nullable: false),
                     OnSea = table.Column<bool>(type: "bit", nullable: false),
                     Extrta = table.Column<bool>(type: "bit", nullable: false),
@@ -73,7 +86,7 @@ namespace server.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RoomsDBs", x => x.RoomNum);
+                    table.PrimaryKey("PK_RoomsDBs", x => x.Id);
                     table.ForeignKey(
                         name: "FK_RoomsDBs_RoomLocations_RoomLocationId",
                         column: x => x.RoomLocationId,
@@ -85,7 +98,8 @@ namespace server.Migrations
                 name: "Conditions",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Option = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<int>(type: "int", nullable: false),
                     RegisteredsId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
@@ -104,8 +118,7 @@ namespace server.Migrations
                 name: "PricesLists",
                 columns: table => new
                 {
-                    IdPrice = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdPrice = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false),
                     Event = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RegisteredsId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
@@ -152,6 +165,9 @@ namespace server.Migrations
 
             migrationBuilder.DropTable(
                 name: "PricesLists");
+
+            migrationBuilder.DropTable(
+                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "RoomsDBs");

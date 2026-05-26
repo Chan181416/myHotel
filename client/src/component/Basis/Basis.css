@@ -4,12 +4,10 @@
     margin: 30px;    
     color: rgb(211, 91, 115);
     align-items: center; */
-    
-        margin: 0;
+        background: #ffffff;
+
+        margin-top: 20px;
         font-family: Arial, sans-serif;
-        background: linear-gradient(135deg, #1c87a1, #2a5298);
-        width: 600px;
-        height: 900px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -31,15 +29,15 @@
         /* border: 2px solid black; */
         
     }
-    .container {
+    #allTheForm {
         border: 2px solid black;
-
-        background: #ffffff;
+        background: linear-gradient(135deg, #1c87a1, #2a5298);
+        margin: 0;
         padding: 30px;
-        border: 2px solid black;
-        border-radius: 16px;
-        width: 20px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        border: 2px solid grey;
+        border-radius: 15px;
+        /* width: 200px; */
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.726);
     }
 
     h2 {

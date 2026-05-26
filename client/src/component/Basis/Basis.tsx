@@ -88,8 +88,8 @@ function Basis() {
         phone: "",
         email: "",
         date: "",
-        tripType: "נופש מלא",
-        roomType: "אקסטרה",
+        tripType: "",
+        roomType: "",
         guests: 1
     });
 
@@ -106,15 +106,15 @@ function Basis() {
     const handleSubmit = () => {
         // יוצרים מחרוזת לאישור
         const message = `
-ת.ז: ${formData.id}
-שם מתארחת: ${formData.name}
-טלפון: ${formData.phone}
-אימייל: ${formData.email}
-תאריך הזמנה: ${formData.date}
-סוג מסלול: ${formData.tripType}
-סוג חדר: ${formData.roomType}
-מספר אורחים: ${formData.guests}
-        `;
+            ת.ז: ${formData.id}
+            שם מתארחת: ${formData.name}
+            טלפון: ${formData.phone}
+            אימייל: ${formData.email}
+            תאריך הזמנה: ${formData.date}
+            סוג מסלול: ${formData.tripType}
+            סוג חדר: ${formData.roomType}
+            מספר אורחים: ${formData.guests}`;
+        
 
         // שואל את המשתמש לאישור
         const confirmed = window.confirm(message);
@@ -126,7 +126,7 @@ function Basis() {
 
     return (
         <div id="welcome">
-            <div id="container">
+            <div id="allTheForm">
                 <div className="form">
                     <h2>רישום אורח למלון</h2>
 
@@ -136,7 +136,7 @@ function Basis() {
                             <input
                                 type="text"
                                 name="id"
-                                placeholder="מס' זהות/מס' רישום"
+                                placeholder="מס' זהות"
                                 value={formData.id}
                                 onChange={handleChange}
                             />
@@ -147,7 +147,7 @@ function Basis() {
                             <input
                                 type="text"
                                 name="name"
-                                placeholder="הכנס שם מתארחת"
+                                placeholder="שם מתארחת"
                                 value={formData.name}
                                 onChange={handleChange}
                             />
@@ -192,6 +192,7 @@ function Basis() {
                         <label>סוג מסלול</label>
                         <select
                             name="tripType"
+                            // placeholder="לחץ לבחירה"
                             value={formData.tripType}
                             onChange={handleChange}
                         >
@@ -208,6 +209,7 @@ function Basis() {
                             value={formData.roomType}
                             onChange={handleChange}
                         >
+                            <option>רגיל</option>
                             <option>אקסטרה</option>
                             <option>מול הים</option>
                         </select>

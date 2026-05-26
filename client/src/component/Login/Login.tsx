@@ -29,17 +29,30 @@ export default function Login() {
       // אם הצליח
       if (loginUser.fulfilled.match(resultAction)) {
         alert("התחברת בהצלחה!");
+        const userData = resultAction.payload;
 
-        const type = resultAction.payload.type;
-
-        // ניווט לפי סוג משתמש
-        if (type === 1) {
+        if (userData.type === 1) {
+          console.log("navigate");
           navigate("/basis");
-        } else if (type === 2) {
-          navigate("/allComponents");
+        } else if (userData.type === 2) {
+          navigate("/home");
         } else {
           navigate("/");
         }
+
+        // const type = resultAction.payload.type;
+
+        // // ניווט לפי סוג משתמש
+        // if (type === 1) {
+        //   navigate("/basis");
+        // } else if (type === 2) {
+        //   navigate("/allComponents");
+        // } else {
+        //   navigate("/");
+        // }
+        
+  
+
       } else {
         alert(
           "שגיאה בהתחברות: " +

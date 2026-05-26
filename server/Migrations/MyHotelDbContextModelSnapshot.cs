@@ -24,9 +24,11 @@ namespace server.Migrations
 
             modelBuilder.Entity("server.Model.Condition", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Option")
                         .HasColumnType("nvarchar(max)");
@@ -44,13 +46,31 @@ namespace server.Migrations
                     b.ToTable("Conditions");
                 });
 
-            modelBuilder.Entity("server.model.PricesList", b =>
+            modelBuilder.Entity("server.Model.Role", b =>
                 {
-                    b.Property<int>("IdPrice")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Num")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPrice"));
+                    b.Property<int>("idNumber")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("server.model.PricesList", b =>
+                {
+                    b.Property<Guid>("IdPrice")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Event")
                         .HasColumnType("nvarchar(max)");
@@ -70,11 +90,9 @@ namespace server.Migrations
 
             modelBuilder.Entity("server.model.PricesListHistory", b =>
                 {
-                    b.Property<int>("IdHistory")
+                    b.Property<Guid>("IdHistory")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdHistory"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DeletedAt")
                         .HasColumnType("datetime2");
@@ -82,8 +100,8 @@ namespace server.Migrations
                     b.Property<string>("Event")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdPrice")
-                        .HasColumnType("int");
+                    b.Property<Guid>("IdPrice")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Price")
                         .HasColumnType("int");
@@ -121,24 +139,11 @@ namespace server.Migrations
                     b.ToTable("Registereds");
                 });
 
-            modelBuilder.Entity("server.model.RoomLocation", b =>
+            modelBuilder.Entity("server.model.RoomDB", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RoomLocations");
-                });
-
-            modelBuilder.Entity("server.model.RoomsDB", b =>
-                {
-                    b.Property<int>("RoomNum")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoomNum"));
 
                     b.Property<bool>("Extrta")
                         .HasColumnType("bit");
@@ -155,11 +160,25 @@ namespace server.Migrations
                     b.Property<Guid?>("RoomLocationId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("RoomNum");
+                    b.Property<int>("RoomNum")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("RoomLocationId");
 
                     b.ToTable("RoomsDBs");
+                });
+
+            modelBuilder.Entity("server.model.RoomLocation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RoomLocations");
                 });
 
             modelBuilder.Entity("server.Model.Condition", b =>
@@ -183,7 +202,7 @@ namespace server.Migrations
                         .HasForeignKey("RoomLocationId");
                 });
 
-            modelBuilder.Entity("server.model.RoomsDB", b =>
+            modelBuilder.Entity("server.model.RoomDB", b =>
                 {
                     b.HasOne("server.model.RoomLocation", null)
                         .WithMany("ListRooms")

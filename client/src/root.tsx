@@ -3,11 +3,11 @@ import { Outlet, Link } from 'react-router-dom';
 function Root() {
   return (
     <div >
-      <p>fff</p>
+      <p>MyHotel</p>
       <hr />
       <Outlet />
     </div>
-  )
+  );
     
 }
 
