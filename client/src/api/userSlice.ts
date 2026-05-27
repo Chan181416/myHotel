@@ -5,7 +5,7 @@ export const loginUser = createAsyncThunk(
   "user/loginUser",
   async ({ username, idNumber }, thunkAPI) => {
     try {
-      const response = await fetch(`http://localhost:5173/Condition/${idNumber}`, {
+      const response = await fetch(`http://localhost:5044/Condition/${idNumber}`, {
         method: "GET",
       });
 
