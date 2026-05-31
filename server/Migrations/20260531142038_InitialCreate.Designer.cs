@@ -12,7 +12,7 @@ using server.Data;
 namespace server.Migrations
 {
     [DbContext(typeof(MyHotelDbContext))]
-    [Migration("20260531112507_InitialCreate")]
+    [Migration("20260531142038_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -133,6 +133,41 @@ namespace server.Migrations
                     b.HasIndex("PriceListId");
 
                     b.ToTable("Registereds");
+                });
+
+            modelBuilder.Entity("server.model.RegisteredsHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ConditionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumberId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("OriginalRegisteredId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PriceListId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("SumPlace")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalPrice")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RegisteredsHistory");
                 });
 
             modelBuilder.Entity("server.model.RoomLocation", b =>

@@ -21,7 +21,7 @@ namespace server.Controllers
         {
             bool eventExists =
                 await _context.PricesLists
-                    .AnyAsync(x => x.Id == dto.Event);
+                    .AnyAsync(x => x.IdPrice == dto.Event);
 
             if (!eventExists)
                 return BadRequest("Event not found");
@@ -107,7 +107,7 @@ public async Task<IActionResult> UpdateField(
 
             bool eventExists =
                 await _context.PricesLists
-                    .AnyAsync(x => x.Id == eventId);
+                    .AnyAsync(x => x.IdPrice == eventId);
 
             if (!eventExists)
                 return BadRequest("Event not found");

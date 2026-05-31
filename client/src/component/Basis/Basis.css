@@ -60,13 +60,14 @@
     }
 
     input, select {
-        width: 60%;
+        width: 90%;
         padding: 10px;
         color: rgb(28, 180, 180);
         border: 2px solid #ccc;
         border-radius: 8px;
         outline: none;
         transition: 0.3s;
+        font-size: 15px;
     }
 
     input:focus, select:focus {

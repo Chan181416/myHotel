@@ -29,14 +29,16 @@ export default function Login() {
       // אם הצליח
       if (loginUser.fulfilled.match(resultAction)) {
         alert("התחברת בהצלחה!");
-
-        const type = resultAction.payload.type;
-
+         console.log("SUCCESS");
+        const type = resultAction.payload.code;
+       
         // ניווט לפי סוג משתמש
         if (Number(type) === 1) {
+           console.log("GO BASIS");
           navigate("/basis");
         } else if (Number(type) === 2) {
-          navigate("/allComponents");
+           console.log("GO HOME");
+          navigate("/home");
         } 
       } else {
         alert(

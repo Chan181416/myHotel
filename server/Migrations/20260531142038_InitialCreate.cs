@@ -53,6 +53,25 @@ namespace server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "RegisteredsHistory",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OriginalRegisteredId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NumberId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SumPlace = table.Column<int>(type: "int", nullable: false),
+                    TotalPrice = table.Column<int>(type: "int", nullable: false),
+                    PriceListId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ConditionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RegisteredsHistory", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
                 {
@@ -161,6 +180,9 @@ namespace server.Migrations
         {
             migrationBuilder.DropTable(
                 name: "PricesListHistories");
+
+            migrationBuilder.DropTable(
+                name: "RegisteredsHistory");
 
             migrationBuilder.DropTable(
                 name: "Roles");

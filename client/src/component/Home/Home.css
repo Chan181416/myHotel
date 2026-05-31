@@ -1,10 +1,23 @@
-#enter{
-display: flex;
-justify-content: center;
+.note{
 
-font-size: 40px;
 }
-.space{
-    margin: 20px;
-    border:  1px solid rgb(171, 83, 83);
+
+.hello{
+    margin: 5px;
+    padding: 5px;
+    background-color: #183669;
+    border-radius: 15px;
+    font-size: 35px;
+    /* font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; */
+    width: 800px;
+    height: 800px;
+    color: black;
+}
+
+h1{
+
+}
+    
+Link{
+    font-size: 50px;
 }

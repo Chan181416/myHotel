@@ -8,9 +8,11 @@ function Home() {
 
     return (
         <>
-            <div>
-                <h1>Welcome to Home Page</h1>
-                <Link to="/">Go to Basis Page</Link>
+            <div className="note">
+                <div className="hello">
+                    <h1>ברוכה הבאה לנופשי נשים של תמי זייברט</h1>
+                </div>
+                <Link to="/">Go to Login Page</Link>
             </div>
 
 
