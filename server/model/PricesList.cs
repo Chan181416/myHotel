@@ -9,6 +9,9 @@ namespace server.model
         public Guid IdPrice { get; set; }
         public int Price { get; set; }
         public string? Event { get; set; }
+
+
+        public List<Registereds> Registrations {get; set;}=[];
     }
     public class PricesListDTO
     {

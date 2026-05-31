@@ -13,9 +13,16 @@ namespace server.model
         public string? Name { get; set; }
         public int SumPlace { get; set; }
         public int TotalPrice { get; set; }
-
-        virtual public List<PricesList> ListOptions { get; set; } = [];
-        virtual public List<Condition> ListConditions { get; set; } = [];
+        
+        public Guid PriceListId { get; set; }
+        [ForeignKey("PriceListId")]
+        public PricesList? Event { get; set; }
+        
+        public Guid ConditionId { get; set; }
+        [ForeignKey("ConditionId")]
+        public Condition? Condition { get; set; }
+        
+        public List<RoomLocation> Rooms { get; set; }=[];
     }
 
     public class RegisteredsCreateDTO
@@ -24,8 +31,7 @@ namespace server.model
         public string? Name { get; set; }
         public int SumPlace { get; set; }
         public int TotalPrice { get; set; }
-
-        public string? Event { get; set; }
-        public string? Condition { get; set; }
+        public Guid Event { get; set; }
+        public Guid Condition { get; set; }
     }
 }

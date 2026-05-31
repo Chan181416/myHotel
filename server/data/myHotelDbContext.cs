@@ -21,6 +21,29 @@ namespace server.Data
 
         {
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Registereds>()
+            .HasOne(r=>r.Event)
+            .WithMany(p=>p.Registrations)
+            .HasForeignKey(r=>r.PriceListId);
+
+            modelBuilder.Entity<Registereds>()
+            .HasOne(r=>r.Condition)
+            .WithMany(c=>c.Registrations)
+            .HasForeignKey(r=>r.ConditionId);
+
+            modelBuilder.Entity<RoomLocation>()
+            .HasOne(r=>r.Room)
+            .WithMany(c=>c.RoomLocations)
+            .HasForeignKey(r=>r.Rooms);
+
+             modelBuilder.Entity<RoomLocation>()
+            .HasOne(r=>r.Registereds)
+            .WithMany(c=>c.Rooms)
+            .HasForeignKey(r=>r.RegisteredsId);
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=localhost, 1434;Database=Hotel;User Id=SA;Password=1234567,Cb;MultipleActiveResultSets=true;TrustServerCertificate=True;");

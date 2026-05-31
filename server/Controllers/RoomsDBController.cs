@@ -36,7 +36,6 @@ namespace server.Controller
                 Floor = dto.Floor,
                 OnSea = dto.OnSea,
                 Extrta = dto.Extrta,
-                Occupied = dto.Occupied
             };
 
             _context.RoomsDBs.Add(room);

@@ -12,8 +12,10 @@ namespace server.model
         public int Floor { get; set; }
         public bool OnSea { get; set; }
         public bool Extrta { get; set; }
-        public string? Occupied { get; set; }
+       
         
+        public List<RoomLocation> RoomLocations { get; set; }=[];
+
     }
 
   public class RoomsDBDTO
@@ -23,7 +25,7 @@ namespace server.model
         public int Floor { get; set; }
         public bool OnSea { get; set; }
         public bool Extrta { get; set; }
-        public string? Occupied { get; set; }
+       
     }
     
 }

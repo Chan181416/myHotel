@@ -50,7 +50,7 @@ namespace server.Controller
             return CreatedAtAction(nameof(GetConditions), new { id = newcondition.Id }, newcondition);
         }
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetPriceById(int id)
+        public async Task<IActionResult> GetPriceById(Guid id)
         {
             // מחפש את הרשומה לפי IdPrice
             var price = await _Context.Conditions

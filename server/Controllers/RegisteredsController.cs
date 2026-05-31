@@ -18,14 +18,25 @@ namespace server.Controllers
         }
         // הכנסת רשומה
         [HttpPost]
-        public async Task<IActionResult> Create(Registereds registered)
+        public async Task<IActionResult> Create(RegisteredsCreateDTO registered)
         {
-            registered.Id = Guid.NewGuid();
 
-            _context.Registereds.Add(registered);
+            var RegisteredsEntity = new Registereds
+            {
+                Id = Guid.NewGuid(),
+                NumberId = registered.NumberId,
+                SumPlace = registered.SumPlace,
+                TotalPrice = registered.TotalPrice,
+                 PriceListId= registered.Event,
+                ConditionId = registered.Condition
+            };
+
+            // registered.Id = Guid.NewGuid();
+
+            _context.Registereds.Add(RegisteredsEntity);
             await _context.SaveChangesAsync();
 
-            return Ok(registered);
+            return Ok(RegisteredsEntity);
         }
 
         // עדכון חלקי לפי ID
