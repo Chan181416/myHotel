@@ -34,7 +34,7 @@ export default function Login() {
 
         // ניווט לפי סוג משתמש
         if (type === 1) {
-          navigate("/basis");
+          navigate("basis");
         } else if (Number(type) === 2) {
           navigate("/allComponents");
         } else {
