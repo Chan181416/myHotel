@@ -34,4 +34,21 @@ namespace server.model
         public Guid Event { get; set; }
         public Guid Condition { get; set; }
     }
+    public class RegisteredsHistory
+{
+    [Key]
+    public Guid Id { get; set; }
+
+    public Guid OriginalRegisteredId { get; set; }
+
+    public string? NumberId { get; set; }
+    public string? Name { get; set; }
+    public int SumPlace { get; set; }
+    public int TotalPrice { get; set; }
+
+    public Guid PriceListId { get; set; }
+    public Guid ConditionId { get; set; }
+
+    public DateTime DeletedAt { get; set; }
+}
 }

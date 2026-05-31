@@ -1,173 +1,120 @@
-// using Microsoft.AspNetCore.Mvc;
-// using Microsoft.EntityFrameworkCore;
-// using server.Data;
-// using server.model;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using server.Data;
+using server.model;
 
-// namespace server.Controllers
-// {
-//     [Route("api/[controller]")]
-//     [ApiController]
-//     public class RoomLocationController : ControllerBase
-//     {
-//         private readonly MyHotelDbContext _context;
+namespace server.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    public class RoomLocationController : ControllerBase
+    {
+        private readonly MyHotelDbContext _context;
 
-//         public RoomLocationController(MyHotelDbContext context)
-//         {
-//             _context = context;
-//         }
+        public RoomLocationController(MyHotelDbContext context)
+        {
+            _context = context;
+        }
 
-//         // =====================================================
-//         // בקשה להוספת RoomLocation חדש עם כל השדות
-//         // =====================================================
-//         [HttpPost("AddRoomLocation")]
-//         public async Task<IActionResult> AddRoomLocation(RoomLocationDTO dto)
-//         {
-//             RoomLocation roomLocation = new RoomLocation
-//             {
-//                 Id = Guid.NewGuid(),
-//                 ListRooms = dto.ListRooms,
-//                 ListRegistereds = dto.ListRegistereds
-//             };
+        // יצירת קשר חדש בין חדר לאורח
+        [HttpPost]
+        public async Task<IActionResult> Add(RoomLocationDTO dto)
+        {
+            bool roomExists =
+                await _context.RoomsDBs.AnyAsync(r => r.Id == dto.Rooms);
 
-//             await _context.RoomLocations.AddAsync(roomLocation);
-//             await _context.SaveChangesAsync();
+            if (!roomExists)
+                return BadRequest("Room does not exist");
 
-//             return Ok(roomLocation);
-//         }
+            bool registeredExists =
+                await _context.Registereds.AnyAsync(r => r.Id == dto.RegisteredsId);
 
-//         // =====================================================
-//         // בקשה לעדכון חלק מהשדות בלבד לפי Id
-//         // רק שדות שנשלחים יתעדכנו
-//         // =====================================================
-//         [HttpPatch("UpdateRoomLocation/{id}")]
-//         public async Task<IActionResult> UpdateRoomLocation(
-//             Guid id,
-//             RoomLocationDTO dto)
-//         {
-//             var roomLocation = await _context.RoomLocations
-//                 .Include(r => r.ListRooms)
-//                 .Include(r => r.ListRegistereds)
-//                 .FirstOrDefaultAsync(r => r.Id == id);
+            if (!registeredExists)
+                return BadRequest("Registered does not exist");
 
-//             if (roomLocation == null)
-//             {
-//                 return NotFound("RoomLocation not found");
-//             }
+            var roomLocation = new RoomLocation
+            {
+                Id = Guid.NewGuid(),
+                Rooms = dto.Rooms,
+                RegisteredsId = dto.RegisteredsId
+            };
 
-//             if (dto.ListRooms != null && dto.ListRooms.Count > 0)
-//             {
-//                 roomLocation.ListRooms = dto.ListRooms;
-//             }
+            _context.RoomLocations.Add(roomLocation);
 
-//             if (dto.ListRegistereds != null && dto.ListRegistereds.Count > 0)
-//             {
-//                 roomLocation.ListRegistereds = dto.ListRegistereds;
-//             }
+            await _context.SaveChangesAsync();
 
-//             await _context.SaveChangesAsync();
+            return Ok(roomLocation);
+        }
 
-//             return Ok(roomLocation);
-//         }
+        // קבלת רשומה לפי Id
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var roomLocation = await _context.RoomLocations
+                .Include(r => r.Room)
+                .Include(r => r.Registereds)
+                .FirstOrDefaultAsync(r => r.Id == id);
 
-//         // =====================================================
-//         // בקשה לקבלת כל השדות לפי Id
-//         // =====================================================
-//         [HttpGet("GetById/{id}")]
-//         public async Task<IActionResult> GetById(Guid id)
-//         {
-//             var roomLocation = await _context.RoomLocations
-//                 .Include(r => r.ListRooms)
-//                 .Include(r => r.ListRegistereds)
-//                 .FirstOrDefaultAsync(r => r.Id == id);
+            if (roomLocation == null)
+                return NotFound();
 
-//             if (roomLocation == null)
-//             {
-//                 return NotFound("RoomLocation not found");
-//             }
+            return Ok(roomLocation);
+        }
 
-//             return Ok(roomLocation);
-//         }
-//         // =====================================================
-//         // בקשה שמחזירה מתוך ListRegistereds
-//         // רק NumberId ו-Name
-//         // לפי NumberId שנשלח
-//         // =====================================================
-//         [HttpGet("GetRegisteredByNumberId/{numberId}")]
-//         public async Task<IActionResult> GetRegisteredByNumberId(string numberId)
-//         {
-//             var result = await _context.RoomLocations
-//                 .SelectMany(r => r.ListRegistereds)
-//                 .Where(x => x.NumberId == numberId)
-//                 .Select(x => new
-//                 {
-//                     x.NumberId,
-//                     x.Name
-//                 })
-//                 .FirstOrDefaultAsync();
+        // קבלת כל הרשומות
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var list = await _context.RoomLocations
+                .Include(r => r.Room)
+                .Include(r => r.Registereds)
+                .ToListAsync();
 
-//             if (result == null)
-//             {
-//                 return NotFound("Registered not found");
-//             }
+            return Ok(list);
+        }
 
-//             return Ok(result);
-//         }
-//         // =====================================================
-//         // בקשה שמחזירה מתוך RoomDB רק RoomNum ו-Floor
-//         // לפי RoomLocation Id
-//         // =====================================================
+        // עדכון החדר או האורח
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> Update(Guid id, RoomLocationDTO dto)
+        {
+            var roomLocation =
+                await _context.RoomLocations.FindAsync(id);
 
-//         [HttpGet("GetRoomsSmall/{id}")]
-//         public async Task<IActionResult> GetRoomsSmall(Guid id)
-//         {
-//             var result = await _context.RoomLocations
-//                 .Where(r => r.Id == id)
-//                 .Select(r => new
-//                 {
-//                     ListRooms = r.ListRooms.Select(room => new
-//                     {
-//                         room.RoomNum,
-//                         room.Floor
-//                     }).ToList()
-//                 })
-//                 .FirstOrDefaultAsync();
+            if (roomLocation == null)
+                return NotFound();
 
-//             if (result == null)
-//             {
-//                 return NotFound("RoomLocation not found");
-//             }
+            bool roomExists =
+                await _context.RoomsDBs.AnyAsync(r => r.Id == dto.Rooms);
 
-//             return Ok(result);
-//         }
-//         //=====================================================================
-//         // בקשת שרת שמכניסה את כל הנתונים לאחר שאילתות נכונות לDatabase
-//         //=====================================================================
-//         [HttpPost("AttachToRoomLocation")]
-//         public async Task<IActionResult> AttachToRoomLocation(Guid roomLocationId, string numberId)
-//         {
-//             var roomLocation = await _context.RoomLocations
-//                 .Include(r => r.ListRooms)
-//                 .Include(r => r.ListRegistereds)
-//                 .FirstOrDefaultAsync(r => r.Id == roomLocationId);
+            bool registeredExists =
+                await _context.Registereds.AnyAsync(r => r.Id == dto.RegisteredsId);
 
-//             if (roomLocation == null)
-//                 return NotFound("RoomLocation not found");
+            if (!roomExists || !registeredExists)
+                return BadRequest("Invalid foreign key");
 
-//             var registered = await _context.Registereds
-//                 .FirstOrDefaultAsync(r => r.NumberId == numberId);
+            roomLocation.Rooms = dto.Rooms;
+            roomLocation.RegisteredsId = dto.RegisteredsId;
 
-//             if (registered == null)
-//                 return NotFound("Registered not found");
+            await _context.SaveChangesAsync();
 
-//             // אם כבר קיים לא מוסיפים שוב
-//             if (!roomLocation.ListRegistereds.Any(x => x.NumberId == numberId))
-//             {
-//                 roomLocation.ListRegistereds.Add(registered);
-//             }
+            return Ok(roomLocation);
+        }
 
-//             await _context.SaveChangesAsync();
+        // מחיקה
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var roomLocation =
+                await _context.RoomLocations.FindAsync(id);
 
-//             return Ok(roomLocation);
-//         }
-//     }
-// }
+            if (roomLocation == null)
+                return NotFound();
+
+            _context.RoomLocations.Remove(roomLocation);
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+    }
+}
