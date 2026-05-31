@@ -11,7 +11,7 @@ const initialState = {
   guests: 1,
 };
 
-const guestSlice = createSlice({
+const registerdsSlice = createSlice({
   name: "guest",
   initialState,
   reducers: {
@@ -22,5 +22,5 @@ const guestSlice = createSlice({
   },
 });
 
-export const { setGuestData, clearGuestData } = guestSlice.actions;
-export default guestSlice.reducer;
+export const { setGuestData, clearGuestData } = registerdsSlice.actions;
+export default registerdsSlice.reducer;

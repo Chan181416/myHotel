@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace server.model
 {
-    public class RoomDB
+    public class RoomsDB
     {
         [Key]
         public Guid Id { get; set; }

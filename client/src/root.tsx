@@ -3,7 +3,7 @@ import { Outlet, Link } from 'react-router-dom';
 function Root() {
   return (
     <div >
-      <p>fff</p>
+      <p>Hotel</p>
       <hr />
       <Outlet />
     </div>
