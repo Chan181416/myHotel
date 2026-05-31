@@ -12,7 +12,7 @@ using server.Data;
 namespace server.Migrations
 {
     [DbContext(typeof(MyHotelDbContext))]
-    [Migration("20260531105021_InitialCreate")]
+    [Migration("20260531112507_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -48,11 +48,14 @@ namespace server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("Code")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdNumber")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Num")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

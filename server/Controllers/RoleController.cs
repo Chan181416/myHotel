@@ -24,7 +24,7 @@ namespace server.Controllers
         public async Task<IActionResult> AddRole(RoleDTO roleDto)
         {
             bool exists = await _context.Roles
-                .AnyAsync(r => r.Name == roleDto.Name && r.Num == roleDto.Num);
+                .AnyAsync(r => r.Name == roleDto.Name && r.IdNumber == roleDto.IdNumber);
 
             if (exists)
             {
@@ -35,7 +35,8 @@ namespace server.Controllers
             {
                 Id = Guid.NewGuid(),
                 Name = roleDto.Name,
-                Num = roleDto.Num
+                IdNumber = roleDto.IdNumber,
+                Code = roleDto.Code
             };
 
             await _context.Roles.AddAsync(role);
@@ -68,15 +69,22 @@ namespace server.Controllers
                     role.Name = newValue;
                     break;
 
-                case "num":
+                case "idnumber":
                     if (!int.TryParse(newValue, out int num))
                     {
                         return BadRequest("Invalid number");
                     }
 
-                    role.Num = num;
+                    role.IdNumber = num;
                     break;
+                case "Code":
+                    if (!int.TryParse(newValue, out int number))
+                    {
+                        return BadRequest("Invalid number");
+                    }
 
+                    role.Code = number;
+                    break;
                 default:
                     return BadRequest("Invalid field name");
             }
@@ -103,5 +111,21 @@ namespace server.Controllers
 
             return Ok(role);
         }
+
+        [HttpGet("getByNameAndId/{name}/{id}")]
+        public async Task<IActionResult> getByNameAndId(string name,int id)
+        {
+            var role = await _context.Roles
+                .FirstOrDefaultAsync(r => r.Name == name && r.IdNumber==id);
+                
+
+            if (role == null)
+            {
+                return NotFound("Role not found");
+            }
+
+            return Ok(role);
+        }
+
     }
 }

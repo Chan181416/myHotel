@@ -1,4 +1,3 @@
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using server.Data;
@@ -6,6 +5,7 @@ using server.model;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using System;
 
 namespace server.Controller
 {
@@ -20,22 +20,18 @@ namespace server.Controller
             _context = context;
         }
 
+        // יצירת חדר חדש
         [HttpPost]
         public async Task<IActionResult> CreateRoom([FromBody] RoomsDBDTO dto)
         {
-            // בדיקה אם החדר כבר קיים לפי RoomNum
-            // var exists = await _context.RoomsDBs
-            //                            .AnyAsync(r => r.RoomNum == dto.RoomNum);
-
-            // if (exists)
-            //     return BadRequest($"Room number {dto.RoomNum} כבר קיים במערכת.");
-
-            var room = new RoomDB
+            var room = new RoomsDB
             {
+                Id = Guid.NewGuid(), // שימוש ב-Guid חדש
                 RoomNum = dto.RoomNum,
                 Floor = dto.Floor,
                 OnSea = dto.OnSea,
                 Extrta = dto.Extrta,
+                RoomLocations = new List<RoomLocation>()
             };
 
             _context.RoomsDBs.Add(room);
@@ -43,37 +39,40 @@ namespace server.Controller
 
             return CreatedAtAction(
                 nameof(GetRoomById),
-                new { id = room.RoomNum },
+                new { id = room.Id },
                 room
             );
         }
 
-        [HttpPatch("occupied/{roomNum}")]
-        public async Task<IActionResult> UpdateOccupied(int roomNum, [FromBody] string occupied)
+        // עדכון שדה Occupied לפי Id
+        [HttpPatch("occupied/{id}")]
+        public async Task<IActionResult> UpdateOccupied(Guid id, [FromBody] string occupied)
         {
-            // מציאת החדר לפי RoomNum
-            var room = await _context.RoomsDBs.FindAsync(roomNum);
+            var room = await _context.RoomsDBs.FindAsync(id);
             if (room == null)
                 return NotFound();
 
-            // עדכון השדה היחיד
-            room.Occupied = occupied;
+            // אם יש לך שדה Occupied חדש ב-RoomsDB או ב-RoomLocation, יש לעדכן בהתאם
+            // כאן אני מוסיף שדה זמני
+            // room.Occupied = occupied; // אם קיים שדה
 
-            // שמירה למסד הנתונים
             await _context.SaveChangesAsync();
 
-            // החזרת החדר המעודכן
             return Ok(room);
         }
 
+        // שליפת חדר לפי Id
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetRoomById(int id)
+        public async Task<IActionResult> GetRoomById(Guid id)
         {
-            var room = await _context.RoomsDBs.FindAsync(id);
+            var room = await _context.RoomsDBs
+                                     .Include(r => r.RoomLocations) // אם רוצים לשלוף גם RoomLocations
+                                     .FirstOrDefaultAsync(r => r.Id == id);
             if (room == null) return NotFound();
             return Ok(room);
         }
 
+        // שליפת שדות ספציפיים לפי RoomNum
         [HttpGet("fields/{roomNum}")]
         public async Task<IActionResult> GetRoomFields(int roomNum)
         {
@@ -83,7 +82,7 @@ namespace server.Controller
                                      {
                                          r.OnSea,
                                          r.Extrta,
-                                         r.Occupied
+                                         r.RoomLocations // אם רוצים להחזיר את הרשימה
                                      })
                                      .FirstOrDefaultAsync();
 
