@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  server:
+    build: ./server
+    ports:
+      - "5044:5044"
+    depends_on:
+      - db
+
+  client:
+    build: ./client
+    ports:
+      - "3000:80"
+    depends_on:
+      - server
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      SA_PASSWORD: "YourStrong!Passw0rd"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"

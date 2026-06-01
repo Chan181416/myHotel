@@ -4,6 +4,8 @@ import Basis from './component/Basis/Basis.tsx';
 import Home from './component/Home/Home.tsx';
 import About from './component/About/About.tsx';
 import Login from './component/Login/Login.tsx';
+import LoginGoogle from "./component/LoginGooge/LoginGoogle.tsx";
+
 
 import Root from './root';
 
@@ -14,18 +16,21 @@ const router = createBrowserRouter([{
 
     { index: true, element: <Login /> },  // / → Basis
 
-
+    {
+      path: "google-login",
+      element: <LoginGoogle />
+    },
  
     {
-      path: "/home",
+      path: "home",
       element: <Home />,
     },
     {
-      path: "/basis",
+      path: "basis",
       element: <Basis />,
     },
     {
-      path: "/about",
+      path: "about",
       element: <About />
     }
 
