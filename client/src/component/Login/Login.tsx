@@ -33,10 +33,10 @@ export default function Login() {
         const type = resultAction.payload.type;
 
         // ניווט לפי סוג משתמש
-        if (type === 1) {
+        if (type === 1) {=
           navigate("basis");
         } else if (Number(type) === 2) {
-          navigate("/allComponents");
+          navigate("home");
         } else {
           navigate("/");
         }
