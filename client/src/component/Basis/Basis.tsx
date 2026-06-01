@@ -23,6 +23,8 @@ function Basis() {
             ...prev,
             [name]: value
         }));
+        console.log({formData});
+        
     };
 
     // פונקציה שמאשרת ושומרת
@@ -42,8 +44,7 @@ function Basis() {
         // שואל את המשתמש לאישור
         const confirmed = window.confirm(message);
         if (confirmed) {
-            localStorage.setItem("guestData", JSON.stringify(formData));
-            navigate("/about"); // מעבר לדף הבא
+            navigate("/basis"); // מעבר לדף הבא
         }
     };
 

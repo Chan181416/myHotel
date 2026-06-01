@@ -5,7 +5,7 @@ export const loginUser = createAsyncThunk(
   "user/loginUser",
   async ({ username, idNumber }, thunkAPI) => {
     try {
-      const response = await fetch(`http://localhost:5044/api/Role/getByNameAndId/${username}/${idNumber}`, {
+      const response = await fetch(`http://localhost:3000/api/Role/getByNameAndId/${username}/${idNumber}`, {
         method: "GET",
       });
 
@@ -53,10 +53,11 @@ const userSlice = createSlice({
 
       .addCase(loginUser.fulfilled, (state, action) => {
         state.status = "succeeded";
-
-        state.username = action.payload.username;
+        console.log({action});
+        
+        state.username = action.payload.name;
         state.idNumber = action.payload.idNumber;
-        state.type = action.payload.type;
+        state.type = action.payload.code;
       })
 
       .addCase(loginUser.rejected, (state, action) => {
