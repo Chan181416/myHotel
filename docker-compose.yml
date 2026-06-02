@@ -1,0 +1,53 @@
+version: '3.9'
+
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      SA_PASSWORD: "YourStrong!Passw0rd"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    networks:
+      - mynetwork
+
+  server:
+    build:
+      context: ./MyServer
+      dockerfile: Dockerfile
+    container_name: csharp_server
+    depends_on:
+      - db
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=db;Database=mydb;User Id=sa;Password=YourStrong!Passw0rd;"
+    ports:
+      - "5000:5000"
+    networks:
+      - mynetwork
+
+  bridge:
+    build:
+      context: ./Bridge
+      dockerfile: Dockerfile
+    container_name: node_bridge
+    depends_on:
+      - server
+    ports:
+      - "3000:3000"
+    networks:
+      - mynetwork
+
+  client:
+    build:
+      context: ./Client
+      dockerfile: Dockerfile
+    container_name: react_client
+    ports:
+      - "80:80"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
