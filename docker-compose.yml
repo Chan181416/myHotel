@@ -1,4 +1,3 @@
-version: '3.9'
 
 services:
   db:
@@ -14,7 +13,7 @@ services:
 
   server:
     build:
-      context: ./MyServer
+      context: ./server
       dockerfile: Dockerfile
     container_name: csharp_server
     depends_on:
@@ -28,7 +27,7 @@ services:
 
   bridge:
     build:
-      context: ./Bridge
+      context: ./hotel-management-gateway
       dockerfile: Dockerfile
     container_name: node_bridge
     depends_on:
@@ -40,7 +39,7 @@ services:
 
   client:
     build:
-      context: ./Client
+      context: ./client
       dockerfile: Dockerfile
     container_name: react_client
     ports:
