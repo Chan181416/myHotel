@@ -1,3 +1,5 @@
+
+
 #page {
     height: 100vh;
     display: flex;
@@ -17,12 +19,14 @@
     box-shadow: 0 10px 40px rgba(0,0,0,0.3);
 }
 
-title {
+.title {
     text-align: center;
     margin-bottom: 30px;
+    font-size: 24px;
+    font-weight: 600;
 }
 
-#inputGroup {
+.inputGroup {
     margin-bottom: 20px;
 }
 
@@ -36,12 +40,16 @@ title {
     width: 100%;
     padding: 14px;
     border-radius: 12px;
-    border:2px;
-    outline: black;
+    border: 2px solid rgba(255,255,255,0.2);
+    outline: none;
     background: rgba(255,255,255,0.12);
     color: rgb(209, 40, 40);
     font-size: 16px;
-    
+    transition: border 0.3s ease;
+}
+
+.input:focus {
+    border-color: #3b82f6;
 }
 
 .loginBtn {
@@ -53,6 +61,29 @@ title {
     color: white;
     font-size: 16px;
     cursor: pointer;
+    transition: background-color  0.3s ease;
+}
+
+.loginBtn:hover {
+    background-color: #2563eb;
+}
+
+.errorText {
+    color: #f87171;
+    background: rgba(248, 113, 113, 0.2);
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 10px;
+    font-size: 14px;
+    text-align: center;
+    opacity: 0;
+    animation: fade-in-anim 0.5s forwards;
+}
+
+@keyframes fadeInAnim {
+    to {
+        opacity: 1;
+    }
 }
 
 #userBox {
@@ -70,4 +101,9 @@ title {
     background: #ef4444;
     color: white;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.logoutBtn:hover {
+    background: #dc2626;
 }

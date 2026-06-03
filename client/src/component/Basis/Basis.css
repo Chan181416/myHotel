@@ -14,23 +14,7 @@
         justify-content: center;
         align-items: center;
 }
-    .basic {
-    
-        /* margin: 0;
-        font-family: Arial, sans-serif;
-        background: linear-gradient(135deg, #1c87a1, #2a5298);
-        width: 600px;
-        height: 900px;
-        display: flex;
-        justify-content: center;
-        align-items: center; */
-        /* min-height: 100vh; */
-    }
-
-    .form{
-        /* border: 2px solid black; */
-        
-    }
+   
     .container {
         border: 2px solid black;
 

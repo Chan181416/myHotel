@@ -9,6 +9,7 @@ namespace server.Data
 {
     public class MyHotelDbContext : DbContext
     {
+        public DbSet<Role> Roles { get; set; }
         public DbSet<Registereds> Registereds { get; set; }
         public DbSet<PricesList> PricesLists { get; set; }
 

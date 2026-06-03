@@ -7,47 +7,43 @@ import "./login.css";
 export default function Login() {
   const [username, setUsername] = useState("");
   const [idNumber, setIdNumber] = useState("");
+  const [loginError, setLoginError] = useState(""); // הודעת שגיאה UI
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  // לפי הסלייס החדש
   const user = useSelector((state) => state?.user);
   const { status, error } = user;
 
   const handleLogin = async () => {
+    setLoginError(""); // איפוס הודעת שגיאה
     if (!username.trim() || !idNumber.trim()) {
-      alert("יש למלא את כל השדות");
+      setLoginError("יש למלא את כל השדות");
       return;
     }
 
     try {
-      const resultAction = await dispatch(
-        loginUser({ username, idNumber })
-      );
+      const resultAction = await dispatch(loginUser({ username, idNumber }));
 
-      // אם הצליח
       if (loginUser.fulfilled.match(resultAction)) {
-        alert("התחברת בהצלחה!");
+        const type = resultAction.payload.code;
 
-        const type = resultAction.payload.type;
-
-        // ניווט לפי סוג משתמש
-        if (type === 1) {=
-          navigate("basis");
-        } else if (Number(type) === 2) {
-          navigate("home");
-        } else {
-          navigate("/");
+        if (!type) {
+          setLoginError("!אתה לא רשום במערכת, פנה למנהל");
+          return;
         }
+
+        if (type === 1) navigate("basis");
+        else if (Number(type) === 2) navigate("home");
+        else navigate("/");
       } else {
-        alert(
+        setLoginError(
           "שגיאה בהתחברות: " +
             (resultAction.payload || resultAction.error.message)
         );
       }
-    } catch (err) {
-      alert("שגיאה כללית בהתחברות");
+    } 
+    catch {
+      setLoginError("שגיאה כללית בהתחברות");
     }
   };
 
@@ -55,12 +51,13 @@ export default function Login() {
     dispatch(logout());
     setUsername("");
     setIdNumber("");
+    setLoginError("");
     navigate("/");
   };
 
   return (
-    <div className="page">
-      <div>
+    <div id="page">
+      <div id="container">
         <h1 className="title">מערכת כניסה</h1>
 
         {!user.type ? (
@@ -92,40 +89,28 @@ export default function Login() {
               className="loginBtn"
               disabled={status === "loading"}
             >
-              {status === "loading"
-                ? "מתחבר..."
-                : "כניסה למערכת"}
+              {status === "loading" ? "מתחבר..." : "כניסה למערכת"}
             </button>
 
-            {error && (
-              <p className="errorText">{error}</p>
-            )}
+            {/* הודעת שגיאה בתוך UI */}
+            {loginError && <p className="errorText fadeIn">{loginError}</p>}
+            {error && <p className="errorText fadeIn">{error}</p>}
           </>
         ) : (
-          <div className="userBox">
-            <h3 style={{ marginBottom: "15px" }}>
-              משתמש מחובר
-            </h3>
+          <div id="userBox">
+            <h3 style={{ marginBottom: "15px" }}>משתמש מחובר</h3>
 
             <p>
-              <strong>שם משתמש:</strong>{" "}
-              {user.username}
+              <strong>שם משתמש:</strong> {user.username}
             </p>
-
             <p>
-              <strong>תעודת זהות:</strong>{" "}
-              {user.idNumber}
+              <strong>תעודת זהות:</strong> {user.idNumber}
             </p>
-
             <p>
-              <strong>סוג משתמש:</strong>{" "}
-              {user.type}
+              <strong>סוג משתמש:</strong> {user.type}
             </p>
 
-            <button
-              onClick={handleLogout}
-              className="logoutBtn"
-            >
+            <button onClick={handleLogout} className="logoutBtn">
               התנתקות
             </button>
           </div>

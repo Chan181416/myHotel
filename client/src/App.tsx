@@ -8,6 +8,7 @@ import LoginGoogle from "./component/LoginGooge/LoginGoogle.tsx";
 
 
 import Root from './root';
+import DataBase from './component/DataBase/DataBase.tsx';
 
 const router = createBrowserRouter([{
   path: "/",
@@ -32,6 +33,10 @@ const router = createBrowserRouter([{
     {
       path: "about",
       element: <About />
+    },
+    {
+      path: "dataBase",
+      element: <DataBase />
     }
 
   ]
