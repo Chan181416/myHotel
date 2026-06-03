@@ -26,6 +26,8 @@ namespace server.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+
             modelBuilder.Entity<Registereds>()
             .HasOne(r => r.Event)
             .WithMany(p => p.Registrations)
@@ -47,6 +49,19 @@ namespace server.Data
            .WithMany(c => c.Rooms)
            .HasForeignKey(r => r.RegisteredsId)
            .OnDelete(DeleteBehavior.Cascade);
+
+            // modelBuilder.Entity<Role>().HasData(
+            //     new Role
+            //     {
+            //         Id = Guid.Parse("11111111-1111-1111-1111-111111111111"),
+            //         Name = "דוד",
+            //         IdNumber = 123456,
+            //         Code = 2
+            //     }
+            // );
+
+            // base.OnModelCreating(modelBuilder);
+
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -1,4 +1,5 @@
 using server.Data;
+using server.Model;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -48,5 +49,23 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<MyHotelDbContext>();
+
+    if (!context.Roles.Any())
+    {
+        context.Roles.Add(new Role
+        {
+            Id = Guid.NewGuid(),
+            Name = "דוד",
+            IdNumber = 123456,
+            Code = 2
+        });
+
+        context.SaveChanges();
+    }
+}
 
 app.Run();
