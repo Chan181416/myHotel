@@ -1,52 +1,72 @@
 
-services:
-  db:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: sqlserver
-    environment:
-      SA_PASSWORD: "YourStrong!Passw0rd"
-      ACCEPT_EULA: "Y"
-    ports:
-      - "1433:1433"
-    networks:
-      - mynetwork
+# services:
+#   db:
+#     image: mcr.microsoft.com/mssql/server:2022-latest
+#     container_name: sqlserver
+# version: "3.9"
 
-  server:
-    build:
-      context: ./server
-      dockerfile: Dockerfile
-    container_name: csharp_server
-    depends_on:
-      - db
-    environment:
-      ConnectionStrings__DefaultConnection: "Server=db;Database=mydb;User Id=sa;Password=YourStrong!Passw0rd;"
-    ports:
-      - "5000:5000"
-    networks:
-      - mynetwork
+# services:
+#   server:
+#     build: ./server
+#     ports:
+#       - "5044:5044"
+#     depends_on:
+#       - db
 
-  bridge:
-    build:
-      context: ./hotel-management-gateway
-      dockerfile: Dockerfile
-    container_name: node_bridge
-    depends_on:
-      - server
-    ports:
-      - "3000:3000"
-    networks:
-      - mynetwork
+#   client:
+#     build: ./client
+#     ports:
+#       - "3000:80"
+#     depends_on:
+#       - server
 
-  client:
-    build:
-      context: ./client
-      dockerfile: Dockerfile
-    container_name: react_client
-    ports:
-      - "80:80"
-    networks:
-      - mynetwork
+#   db:
+#     image: mcr.microsoft.com/mssql/server:2022-latest
+#     environment:
+#       SA_PASSWORD: "YourStrong!Passw0rd"
+#       ACCEPT_EULA: "Y"
+#     ports:
+#       - "1433:1433"
+#     networks:
+#       - mynetwork
 
-networks:
-  mynetwork:
-    driver: bridge
+#   server:
+#     build:
+#       context: ./server
+#       dockerfile: Dockerfile
+#     container_name: csharp_server
+#     depends_on:
+#       - db
+#     environment:
+#       ConnectionStrings__DefaultConnection: "Server=db;Database=mydb;User Id=sa;Password=YourStrong!Passw0rd;"
+#     ports:
+#       - "5000:5000"
+#     networks:
+#       - mynetwork
+
+#   bridge:
+#     build:
+#       context: ./hotel-management-gateway
+#       dockerfile: Dockerfile
+#     container_name: node_bridge
+#     depends_on:
+#       - server
+#     ports:
+#       - "3000:3000"
+#     networks:
+#       - mynetwork
+
+#   client:
+#     build:
+#       context: ./client
+#       dockerfile: Dockerfile
+#     container_name: react_client
+#     ports:
+#       - "80:80"
+#     networks:
+#       - mynetwork
+
+# networks:
+#   mynetwork:
+#     driver: bridge
+#       - "1433:1433"
