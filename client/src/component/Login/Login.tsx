@@ -7,6 +7,7 @@ import "./login.css";
 export default function Login() {
   const [username, setUsername] = useState("");
   const [idNumber, setIdNumber] = useState("");
+  const [errorMessage, setErrorMessage] = useState('')
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -28,26 +29,26 @@ export default function Login() {
 
       // אם הצליח
       if (loginUser.fulfilled.match(resultAction)) {
-        alert("התחברת בהצלחה!");
-         console.log("SUCCESS");
+        // alert("התחברת בהצלחה!");
+        //  console.log("SUCCESS");
+        setErrorMessage('')
         const type = resultAction.payload.code;
-       
+
         // ניווט לפי סוג משתמש
         if (Number(type) === 1) {
-           console.log("GO BASIS");
           navigate("/basis");
         } else if (Number(type) === 2) {
-           console.log("GO HOME");
           navigate("/home");
-        } 
+        }
       } else {
-        alert(
+
+        setErrorMessage(
           "שגיאה בהתחברות: " +
-            (resultAction.payload || resultAction.error.message)
+          (resultAction.payload || resultAction.error.message)
         );
       }
     } catch (err) {
-      alert("שגיאה כללית בהתחברות");
+      setErrorMessage("שגיאה כללית בהתחברות");
     }
   };
 
@@ -131,6 +132,7 @@ export default function Login() {
           </div>
         )}
       </div>
+      <div>{errorMessage }</div>
     </div>
   );
 }
