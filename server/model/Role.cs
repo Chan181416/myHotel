@@ -8,14 +8,15 @@ namespace server.Model
     {
         public Guid Id { get; set; }
         public string? Name { get; set; }
-        public int Num { get; set; }
+        public int IdNumber { get; set; }
+        public int Code { get; set; }
 
     }
     public class RoleDTO
     {
         public string? Name { get; set; }
-        public int Num { get; set; }
-
+        public int IdNumber { get; set; }
+        public int Code { get; set; }
 
     }
 }
