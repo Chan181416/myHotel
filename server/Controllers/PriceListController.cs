@@ -37,11 +37,15 @@ namespace server.Controller
             await _context.SaveChangesAsync();
 
             // מחזיר HTTP 201 Created עם Action שמחזיר את הרשומה החדשה
-            return CreatedAtAction(
-                nameof(GetPriceById),          // שם הפעולה שמחזירה רשומה לפי Id
-                new { id = price.IdPrice },    // פרמטרים לאיתור הרשומה
-                price                          // גוף התשובה
-            );
+            // return CreatedAtAction(
+            //     nameof(GetPriceById),          // שם הפעולה שמחזירה רשומה לפי Id
+            //     new { id = price.IdPrice },    // פרמטרים לאיתור הרשומה
+            //     price       
+
+            //            );        // גוף התשובה
+
+            return NoContent();
+
         }
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdatePrice(Guid id, [FromBody] PricesListDTO dto)
@@ -79,6 +83,8 @@ namespace server.Controller
         [HttpGet("idbyevent/{eventName}")]
         public async Task<IActionResult> GetIdByEvent(string eventName)
         {
+            Console.WriteLine($"Searching for option: '{eventName}'");
+
             var item = await _context.PricesLists
                                    .Where(p => p.Event == eventName)
                                    .FirstOrDefaultAsync();

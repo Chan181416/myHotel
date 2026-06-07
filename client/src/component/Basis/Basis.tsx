@@ -11,7 +11,7 @@ function Basis() {
         phone: "",
         email: "",
         date: "",
-        tripType: "נופש מלא",
+        tripType: "נופש_מלא",
         roomType: "אקסטרה",
         guests: 1
     });
@@ -50,8 +50,9 @@ function Basis() {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(formData),
-            });
 
+            });
+            console.log(response.status);
             const result = await response.json();
             console.log("Response from server:", result);
 
@@ -133,9 +134,9 @@ function Basis() {
                             value={formData.tripType}
                             onChange={handleChange}
                         >
-                            <option>נופש מלא</option>
-                            <option>יום א</option>
-                            <option>יום ב</option>
+                            <option>נופש_מלא</option>
+                            <option>יום_א</option>
+                            <option>יום_ב</option>
                         </select>
                     </div>
 
@@ -147,7 +148,7 @@ function Basis() {
                             onChange={handleChange}
                         >
                             <option>אקסטרה</option>
-                            <option>מול הים</option>
+                            <option>מול_הים</option>
                         </select>
                     </div>
 

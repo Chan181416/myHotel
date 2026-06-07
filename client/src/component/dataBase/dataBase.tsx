@@ -166,7 +166,7 @@ export default function DataBase() {
     try {
       for (const price of priceLists) {
         const response = await fetch(
-          "http://localhost:3000/api/proxy/PriceList",
+          "http://localhost:3000/api/proxy/PricesList",
           {
             method: "POST",
             headers: {
@@ -560,6 +560,10 @@ export default function DataBase() {
 
                   <td>
                     <input
+
+
+
+
                       type="text"
                       inputMode="numeric"
                       placeholder="00000"
@@ -637,7 +641,7 @@ export default function DataBase() {
                     <input
                       type="text"
                       inputMode="numeric"
-                      placeholder="000"
+                      placeholder="0000"
                       value={row.roomNum || ""}
                       onChange={(e) => {
 
@@ -652,10 +656,11 @@ export default function DataBase() {
                           idx,
                           rooms,
                           setRooms,
-                          "room"
+                          "roomNum"
                         );
                       }}
                     />
+                   
                   </td>
 
                   <td>

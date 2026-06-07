@@ -11,22 +11,30 @@ namespace server.Controller
 {
     [ApiController]
     [Route("[controller]")]
-    public class RoomsController : ControllerBase
+    public class RoomDBController : ControllerBase
     {
         private readonly MyHotelDbContext _context;
 
-        public RoomsController(MyHotelDbContext context)
+        public RoomDBController(MyHotelDbContext context)
         {
             _context = context;
         }
 
         // יצירת חדר חדש
+
         [HttpPost]
         public async Task<IActionResult> CreateRoom([FromBody] RoomsDBDTO dto)
         {
+
+            bool exists = await _context.RoomsDBs
+                                        .AnyAsync(r => r.RoomNum == dto.RoomNum);
+
+            if (exists)
+                return BadRequest($"Room number '{dto.RoomNum}' כבר קיים במערכת.");
+
             var room = new RoomsDB
             {
-                Id = Guid.NewGuid(), // שימוש ב-Guid חדש
+                Id = Guid.NewGuid(),
                 RoomNum = dto.RoomNum,
                 Floor = dto.Floor,
                 OnSea = dto.OnSea,
@@ -37,13 +45,17 @@ namespace server.Controller
             _context.RoomsDBs.Add(room);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(
-                nameof(GetRoomById),
-                new { id = room.Id },
-                room
-            );
+            return NoContent(); // או Ok(room) אם רוצים להחזיר את החדר החדש
         }
+        [HttpGet]
+        public async Task<IActionResult> GetAllRooms()
+        {
+            var rooms = await _context.RoomsDBs
+                                      .Include(r => r.RoomLocations)
+                                      .ToListAsync();
 
+            return Ok(rooms);
+        }
         // עדכון שדה Occupied לפי Id
         [HttpPatch("occupied/{id}")]
         public async Task<IActionResult> UpdateOccupied(Guid id, [FromBody] string occupied)

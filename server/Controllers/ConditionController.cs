@@ -55,7 +55,7 @@ namespace server.Controller
             // מחפש את הרשומה לפי IdPrice
             var price = await _Context.Conditions
                                       .Where(p => p.Id == id)
-                                     
+
                                       .FirstOrDefaultAsync();
 
             // אם הרשומה לא קיימת מחזירים 404
@@ -65,6 +65,24 @@ namespace server.Controller
             // מחזיר את הערך של Price בלבד
             return Ok(price.Price);
         }
+        [HttpGet("idbyoption/{option}")]
+        public async Task<IActionResult> GetIdByOption(string option)
+        {
+            Console.WriteLine($"Searching for option: '{option}'");
+
+            var item = await _Context.Conditions
+                                     .Where(c => c.Option == option)
+                                     .FirstOrDefaultAsync();
+
+            if (item == null)
+            {
+                Console.WriteLine("Condition not found!");
+                return NotFound();
+            }
+
+            return Ok(item.Id); // Id של Condition
+        }
+
     }
 
 

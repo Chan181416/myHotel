@@ -42,7 +42,7 @@ namespace server.Controllers
             await _context.Roles.AddAsync(role);
             await _context.SaveChangesAsync();
 
-            return Ok(role);
+            return Ok();
         }
 
         // ============================================

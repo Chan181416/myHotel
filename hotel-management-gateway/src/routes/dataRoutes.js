@@ -2,6 +2,6 @@ const router = require("express").Router();
 
 const dataController = require("../controllers/dataController");
 
-router.post("/load", dataController.loadData);
+router.post("/loadData", dataController.loadData);
 
 module.exports = router;

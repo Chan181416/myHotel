@@ -3,7 +3,7 @@ const proxyController = require("../controllers/proxyController");
 
 router.post("/Role/AddRole", proxyController.addRole);
 
-router.post("/PriceList", proxyController.addPriceList);
+router.post("/PricesList", proxyController.addPriceList);
 
 router.post("/Condition", proxyController.addCondition);
 

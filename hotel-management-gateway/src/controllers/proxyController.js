@@ -21,19 +21,34 @@ exports.addRole = async (req, res) => {
   }
 };
 
-exports.addPriceList = async (req, res) => {
+
+
+ exports.addPriceList = async (req, res) => {
   try {
 
+    console.log("BODY:");
+    console.log(req.body);
+
     const response = await axios.post(
-      "http://localhost:5044/PriceList",
+      "http://localhost:5044/PricesList",
       req.body
     );
 
-    res.json(response.data);
+    console.log("SUCCESS");
+    console.log(response.status);
+
+    res.sendStatus(204);
 
   } catch (error) {
 
-    console.error(error);
+    console.log("STATUS:");
+    console.log(error.response?.status);
+
+    console.log("DATA:");
+    console.log(error.response?.data);
+
+    console.log("MESSAGE:");
+    console.log(error.message);
 
     res.status(500).json({
       message: error.message
@@ -41,6 +56,7 @@ exports.addPriceList = async (req, res) => {
 
   }
 };
+
 
 exports.addCondition = async (req, res) => {
   try {
