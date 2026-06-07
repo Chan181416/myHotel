@@ -1,0 +1,168 @@
+#welcome {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 30px;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #1c87a1, #2a5298);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Roles */
+.fullWidth {
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+/* שורת 3 טבלאות */
+.tablesRow {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+}
+
+/* container כללי */
+.container {
+    background: white;
+    border-radius: 18px;
+    padding: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+    overflow: hidden;
+}
+
+/* טבלאות קטנות */
+.smallTable {
+    width: 100%;
+    min-width: 0;
+}
+
+/* כותרות */
+h2 {
+    text-align: center;
+    color: #183669;
+    margin-bottom: 15px;
+}
+
+/* טבלאות */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* גלילה */
+.tableBodyWrapper {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* תאים */
+th,
+td {
+    border: 1px solid #d6d6d6;
+    padding: 10px;
+    text-align: center;
+}
+
+/* כותרות */
+th {
+    background: #183669;
+    color: white;
+}
+
+/* inputs */
+input[type="text"],
+input[type="number"] {
+    width: 95%;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+/* checkbox */
+input[type="checkbox"] {
+    transform: scale(1.2);
+}
+
+/* focus */
+input:focus {
+    border-color: #1c87a1;
+    box-shadow: 0 0 6px rgba(28,135,161,0.4);
+    outline: none;
+}
+
+/* buttons */
+button {
+    margin-top: 7px;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background: #183669;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #1c87a1;
+}
+
+.globalSaveContainer {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.globalSaveBtn {
+  padding: 14px 28px;
+  font-size: 18px;
+  background-color: #183669;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.globalSaveBtn:hover {
+  background-color: rgba(7, 30, 70, 0.5);
+}
+
+.globalSaveBtn:disabled {
+    background: gray;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.saveMessage {
+  margin-top: 10px;
+  color: black;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.codeToggle {
+  display: flex;
+  gap: 4px;
+}
+
+.codeToggle button {
+  flex: 1;
+  padding: 6px 0;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.codeToggle button.active {
+  background-color: #1c86a1d2;
+  color: white;
+  border-color: rgb(133, 9, 9);
+}
+

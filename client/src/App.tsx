@@ -6,6 +6,7 @@ import About from './component/About/About.tsx';
 import Login from './component/Login/Login.tsx';
 
 import Root from './root';
+import DataBase from './component/dataBase/dataBase.tsx';
 
 const router = createBrowserRouter([{
   path: "/",
@@ -15,7 +16,7 @@ const router = createBrowserRouter([{
     { index: true, element: <Login /> },  // / → Basis
 
 
- 
+
     {
       path: "/home",
       element: <Home />,
@@ -27,6 +28,9 @@ const router = createBrowserRouter([{
     {
       path: "/about",
       element: <About />
+    }, {
+      path: '/dataBase',
+      element: <DataBase />
     }
 
   ]

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import './Basis.css';
 
-function Basis() {   
+function Basis() {
 
     // סטייט לכל השדות
     const [formData, setFormData] = useState({
@@ -23,13 +23,11 @@ function Basis() {
             ...prev,
             [name]: value
         }));
-        console.log({formData});
-        
+        console.log({ formData });
+
     };
 
-    // פונקציה שמאשרת ושומרת
-    const handleSubmit = () => {
-        // יוצרים מחרוזת לאישור
+    const handleSubmit = async () => {
         const message = `
 ת.ז: ${formData.id}
 שם מתארחת: ${formData.name}
@@ -39,12 +37,28 @@ function Basis() {
 סוג מסלול: ${formData.tripType}
 סוג חדר: ${formData.roomType}
 מספר אורחים: ${formData.guests}
-        `;
+  `;
 
-        // שואל את המשתמש לאישור
         const confirmed = window.confirm(message);
-        if (confirmed) {
-            navigate("/basis"); // מעבר לדף הבא
+        if (!confirmed) return;
+
+        try {
+            // שליחת הנתונים ל־Node
+            const response = await fetch("http://localhost:3000/api/data/loadData", {
+                method: "POST", // POST כי אנחנו שולחים נתונים
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const result = await response.json();
+            console.log("Response from server:", result);
+
+            // // לדוגמה – ניווט לדף הבא
+            // navigate("/basis");
+        } catch (error) {
+            console.error("Error sending data to server:", error);
         }
     };
 
