@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./DataBase.css";
+import { floor } from "firebase/firestore/pipelines";
 
 interface Condition {
   option: string;
@@ -139,7 +140,7 @@ export default function DataBase() {
 
     try {
       for (const role of roles) {
-        const response = await fetch("https://yourserver.com/AddRole", {
+        const response = await fetch("http://localhost:5044/api/Role/AddRole", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(role),
@@ -156,6 +157,155 @@ export default function DataBase() {
     } catch (err) {
       console.error(err);
       setMessage("Roles", "Error saving roles: network or server problem.");
+    }
+  };
+
+  /* שמירת Price List לשרת */
+  const handleSavePriceList = async () => {
+    if (!validateRows(priceLists, "Price List")) return;
+    try {
+      for (const price of priceLists) {
+        const response = await fetch(
+          "http://localhost:5044/PriceList",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(price),
+          }
+        );
+
+        if (!response.ok) {
+
+          const errorText = await response.text();
+
+          setMessage(
+            "Price List",
+            `Error saving Price List: ${errorText}`
+          );
+
+          return;
+        }
+      }
+
+      setMessage(
+        "Price List",
+        "Price List saved successfully!"
+      );
+
+    }
+
+    catch (error) {
+
+      console.log(error);
+
+      setMessage(
+        "Price List",
+        "Server error while saving Price List."
+      );
+    }
+  };
+
+  /* שמירת Conditions לשרת */
+  const handleSaveConditions = async () => {
+
+    if (!validateRows(conditions, "Conditions")) return;
+
+    try {
+
+      for (const condition of conditions) {
+
+        const response = await fetch(
+          "http://localhost:5044/Condition",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(condition),
+          }
+        );
+
+        if (!response.ok) {
+
+          const errorText = await response.text();
+
+          setMessage(
+            "Conditions",
+            `Error saving condition: ${errorText}`
+          );
+
+          return;
+        }
+      }
+
+      setMessage(
+        "Conditions",
+        "Conditions saved successfully!"
+      );
+
+    }
+
+    catch (error) {
+
+      console.log(error);
+
+      setMessage(
+        "Conditions",
+        "Server error while saving Conditions."
+      );
+    }
+  };
+
+  /* שמירת Rooms לשרת */
+  const handleSaveRooms = async () => {
+
+    if (!validateRows(rooms, "Rooms")) return;
+
+    try {
+
+      for (const room of rooms) {
+
+        const response = await fetch(
+          "http://localhost:5044/RoomDB",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(room),
+          }
+        );
+
+        if (!response.ok) {
+
+          const errorText = await response.text();
+
+          setMessage(
+            "Rooms",
+            `Error saving room: ${errorText}`
+          );
+
+          return;
+        }
+      }
+
+      setMessage(
+        "Rooms",
+        "Rooms saved successfully!"
+      );
+
+    }
+
+    catch (error) {
+
+      console.log(error);
+
+      setMessage(
+        "Rooms",
+        "Server error while saving Rooms."
+      );
     }
   };
 
@@ -182,7 +332,7 @@ export default function DataBase() {
     // שמירה לכל הטבלאות
     try {
       for (const role of roles) {
-        const res = await fetch("https://yourserver.com/AddRole", {
+        const res = await fetch("http://localhost:5044/AddRole", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(role),
@@ -229,11 +379,27 @@ export default function DataBase() {
                 </td>
                 <td>
                   <input
-                    type="number"
-                    value={row.idNumber}
-                    onChange={(e) =>
-                      handleInputChange(e, idx, roles, setRoles, "idNumber")
-                    }
+                    type="text"
+                    inputMode="numeric"
+                    maxLength={9}
+                    placeholder="9 digits:"
+                    value={row.idNumber || ""}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/\D/g, "");
+                      if (value.length <= 9) {
+                        handleInputChange(
+                          {
+                            target: {
+                              value: value === "" ? "" : Number(value)
+                            }
+                          },
+                          idx,
+                          roles,
+                          setRoles,
+                          "idNumber"
+                        );
+                      }
+                    }}
                   />
                 </td>
                 <td>
@@ -273,312 +439,326 @@ export default function DataBase() {
       </div>
 
       {/* PriceList + Conditions + Rooms */}
-<div className="tablesRow">
+      <div className="tablesRow">
 
-  {/* Price List */}
-  <div className="container smallTable">
+        {/* Price List */}
+        <div className="container smallTable">
 
-    <h2>Price List</h2>
+          <h2>Price List</h2>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Event</th>
-          <th>Price</th>
-        </tr>
-      </thead>
+          <table>
+            <thead>
+              <tr>
+                <th>Event</th>
+                <th>Price</th>
+              </tr>
+            </thead>
 
-      <tbody>
-        {priceLists.map((row, idx) => (
-          <tr key={idx}>
+            <tbody>
+              {priceLists.map((row, idx) => (
+                <tr key={idx}>
 
-            <td>
-              <input
-                type="text"
-                value={row.event}
-                onChange={(e) =>
-                  handleInputChange(
-                    e,
-                    idx,
-                    priceLists,
-                    setPriceLists,
-                    "event"
-                  )
-                }
-              />
-            </td>
+                  <td>
+                    <input
+                      type="text"
+                      value={row.event}
+                      onChange={(e) =>
+                        handleInputChange(
+                          e,
+                          idx,
+                          priceLists,
+                          setPriceLists,
+                          "event"
+                        )
+                      }
+                    />
+                  </td>
 
-            <td>
-              <input
-                type="number"
-                value={row.price}
-                onChange={(e) =>
-                  handleInputChange(
-                    e,
-                    idx,
-                    priceLists,
-                    setPriceLists,
-                    "price"
-                  )
-                }
-              />
-            </td>
+                  <td>
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      placeholder="00000"
+                      value={row.price || ""}
+                      onChange={(e) => {
+                        const value = e.target.value.replace(/\D/g, "");
+                        handleInputChange(
+                          {
+                            target: {
+                              value: value === "" ? "" : Number(value)
+                            }
+                          },
+                          idx,
+                          priceLists,
+                          setPriceLists,
+                          "price"
+                        );
+                      }}
+                    />
+                  </td>
 
-          </tr>
-        ))}
-      </tbody>
-    </table>
+                </tr>
+              ))}
+            </tbody>
+          </table>
 
-    <button
-      onClick={() =>
-        addRow(setPriceLists, priceLists, {
-          event: "",
-          price: 0
-        })
-      }
-    >
-      Add Price
-    </button>
+          <button
+            onClick={() =>
+              addRow(setPriceLists, priceLists, {
+                event: "",
+                price: 0
+              })
+            }
+          >
+            Add Price
+          </button>
 
-    <button
-      onClick={() =>
-        handleSaveTable(priceLists, "Price List")
-      }
-    >
-      Save Prices
-    </button>
+          <button onClick={handleSavePriceList}>
+            Save Prices
+          </button>
 
-    {priceMessage && (
-      <p className="saveMessage">
-        {priceMessage}
-      </p>
-    )}
+          {priceMessage && (
+            <p className="saveMessage">
+              {priceMessage}
+            </p>
+          )}
 
-  </div>
+        </div>
 
-  {/* Conditions */}
-  <div className="container smallTable">
+        {/* Conditions */}
+        <div className="container smallTable">
 
-    <h2>Conditions</h2>
+          <h2>Conditions</h2>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Option</th>
-          <th>Price</th>
-        </tr>
-      </thead>
+          <table>
+            <thead>
+              <tr>
+                <th>Option</th>
+                <th>Price</th>
+              </tr>
+            </thead>
 
-      <tbody>
-        {conditions.map((row, idx) => (
-          <tr key={idx}>
+            <tbody>
+              {conditions.map((row, idx) => (
+                <tr key={idx}>
 
-            <td>
-              <input
-                type="text"
-                value={row.option}
-                onChange={(e) =>
-                  handleInputChange(
-                    e,
-                    idx,
-                    conditions,
-                    setConditions,
-                    "option"
-                  )
-                }
-              />
-            </td>
+                  <td>
+                    <input
+                      type="text"
+                      value={row.option}
+                      onChange={(e) =>
+                        handleInputChange(
+                          e,
+                          idx,
+                          conditions,
+                          setConditions,
+                          "option"
+                        )
+                      }
+                    />
+                  </td>
 
-            <td>
-              <input
-                type="number"
-                value={row.price}
-                onChange={(e) =>
-                  handleInputChange(
-                    e,
-                    idx,
-                    conditions,
-                    setConditions,
-                    "price"
-                  )
-                }
-              />
-            </td>
+                  <td>
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      placeholder="00000"
+                      value={row.price || ""}
+                      onChange={(e) => {
 
-          </tr>
-        ))}
-      </tbody>
-    </table>
+                        const value = e.target.value.replace(/\D/g, "");
 
-    <button
-      onClick={() =>
-        addRow(setConditions, conditions, {
-          option: "",
-          price: 0
-        })
-      }
-    >
-      Add Condition
-    </button>
+                        handleInputChange(
+                          {
+                            target: {
+                              value: value === "" ? "" : Number(value)
+                            }
+                          },
+                          idx,
+                          conditions,
+                          setConditions,
+                          "price"
+                        );
+                      }}
+                    />
+                  </td>
 
-    <button
-      onClick={() =>
-        handleSaveTable(conditions, "Conditions")
-      }
-    >
-      Save Conditions
-    </button>
+                </tr>
+              ))}
+            </tbody>
+          </table>
 
-    {conditionMessage && (
-      <p className="saveMessage">
-        {conditionMessage}
-      </p>
-    )}
+          <button
+            onClick={() =>
+              addRow(setConditions, conditions, {
+                option: "",
+                price: 0
+              })
+            }
+          >
+            Add Condition
+          </button>
 
-  </div>
+          <button onClick={handleSaveConditions}>
+            Save Conditions
+          </button>
 
-  {/* Rooms */}
-  <div className="container smallTable">
+          {conditionMessage && (
+            <p className="saveMessage">
+              {conditionMessage}
+            </p>
+          )}
 
-    <h2>Rooms</h2>
+        </div>
 
-    <table>
+        {/* Rooms */}
+        <div className="container smallTable">
 
-      <thead>
-        <tr>
-          <th>Room</th>
-          <th>Floor</th>
-          <th>Sea</th>
-          <th>Extra</th>
-        </tr>
-      </thead>
+          <h2>Rooms</h2>
 
-      <tbody>
+          <table>
 
-        {rooms.map((row, idx) => (
+            <thead>
+              <tr>
+                <th>Room</th>
+                <th>Floor</th>
+                <th>Sea</th>
+                <th>Extra</th>
+              </tr>
+            </thead>
 
-          <tr key={idx}>
+            <tbody>
 
-            <td>
-              <input
-                type="number"
-                value={row.roomNum}
-                onChange={(e) =>
-                  handleInputChange(
-                    e,
-                    idx,
-                    rooms,
-                    setRooms,
-                    "roomNum"
-                  )
-                }
-              />
-            </td>
+              {rooms.map((row, idx) => (
 
-            <td>
-              <input
-                type="number"
-                value={row.floor}
-                onChange={(e) =>
-                  handleInputChange(
-                    e,
-                    idx,
-                    rooms,
-                    setRooms,
-                    "floor"
-                  )
-                }
-              />
-            </td>
+                <tr key={idx}>
 
-            <td>
-              <input
-                type="checkbox"
-                checked={row.onSea}
-                onChange={(e) =>
-                  handleInputChange(
-                    e,
-                    idx,
-                    rooms,
-                    setRooms,
-                    "onSea"
-                  )
-                }
-              />
-            </td>
+                  <td>
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      placeholder="000"
+                      value={row.roomNum || ""}
+                      onChange={(e) => {
 
-            <td>
-              <input
-                type="checkbox"
-                checked={row.extrta}
-                onChange={(e) =>
-                  handleInputChange(
-                    e,
-                    idx,
-                    rooms,
-                    setRooms,
-                    "extrta"
-                  )
-                }
-              />
-            </td>
+                        const value = e.target.value.replace(/\D/g, "");
 
-          </tr>
-        ))}
+                        handleInputChange(
+                          {
+                            target: {
+                              value: value === "" ? "" : Number(value)
+                            }
+                          },
+                          idx,
+                          rooms,
+                          setRooms,
+                          "room"
+                        );
+                      }}
+                    />
+                  </td>
 
-      </tbody>
+                  <td>
+                    <input
+                      type="number"
+                      value={row.floor}
+                      onChange={(e) =>
+                        handleInputChange(
+                          e,
+                          idx,
+                          rooms,
+                          setRooms,
+                          "floor"
+                        )
+                      }
+                    />
+                  </td>
 
-    </table>
 
-    <button
-      onClick={() =>
-        addRow(setRooms, rooms, {
-          roomNum: 0,
-          floor: 0,
-          onSea: false,
-          extrta: false
-        })
-      }
-    >
-      Add Room
-    </button>
+                  <td>
+                    <input
+                      type="checkbox"
+                      checked={row.onSea}
+                      onChange={(e) =>
+                        handleInputChange(
+                          e,
+                          idx,
+                          rooms,
+                          setRooms,
+                          "onSea"
+                        )
+                      }
+                    />
+                  </td>
 
-    <button
-      onClick={() =>
-        handleSaveTable(rooms, "Rooms")
-      }
-    >
-      Save Rooms
-    </button>
+                  <td>
+                    <input
+                      type="checkbox"
+                      checked={row.extrta}
+                      onChange={(e) =>
+                        handleInputChange(
+                          e,
+                          idx,
+                          rooms,
+                          setRooms,
+                          "extrta"
+                        )
+                      }
+                    />
+                  </td>
 
-    {roomMessage && (
-      <p className="saveMessage">
-        {roomMessage}
-      </p>
-    )}
+                </tr>
+              ))}
 
-  </div>
+            </tbody>
 
-</div>
+          </table>
 
-{/* Global Save */}
-<div className="globalSaveContainer">
+          <button
+            onClick={() =>
+              addRow(setRooms, rooms, {
+                roomNum: 0,
+                floor: 0,
+                onSea: false,
+                extrta: false
+              })
+            }
+          >
+            Add Room
+          </button>
 
-  <button
-    className="globalSaveBtn"
-    onClick={handleGlobalSave}
-  >
-    Save Changes
-  </button>
+          <button onClick={handleSaveRooms}>
+            Save Rooms
+          </button>
 
-  {globalMessage && (
-    <p className="saveMessage">
-      {globalMessage}
-    </p>
-  )}
+          {roomMessage && (
+            <p className="saveMessage">
+              {roomMessage}
+            </p>
+          )}
 
-</div>
+        </div>
 
-</div>
-);
+      </div>
+
+      {/* Global Save */}
+      <div className="globalSaveContainer">
+
+        <button
+          className="globalSaveBtn"
+          onClick={handleGlobalSave}
+        >
+          Save Changes
+        </button>
+
+        {globalMessage && (
+          <p className="saveMessage">
+            {globalMessage}
+          </p>
+        )}
+
+      </div>
+
+    </div>
+  );
 }
