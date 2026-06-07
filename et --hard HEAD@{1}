@@ -1,0 +1,81 @@
+[33mb4cfe72[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mstartTheNode[m[33m)[m HEAD@{0}: checkout: moving from endTheRequest to startTheNode
+[33mc19c977[m[33m ([m[1;31morigin/endTheRequest[m[33m, [m[1;32mendTheRequest[m[33m)[m HEAD@{1}: commit: endTheData
+[33m88d0e99[m HEAD@{2}: commit: remove node_modules
+[33mb4cfe72[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mstartTheNode[m[33m)[m HEAD@{3}: checkout: moving from startTheNode to endTheRequest
+[33mb4cfe72[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mstartTheNode[m[33m)[m HEAD@{4}: checkout: moving from main to startTheNode
+[33m8163b5d[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{5}: checkout: moving from startTheNode to main
+[33mb4cfe72[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mstartTheNode[m[33m)[m HEAD@{6}: checkout: moving from endTheRequest to startTheNode
+[33mb4cfe72[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mstartTheNode[m[33m)[m HEAD@{7}: commit: endCurrentClient
+[33m729ed6e[m HEAD@{8}: checkout: moving from main to endTheRequest
+[33m8163b5d[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{9}: commit (merge): aaaa
+[33m4ca2f77[m HEAD@{10}: commit: Update Docker setup
+[33m2e24cdf[m HEAD@{11}: commit: compose
+[33m6a92276[m HEAD@{12}: checkout: moving from endTheRequest to main
+[33m729ed6e[m HEAD@{13}: commit: makeTheNodeToMidleWare
+[33m4cf6d7a[m HEAD@{14}: commit: ItsWorked!
+[33mc5d4da8[m HEAD@{15}: commit: endTheRequesrt
+[33m0db3732[m HEAD@{16}: commit: push
+[33m77c9c08[m HEAD@{17}: commit: hi
+[33m8053e69[m HEAD@{18}: commit: new-day
+[33m269287c[m HEAD@{19}: checkout: moving from main to endTheRequest
+[33m6a92276[m HEAD@{20}: checkout: moving from ch_client to main
+[33mbe30cc9[m[33m ([m[1;31morigin/ch_client[m[33m, [m[1;32mch_client[m[33m)[m HEAD@{21}: commit: aaa
+[33ma38b4ce[m HEAD@{22}: commit: setSql
+[33m6a92276[m HEAD@{23}: checkout: moving from main to ch_client
+[33m6a92276[m HEAD@{24}: checkout: moving from endTheRequest to main
+[33m269287c[m HEAD@{25}: commit: continue tomorrow
+[33m6a92276[m HEAD@{26}: checkout: moving from main to endTheRequest
+[33m6a92276[m HEAD@{27}: checkout: moving from endTheRequest to main
+[33m6a92276[m HEAD@{28}: checkout: moving from main to endTheRequest
+[33m6a92276[m HEAD@{29}: commit: seccesReadax
+[33m62b6a7d[m HEAD@{30}: pull origin main: Fast-forward
+[33m685d86c[m HEAD@{31}: commit: endthemerge
+[33m13a4dbd[m HEAD@{32}: pull: Fast-forward
+[33me9553f4[m HEAD@{33}: checkout: moving from loginTabels to main
+[33mf7617e2[m[33m ([m[1;32mloginTabels[m[33m)[m HEAD@{34}: commit (merge): remove
+[33md73ee82[m HEAD@{35}: commit: merge conflicts
+[33m740ad50[m HEAD@{36}: commit (merge): merge conflicts
+[33m4005b7b[m HEAD@{37}: checkout: moving from main to loginTabels
+[33me9553f4[m HEAD@{38}: commit: remove obj
+[33m3de57c2[m HEAD@{39}: pull: Fast-forward
+[33m16e3bec[m HEAD@{40}: checkout: moving from seccfull to main
+[33m6820185[m[33m ([m[1;31morigin/seccfull[m[33m, [m[1;32mseccfull[m[33m)[m HEAD@{41}: commit: finish merge
+[33mcca21af[m HEAD@{42}: commit (merge): merge conflicts
+[33m9526069[m HEAD@{43}: commit: aaaa
+[33mc8d9e1b[m HEAD@{44}: commit: ChaniB & Bina...
+[33mb177f93[m HEAD@{45}: commit: i dont belive
+[33m93c4d12[m HEAD@{46}: commit: aaaa
+[33m232fb18[m HEAD@{47}: commit: theRouterError
+[33m00ad9fa[m HEAD@{48}: commit: this client
+[33m80745fc[m HEAD@{49}: commit: hashemhelpme
+[33ma56f71a[m HEAD@{50}: commit: end the table
+[33m1e83b1f[m HEAD@{51}: commit (merge): mergetheTable
+[33mca737dc[m HEAD@{52}: commit: aaaaa
+[33md2a5606[m HEAD@{53}: checkout: moving from development to seccfull
+[33mb25be4e[m[33m ([m[1;32mdevelopment[m[33m)[m HEAD@{54}: commit: win
+[33m55d160f[m HEAD@{55}: checkout: moving from seccfull to development
+[33md2a5606[m HEAD@{56}: checkout: moving from development to seccfull
+[33m55d160f[m HEAD@{57}: checkout: moving from seccfull to development
+[33md2a5606[m HEAD@{58}: checkout: moving from development to seccfull
+[33m55d160f[m HEAD@{59}: commit: end
+[33m1c01038[m[33m ([m[1;32mbli[m[33m)[m HEAD@{60}: checkout: moving from seccfull to development
+[33md2a5606[m HEAD@{61}: commit: nedTables
+[33m1c01038[m[33m ([m[1;32mbli[m[33m)[m HEAD@{62}: checkout: moving from development to seccfull
+[33m1c01038[m[33m ([m[1;32mbli[m[33m)[m HEAD@{63}: checkout: moving from bli to development
+[33m1c01038[m[33m ([m[1;32mbli[m[33m)[m HEAD@{64}: pull origin development: Fast-forward
+[33m2687115[m[33m ([m[1;31morigin/bli[m[33m)[m HEAD@{65}: commit (merge): merge conflicts
+[33mb08ff5b[m HEAD@{66}: commit: changes
+[33m9beec66[m HEAD@{67}: reset: moving to HEAD
+[33m9beec66[m HEAD@{68}: reset: moving to HEAD
+[33m9beec66[m HEAD@{69}: checkout: moving from main to bli
+[33m16e3bec[m HEAD@{70}: checkout: moving from bli to main
+[33m9beec66[m HEAD@{71}: commit: startComponent
+[33m8a4515b[m HEAD@{72}: commit: fullworking
+[33m838ca65[m HEAD@{73}: checkout: moving from hel to bli
+[33mcd4c03c[m[33m ([m[1;32mhel[m[33m)[m HEAD@{74}: commit: branch
+[33m16e3bec[m HEAD@{75}: checkout: moving from bli to hel
+[33m838ca65[m HEAD@{76}: commit: setserver
+[33m16e3bec[m HEAD@{77}: checkout: moving from hel to bli
+[33m16e3bec[m HEAD@{78}: checkout: moving from main to hel
+[33m16e3bec[m HEAD@{79}: pull: Fast-forward
+[33m71979df[m HEAD@{80}: checkout: moving from bli to main
