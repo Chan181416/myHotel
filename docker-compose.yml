@@ -1,0 +1,42 @@
+version: '3.9'
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: myhotel_sql
+    environment:
+      SA_PASSWORD: "YourStrong!Passw0rd"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql_data:/var/opt/mssql
+
+  server:
+    build: ./server
+    container_name: myhotel_server
+    depends_on:
+      - sqlserver
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=sqlserver;Database=Hotel;User Id=sa;Password=1234567,Cb;"
+    ports:
+      - "1434:1434"
+
+  gateway:
+    build: ./hotel-management-gateway
+    container_name: myhotel_gateway
+    depends_on:
+      - server
+    ports:
+      - "3000:3000"
+
+  client:
+    build: ./client
+    container_name: myhotel_client
+    depends_on:
+      - gateway
+    ports:
+      - "80:80"
+
+volumes:
+  sql_data:
