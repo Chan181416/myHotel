@@ -1,16 +1,20 @@
-# ./MyServer/Dockerfile
-# FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
-# WORKDIR /app
-# EXPOSE 5000
+# Use official .NET SDK image for build
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+WORKDIR /app
 
-# FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
-# WORKDIR /src
-# COPY ["server.csproj", "./"]
-# RUN dotnet restore "server.csproj"
-# COPY . .
-# RUN dotnet publish -c Release -o /app/publish
+# Copy csproj and restore as distinct layers
+COPY server.csproj ./
+RUN dotnet restore
 
-# FROM base AS final
-# WORKDIR /app
-# COPY --from=build /app/publish .
-# ENTRYPOINT ["dotnet", "server.dll"]
+# Copy everything and build
+COPY . ./
+RUN dotnet publish -c Release -o out
+
+# Runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:7.0
+WORKDIR /app
+COPY --from=build /app/out .
+
+# Expose port
+EXPOSE 5000
+ENTRYPOINT ["dotnet", "server.dll"]
