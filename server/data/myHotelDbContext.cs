@@ -31,25 +31,34 @@ namespace server.Data
             modelBuilder.Entity<Registereds>()
             .HasOne(r => r.Event)
             .WithMany(p => p.Registrations)
-            .HasForeignKey(r => r.PriceListId);
+            .HasForeignKey(r => r.PriceListId)
+            .OnDelete(DeleteBehavior.Restrict);
+
 
             modelBuilder.Entity<Registereds>()
             .HasOne(r => r.Condition)
             .WithMany(c => c.Registrations)
-            .HasForeignKey(r => r.ConditionId);
+            .HasForeignKey(r => r.ConditionId)
+            .OnDelete(DeleteBehavior.Restrict);
+
 
             modelBuilder.Entity<RoomLocation>()
             .HasOne(r => r.Room)
             .WithMany(c => c.RoomLocations)
             .HasForeignKey(r => r.Rooms)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<RoomLocation>()
            .HasOne(r => r.Registereds)
            .WithMany(c => c.Rooms)
            .HasForeignKey(r => r.RegisteredsId)
-           .OnDelete(DeleteBehavior.Cascade);
+           .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<RoomsDB>()
+        .HasOne(r => r.Condition)
+        .WithMany()
+        .HasForeignKey(r => r.ConditionId)
+        .OnDelete(DeleteBehavior.Restrict);
             // modelBuilder.Entity<Role>().HasData(
             //     new Role
             //     {

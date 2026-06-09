@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+// import { saveGuestData } from "../../api/registerdsSlice";
+// import { useDispatch } from "react-redux";
+// import type { AppDispatch } from "../../app/store";
 import './Basis.css';
 
 function Basis() {
-
+    // const dispatch = useDispatch<AppDispatch>();
     // סטייט לכל השדות
     const [formData, setFormData] = useState({
         id: "",
@@ -42,6 +45,7 @@ function Basis() {
         const confirmed = window.confirm(message);
         if (!confirmed) return;
 
+        // dispatch(saveGuestData(formData)); // זה יעדכן גם את ה־Redux
         try {
             // שליחת הנתונים ל־Node
             const response = await fetch("http://localhost:3000/api/data/loadData", {

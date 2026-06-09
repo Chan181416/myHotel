@@ -21,11 +21,9 @@ namespace server.Controller
         }
 
         // יצירת חדר חדש
-
         [HttpPost]
         public async Task<IActionResult> CreateRoom([FromBody] RoomsDBDTO dto)
         {
-
             bool exists = await _context.RoomsDBs
                                         .AnyAsync(r => r.RoomNum == dto.RoomNum);
 
@@ -37,36 +35,36 @@ namespace server.Controller
                 Id = Guid.NewGuid(),
                 RoomNum = dto.RoomNum,
                 Floor = dto.Floor,
-                OnSea = dto.OnSea,
-                Extrta = dto.Extrta,
+                ConditionId = dto.ConditionId,
+                Sumbed = dto.Sumbed,
                 RoomLocations = new List<RoomLocation>()
             };
 
             _context.RoomsDBs.Add(room);
             await _context.SaveChangesAsync();
 
-            return NoContent(); // או Ok(room) אם רוצים להחזיר את החדר החדש
+            return NoContent();
         }
+
+        // שליפת כל החדרים
         [HttpGet]
         public async Task<IActionResult> GetAllRooms()
         {
             var rooms = await _context.RoomsDBs
                                       .Include(r => r.RoomLocations)
+                                      .Include(r => r.Condition)
                                       .ToListAsync();
 
             return Ok(rooms);
         }
-        // עדכון שדה Occupied לפי Id
+
+        // עדכון (נשאר כמו שהיה - לא נוגע כי אין שדות ישנים)
         [HttpPatch("occupied/{id}")]
         public async Task<IActionResult> UpdateOccupied(Guid id, [FromBody] string occupied)
         {
             var room = await _context.RoomsDBs.FindAsync(id);
             if (room == null)
                 return NotFound();
-
-            // אם יש לך שדה Occupied חדש ב-RoomsDB או ב-RoomLocation, יש לעדכן בהתאם
-            // כאן אני מוסיף שדה זמני
-            // room.Occupied = occupied; // אם קיים שדה
 
             await _context.SaveChangesAsync();
 
@@ -78,13 +76,16 @@ namespace server.Controller
         public async Task<IActionResult> GetRoomById(Guid id)
         {
             var room = await _context.RoomsDBs
-                                     .Include(r => r.RoomLocations) // אם רוצים לשלוף גם RoomLocations
+                                     .Include(r => r.RoomLocations)
+                                     .Include(r => r.Condition)
                                      .FirstOrDefaultAsync(r => r.Id == id);
+
             if (room == null) return NotFound();
+
             return Ok(room);
         }
 
-        // שליפת שדות ספציפיים לפי RoomNum
+        // שליפת שדות לפי RoomNum
         [HttpGet("fields/{roomNum}")]
         public async Task<IActionResult> GetRoomFields(int roomNum)
         {
@@ -92,13 +93,16 @@ namespace server.Controller
                                      .Where(r => r.RoomNum == roomNum)
                                      .Select(r => new
                                      {
-                                         r.OnSea,
-                                         r.Extrta,
-                                         r.RoomLocations // אם רוצים להחזיר את הרשימה
+                                         r.RoomNum,
+                                         r.Floor,
+                                         r.ConditionId,
+                                         ConditionOption = r.Condition.Option,
+                                         r.RoomLocations
                                      })
                                      .FirstOrDefaultAsync();
 
-            if (room == null) return NotFound();
+            if (room == null)
+                return NotFound();
 
             return Ok(room);
         }

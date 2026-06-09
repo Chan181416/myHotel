@@ -1,3 +1,4 @@
+#client
 # Build stage
 FROM node:18 AS build
 WORKDIR /app

@@ -12,8 +12,8 @@ using server.Data;
 namespace server.Migrations
 {
     [DbContext(typeof(MyHotelDbContext))]
-    [Migration("20260531142038_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260609120546_FixCascadeRoomsCondition")]
+    partial class FixCascadeRoomsCondition
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -197,19 +197,21 @@ namespace server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("Extrta")
-                        .HasColumnType("bit");
+                    b.Property<Guid>("ConditionId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Floor")
                         .HasColumnType("int");
 
-                    b.Property<bool>("OnSea")
-                        .HasColumnType("bit");
-
                     b.Property<int>("RoomNum")
                         .HasColumnType("int");
 
+                    b.Property<int>("Sumbed")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ConditionId");
 
                     b.ToTable("RoomsDBs");
                 });
@@ -219,13 +221,13 @@ namespace server.Migrations
                     b.HasOne("server.Model.Condition", "Condition")
                         .WithMany("Registrations")
                         .HasForeignKey("ConditionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("server.model.PricesList", "Event")
                         .WithMany("Registrations")
                         .HasForeignKey("PriceListId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Condition");
@@ -238,18 +240,29 @@ namespace server.Migrations
                     b.HasOne("server.model.Registereds", "Registereds")
                         .WithMany("Rooms")
                         .HasForeignKey("RegisteredsId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("server.model.RoomsDB", "Room")
                         .WithMany("RoomLocations")
                         .HasForeignKey("Rooms")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Registereds");
 
                     b.Navigation("Room");
+                });
+
+            modelBuilder.Entity("server.model.RoomsDB", b =>
+                {
+                    b.HasOne("server.Model.Condition", "Condition")
+                        .WithMany()
+                        .HasForeignKey("ConditionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Condition");
                 });
 
             modelBuilder.Entity("server.Model.Condition", b =>

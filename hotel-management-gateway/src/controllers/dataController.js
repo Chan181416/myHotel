@@ -1,73 +1,3 @@
-// const axios = require("axios");
-
-// exports.loadData = async (req, res) => {
-//   try {
-//     const formData = req.body;
-
-//     console.log("Before:", formData);
-
-//     // 🔹 שליפת eventId לפי event string
-//     const eventResponse = await axios.get(
-//       `http://localhost:5044/api/PricesList/idbyevent/${encodeURIComponent(formData.event)}`
-//     );
-
-//     const eventId = eventResponse.data;
-
-//     // 🔥 כאן קורה ההחלפה האמיתית בתוך אותו אובייקט
-//     formData.event = eventId;
-
-//     console.log("After:", formData);
-
-//     const {
-//       id,
-//       name,
-//       phone,
-//       email,
-//       date,
-//       tripType,
-//       roomType,
-//       guests,
-//       conditionId,
-//       event // עכשיו זה כבר GUID ולא string
-//     } = formData;
-
-//     // המשך עבודה רגיל
-//     const [registeredsResponse, roomsResponse] = await Promise.all([
-//       axios.get("http://localhost:5044/Registereds"),
-//       axios.get("http://localhost:5044/RoomDB")
-//     ]);
-
-//     const registereds = registeredsResponse.data;
-//     const rooms = roomsResponse.data;
-
-//     const filtered = registereds.filter(reg =>
-//       reg.ConditionId === conditionId &&
-//       reg.PriceListId === event
-//     );
-
-//     const grouped = {
-//       'נופש מלא': [],
-//       'יום א': [],
-//       'יום ב': []
-//     };
-
-//     filtered.forEach(reg => {
-//       if (reg.Event?.Event === 'נופש מלא') grouped['נופש מלא'].push(reg);
-//       else if (reg.Event?.Event === 'יום א') grouped['יום א'].push(reg);
-//       else if (reg.Event?.Event === 'יום ב') grouped['יום ב'].push(reg);
-//     });
-
-//     res.json({
-//       clientData: formData,
-//       rooms,
-//       groupedRegistereds: grouped
-//     });
-
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: error.message });
-//   }
-// };
 const axios = require("axios");
 
 exports.loadData = async (req, res) => {
@@ -115,11 +45,7 @@ exports.loadData = async (req, res) => {
     const registereds = registeredsResponse.data;
     const rooms = roomsResponse.data;
 
-    // 🔹 סינון רק אם קיימים IDs חוקיים
-    // const filtered = registereds.filter(reg =>
-    //   reg.ConditionId === conditionId &&
-    //   reg.PriceListId === tripType
-    // );
+   
 
     const grouped = {
       'נופש מלא': [],
@@ -127,7 +53,7 @@ exports.loadData = async (req, res) => {
       'יום ב': []
     };
 
-    // filtered.forEach(reg => {
+    //   filtered.forEach(reg => {
     //   if (reg.Event?.Event === 'נופש מלא') grouped['נופש מלא'].push(reg);
     //   else if (reg.Event?.Event === 'יום א') grouped['יום א'].push(reg);
     //   else if (reg.Event?.Event === 'יום ב') grouped['יום ב'].push(reg);

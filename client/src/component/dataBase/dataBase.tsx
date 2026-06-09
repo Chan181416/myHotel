@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./DataBase.css";
-import { floor } from "firebase/firestore/pipelines";
+// import { floor } from "firebase/firestore/pipelines";
 
 interface Condition {
   option: string;
@@ -21,9 +21,10 @@ interface Role {
 interface RoomDB {
   roomNum: number;
   floor: number;
+  beds: number;
   onSea: boolean;
   extrta: boolean;
-  occupied?: string;
+  // occupied?: string;
 }
 
 export default function DataBase() {
@@ -356,13 +357,13 @@ export default function DataBase() {
     <div id="welcome">
       {/* Roles */}
       <div className="container fullWidth">
-        <h2>Roles</h2>
+        <h2>עובדים</h2>
         <table>
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Id Number</th>
-              <th>Code</th>
+              <th>שם</th>
+              <th>מספר זהות</th>
+              <th>קוד</th>
             </tr>
           </thead>
           <tbody>
@@ -432,9 +433,9 @@ export default function DataBase() {
             addRow(setRoles, roles, { name: "", idNumber: 0, code: 1 })
           }
         >
-          Add Role
+          הוסף
         </button>
-        <button onClick={handleSaveRoles}>Save Roles</button>
+        <button onClick={handleSaveRoles}>שמור</button>
         {rolesMessage && <p className="saveMessage">{rolesMessage}</p>}
       </div>
 
@@ -444,13 +445,13 @@ export default function DataBase() {
         {/* Price List */}
         <div className="container smallTable">
 
-          <h2>Price List</h2>
+          <h2>מסלולים</h2>
 
           <table>
             <thead>
               <tr>
-                <th>Event</th>
-                <th>Price</th>
+                <th>אירוע</th>
+                <th>מחיר</th>
               </tr>
             </thead>
 
@@ -510,11 +511,11 @@ export default function DataBase() {
               })
             }
           >
-            Add Price
+            הוסף
           </button>
 
           <button onClick={handleSavePriceList}>
-            Save Prices
+            שמור
           </button>
 
           {priceMessage && (
@@ -528,13 +529,13 @@ export default function DataBase() {
         {/* Conditions */}
         <div className="container smallTable">
 
-          <h2>Conditions</h2>
+          <h2>תנאים</h2>
 
           <table>
             <thead>
               <tr>
-                <th>Option</th>
-                <th>Price</th>
+                <th>סוג חדר</th>
+                <th>מחיר</th>
               </tr>
             </thead>
 
@@ -600,11 +601,11 @@ export default function DataBase() {
               })
             }
           >
-            Add Condition
+            הוסף תנאי
           </button>
 
           <button onClick={handleSaveConditions}>
-            Save Conditions
+            שמור תנאים
           </button>
 
           {conditionMessage && (
@@ -618,16 +619,17 @@ export default function DataBase() {
         {/* Rooms */}
         <div className="container smallTable">
 
-          <h2>Rooms</h2>
+          <h2>חדרים</h2>
 
           <table>
 
             <thead>
               <tr>
-                <th>Room</th>
-                <th>Floor</th>
-                <th>Sea</th>
-                <th>Extra</th>
+                <th>מספר חדר</th>
+                <th>קומה</th>
+                <th>מספר מיטות</th>
+                <th>נוף לים</th>
+                <th>תוספת</th>
               </tr>
             </thead>
 
@@ -660,7 +662,7 @@ export default function DataBase() {
                         );
                       }}
                     />
-                   
+
                   </td>
 
                   <td>
@@ -678,7 +680,21 @@ export default function DataBase() {
                       }
                     />
                   </td>
-
+ <td>
+                    <input
+                      type="number"
+                      value={row.floor}
+                      onChange={(e) =>
+                        handleInputChange(
+                          e,
+                          idx,
+                          rooms,
+                          setRooms,
+                          "sumbed"
+                        )
+                      }
+                    />
+                  </td>
                   <td>
                     <input
                       type="checkbox"
@@ -728,11 +744,10 @@ export default function DataBase() {
               })
             }
           >
-            Add Room
-          </button>
+הוסף          </button>
 
           <button onClick={handleSaveRooms}>
-            Save Rooms
+            שמור
           </button>
 
           {roomMessage && (
@@ -752,7 +767,7 @@ export default function DataBase() {
           className="globalSaveBtn"
           onClick={handleGlobalSave}
         >
-          Save Changes
+          שמור
         </button>
 
         {globalMessage && (

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace server.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class FixCascadeRoomsCondition : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -92,12 +92,18 @@ namespace server.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     RoomNum = table.Column<int>(type: "int", nullable: false),
                     Floor = table.Column<int>(type: "int", nullable: false),
-                    OnSea = table.Column<bool>(type: "bit", nullable: false),
-                    Extrta = table.Column<bool>(type: "bit", nullable: false)
+                    ConditionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Sumbed = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_RoomsDBs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RoomsDBs_Conditions_ConditionId",
+                        column: x => x.ConditionId,
+                        principalTable: "Conditions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -120,13 +126,13 @@ namespace server.Migrations
                         column: x => x.ConditionId,
                         principalTable: "Conditions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Registereds_PricesLists_PriceListId",
                         column: x => x.PriceListId,
                         principalTable: "PricesLists",
                         principalColumn: "IdPrice",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -145,13 +151,13 @@ namespace server.Migrations
                         column: x => x.RegisteredsId,
                         principalTable: "Registereds",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_RoomLocations_RoomsDBs_Rooms",
                         column: x => x.Rooms,
                         principalTable: "RoomsDBs",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -173,6 +179,11 @@ namespace server.Migrations
                 name: "IX_RoomLocations_Rooms",
                 table: "RoomLocations",
                 column: "Rooms");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RoomsDBs_ConditionId",
+                table: "RoomsDBs",
+                column: "ConditionId");
         }
 
         /// <inheritdoc />
@@ -197,10 +208,10 @@ namespace server.Migrations
                 name: "RoomsDBs");
 
             migrationBuilder.DropTable(
-                name: "Conditions");
+                name: "PricesLists");
 
             migrationBuilder.DropTable(
-                name: "PricesLists");
+                name: "Conditions");
         }
     }
 }
