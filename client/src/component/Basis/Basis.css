@@ -106,8 +106,10 @@ button:hover {
 }
 
 .error-message {
-    color: red;
-    font-size: 14px;
+    color: rgb(153, 26, 26);
+    font-size: 15px;
     margin-bottom: 15px;
     text-align: center;
+        margin-top: 4px;
+
 }

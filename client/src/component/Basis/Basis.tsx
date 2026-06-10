@@ -178,7 +178,6 @@
 // export default Basis;
 
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import './Basis.css';
 
 function Basis() {
@@ -193,7 +192,28 @@ function Basis() {
         guests: 1
     });
 
-    const [error, setError] = useState(""); // הודעת שגיאה
+    const [errors, setErrors] = useState({
+        id: "",
+        name: "",
+        phone: "",
+        email: ""
+    });
+
+    // פונקציה לבדיקה בזמן אמת של כל שדה
+    const validateField = (name, value) => {
+        switch (name) {
+            case "id":
+                return /^\d{9}$/.test(value) ? "" : "תעודת זהות חייבת להכיל 9 ספרות";
+            case "name":
+                return /^[א-תa-zA-Z\s]+$/.test(value.trim()) ? "" : "שם חייב להכיל אותיות בלבד";
+            case "phone":
+                return /^0\d{9}$/.test(value) ? "" : "מספר טלפון לא תקין";
+            case "email":
+                return !value || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? "" : "כתובת מייל לא תקינה";
+            default:
+                return "";
+        }
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -201,20 +221,30 @@ function Basis() {
             ...prev,
             [name]: value
         }));
+        setErrors(prev => ({
+            ...prev,
+            [name]: validateField(name, value)
+        }));
+    };
+
+    // בדיקה כוללת לפני שליחה
+    const validateForm = () => {
+        const newErrors = {
+            id: "",
+            name: "",
+            phone: "",
+            email: ""
+        };
+        ["id", "name", "phone", "email"].forEach(field => {
+            newErrors[field] = validateField(field, formData[field]);
+        });
+        setErrors(newErrors);
+        // תקין אם אין שגיאות בשדות חובה
+        return !["id", "name", "phone"].some(field => newErrors[field]);
     };
 
     const handleSubmit = async () => {
-        const requiredFields = ["id", "name", "phone"];
-        const hasEmptyField = requiredFields.some(
-            field => String(formData[field]).trim() === ""
-        );
-
-        if (hasEmptyField) {
-            setError("יש למלא את כל השדות החובה לפני המשך.");
-            return;
-        }
-
-        setError("");
+        if (!validateForm()) return;
 
         const message = `
 ת.ז: ${formData.id}
@@ -244,18 +274,14 @@ function Basis() {
         }
     };
 
-    const isFormValid =
-        formData.id.trim() &&
-        formData.name.trim() &&
-        formData.phone.trim();
+    // מצב כפתור שמושבת אם יש שגיאות או שדות ריקים
+    const isFormValid = ["id", "name", "phone"].every(field => formData[field].trim() && !errors[field]);
 
     return (
         <div id="welcome">
             <div id="container">
                 <div className="form">
                     <h2>רישום אורח למלון</h2>
-
-                    {/* {error && <div className="error-message">{error}</div>} */}
 
                     <div className="row">
                         <div className="field">
@@ -267,7 +293,9 @@ function Basis() {
                                 value={formData.id}
                                 onChange={handleChange}
                             />
+                            {errors.id && <div className="error-message">{errors.id}</div>}
                         </div>
+
                         <div className="field">
                             <label>שם מתארחת</label>
                             <input
@@ -277,6 +305,7 @@ function Basis() {
                                 value={formData.name}
                                 onChange={handleChange}
                             />
+                            {errors.name && <div className="error-message">{errors.name}</div>}
                         </div>
                     </div>
 
@@ -290,7 +319,9 @@ function Basis() {
                                 value={formData.phone}
                                 onChange={handleChange}
                             />
+                            {errors.phone && <div className="error-message">{errors.phone}</div>}
                         </div>
+
                         <div className="field">
                             <label>אימייל</label>
                             <input
@@ -300,6 +331,7 @@ function Basis() {
                                 value={formData.email}
                                 onChange={handleChange}
                             />
+                            {errors.email && <div className="error-message">{errors.email}</div>}
                         </div>
                     </div>
 
