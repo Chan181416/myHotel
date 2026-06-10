@@ -1,41 +1,49 @@
 const axios = require("axios");
 
-async function getAvailableRoomsByEvent(eventName) {
+// שליפת כל הנתונים הדרושים לבדיקת זמינות והלוגיקה
+async function getFullRoomData(eventName) {
     try {
-        // שולחים בקשה לשרת C# לקבל את כל החדרים
-        const roomsResponse = await axios.get("http://localhost:5000/api/rooms");
-        const allRooms = roomsResponse.data;
+        // כל החדרים
+        const roomsResponse = await axios.get("http://localhost:5000/api/RoomDB");
+        const rooms = roomsResponse.data;
 
-        // שולפים את RoomLocation והזמנות קיימות
-        const roomLocationResponse = await axios.get("http://localhost:5000/api/roomlocation");
-        const roomLocations = roomLocationResponse.data;
+        // RoomLocation
+        const roomLocationsResponse = await axios.get("http://localhost:5000/api/RoomLocation");
+        const roomLocations = roomLocationsResponse.data;
 
-        const registeredsResponse = await axios.get("http://localhost:5000/api/registereds");
+        // Registereds
+        const registeredsResponse = await axios.get("http://localhost:5000/api/Registereds");
         const registereds = registeredsResponse.data;
 
-        const pricesResponse = await axios.get("http://localhost:5000/api/priceslist");
-        const pricesList = pricesResponse.data;
+        // סינון נרשמים לפי Event המבוקש
+        const filteredRegistereds = registereds.filter(r => r.Event?.Event === eventName);
 
-        // מסננים חדרים תפוסים באותו אירוע
-        const unavailableRoomIds = roomLocations
-            .map(rl => {
-                const reg = registereds.find(r => r.id === rl.RegisteredsId);
-                if (!reg) return null;
+        return {
+            rooms,
+            roomLocations,
+            registereds: filteredRegistereds
+        };
+    }
+    catch (error) {
+        console.error(
+            "שגיאה בשליפת נתונים משרת C#:"
+        );
 
-                const price = pricesList.find(p => p.Event === eventName && p.IdPrice === reg.EventId);
-                return price ? rl.Rooms : null;
-            })
-            .filter(id => id !== null);
+        if (error.response) {
+            console.error("קוד שגיאה:", error.response.status);
+        }
 
-        // מחזירים רק חדרים פנויים
-        const availableRooms = allRooms.filter(room => !unavailableRoomIds.includes(room.Id));
+        console.error("פירוט:", error.message);
 
-        return availableRooms;
-
-    } catch (error) {
-        console.error("Error fetching rooms from C# server:", error.message);
-        return [];
+        return {
+            rooms: [],
+            roomLocations: [],
+            registereds: []
+        };
     }
 }
 
-module.exports = { getAvailableRoomsByEvent };
+
+module.exports = {
+    getFullRoomData
+};
