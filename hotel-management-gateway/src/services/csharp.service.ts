@@ -1,7 +1,7 @@
-const axios = require("axios");
+import axios from "axios";
 
 const api = axios.create({
     baseURL: process.env.CSHARP_API
 });
 
-module.exports = api;
+export default api;
