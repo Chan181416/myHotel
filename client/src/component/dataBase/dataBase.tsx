@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./DataBase.css";
+import "./dataBase.css";
 import { Navigate, useNavigate } from "react-router-dom";
 
 interface Condition {

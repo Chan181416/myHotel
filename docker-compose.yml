@@ -6,10 +6,16 @@ services:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: myhotel_sql
     environment:
-      SA_PASSWORD: "YourStrong!Passw0rd"
+      SA_PASSWORD: "${SQL_PASSWORD}"
       ACCEPT_EULA: "Y"
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c '</dev/tcp/localhost/1433'"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 90s
     ports:
-      - "1433:1433"
+      - "1434:1433"
     volumes:
       - sql_data:/var/opt/mssql
 
@@ -17,11 +23,12 @@ services:
     build: ./server
     container_name: myhotel_server
     depends_on:
-      - sqlserver
+      sqlserver:
+        condition: service_healthy
     environment:
-      ConnectionStrings__DefaultConnection: "Server=sqlserver;Database=Hotel;User Id=sa;Password=1234567,Cb;"
+      ConnectionStrings__DefaultConnection: "Server=sqlserver;Database=Hotel;User Id=sa;Password=${SQL_PASSWORD};MultipleActiveResultSets=true;TrustServerCertificate=True;"
     ports:
-      - "1434:1434"
+      - "5017:5017"
 
   gateway:
     build: ./hotel-management-gateway
