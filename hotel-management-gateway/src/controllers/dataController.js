@@ -46,6 +46,8 @@ exports.loadData = async (req, res) => {
 
     const registereds = registeredsResponse.data;
     const rooms = roomsResponse.data;
+    console.log(rooms);
+    
 
     // 🔹 סינון רק אם קיימים IDs חוקיים
     // const filtered = registereds.filter(reg =>

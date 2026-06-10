@@ -6,25 +6,89 @@ const { calculateScore } = require("../utils/scoreUtil");
 // סף מינימום להתאמה מלאה
 const MINIMUM_MATCH_SCORE = 80;
 
+function isRoomAvailable(
+    room,
+    requestEvent,
+    roomLocations,
+    registereds
+) {
+    const requestedParts =
+        eventMap[requestEvent] || [];
+
+    const roomAssignments =
+        roomLocations.filter(
+            rl => rl.rooms === room.id
+        );
+
+    for (const assignment of roomAssignments) {
+
+        const registered =
+            registereds.find(
+                r => r.id === assignment.registeredsId
+            );
+
+        if (!registered) {
+            continue;
+        }
+
+        const occupiedEvent =
+            registered.event?.event;
+
+        const occupiedParts =
+            eventMap[occupiedEvent] || [];
+
+        const overlap =
+            requestedParts.some(
+                part => occupiedParts.includes(part)
+            );
+
+        if (overlap) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 async function processBooking(request) {
     // שלב 1: שליפת חדרים פנויים
-    const availableRooms =
-        await csharpApi.getAvailableRoomsByEvent(request.event);
-    console.log("חדרים פנויים בתאריכים:", availableRooms.length);
+    const {
+        rooms,
+        roomLocations,
+        registereds
+    } = await csharpApi.getFullRoomData(request.event);
+    console.log("דוגמת חדר:", rooms[0]);
+    console.log("דוגמת RoomLocation:", roomLocations[0]);
+    console.log("דוגמת Registered:", registereds[0]);
+
+    console.log("חדרים:", rooms.length);
+    console.log("שיבוצים:", roomLocations.length);
+    console.log("נרשמים:", registereds.length);
 
     const filteredRooms =
-        availableRooms.filter(room => {
+        rooms.filter(room => {
+            if (
+                !isRoomAvailable(
+                    room,
+                    request.event,
+                    roomLocations,
+                    registereds
+                )
+            ) {
+                return false;
+            }
 
             // התאמת כמות אורחים
-            if (room.capacity < request.guests) {
+            if (room.sumbed < request.guests) {
                 return false;
             }
 
             // מול הים
-            if (
-                request.seaView &&
-                !room.seaView
-            ) {
+            if (request.seaView && room.condition.option !== "מול הים") {
+                return false;
+            }
+
+            if (request.doubleRoom && room.condition.option !== "זוגי") {
                 return false;
             }
 
@@ -49,7 +113,7 @@ async function processBooking(request) {
     };
     console.log("התקבלה הזמנה:");
     console.log(bookingDetails);
-    const roomOptions = splitGuestsIntoRooms(request.guests, bookingDetails, filteredRooms);
+    const roomOptions = splitGuestsIntoRooms(request.guests, bookingDetails);
     console.log("אפשרויות חלוקה של אורחים לחדרים עם ניקוד:", roomOptions);
 
     //  חישוב ציונים לכל חדר פנוי
