@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./DataBase.css";
+import { Navigate, useNavigate } from "react-router-dom";
 // import { floor } from "firebase/firestore/pipelines";
 
 interface Condition {
@@ -38,7 +39,7 @@ export default function DataBase() {
   const [conditionMessage, setConditionMessage] = useState("");
   const [roomMessage, setRoomMessage] = useState("");
   const [globalMessage, setGlobalMessage] = useState("");
-
+  const navigate = useNavigate()
   /* הוספת שורה */
   const addRow = (setter: any, state: any, newRow: any) => {
     setter([...state, newRow]);
@@ -680,7 +681,7 @@ export default function DataBase() {
                       }
                     />
                   </td>
- <td>
+                  <td>
                     <input
                       type="number"
                       value={row.floor}
@@ -744,11 +745,12 @@ export default function DataBase() {
               })
             }
           >
-הוסף          </button>
+            הוסף          </button>
 
           <button onClick={handleSaveRooms}>
             שמור
           </button>
+
 
           {roomMessage && (
             <p className="saveMessage">
@@ -769,7 +771,9 @@ export default function DataBase() {
         >
           שמור
         </button>
-
+        <button onClick={() => navigate('/basis')}>
+          מעבר לדף הרישום
+        </button>
         {globalMessage && (
           <p className="saveMessage">
             {globalMessage}

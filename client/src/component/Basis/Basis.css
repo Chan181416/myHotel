@@ -1,22 +1,23 @@
-#welcome{
+#welcome {
     width: 700px;
     /* font-size: 15px;
     margin: 30px;    
     color: rgb(211, 91, 115);
     align-items: center; */
-    
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background: linear-gradient(135deg, #1c87a1, #2a5298);
-        width: 600px;
-        height: 900px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #1c87a1, #2a5298);
+    width: 600px;
+    height: 900px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-    .basic {
-    
-        /* margin: 0;
+
+.basic {
+
+    /* margin: 0;
         font-family: Arial, sans-serif;
         background: linear-gradient(135deg, #1c87a1, #2a5298);
         width: 600px;
@@ -24,79 +25,89 @@
         display: flex;
         justify-content: center;
         align-items: center; */
-        /* min-height: 100vh; */
-    }
+    /* min-height: 100vh; */
+}
 
-    .form{
-        /* border: 2px solid black; */
-        
-    }
-    .container {
-        border: 2px solid black;
+.form {
+    /* border: 2px solid black; */
 
-        background: #ffffff;
-        padding: 30px;
-        border: 2px solid black;
-        border-radius: 16px;
-        width: 20px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    }
+}
 
-    h2 {
-        text-align: center;
-        margin-bottom: 20px;
-        color: rgb(16, 16, 99);
-    }
+.container {
+    border: 2px solid black;
 
-    .field {
-        margin-bottom: 15px;
-    }
+    background: #ffffff;
+    padding: 30px;
+    border: 2px solid black;
+    border-radius: 16px;
+    width: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
 
-    label {
-        display: block;
-        margin-bottom: 5px;
-        font-size: 20px;
-        color: #333;
-    }
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: rgb(16, 16, 99);
+}
 
-    input, select {
-        width: 90%;
-        padding: 10px;
-        color: rgb(28, 180, 180);
-        border: 2px solid #ccc;
-        border-radius: 8px;
-        outline: none;
-        transition: 0.3s;
-        font-size: 15px;
-    }
+.field {
+    margin-bottom: 15px;
+}
 
-    input:focus, select:focus {
-        border-color: #112952;
-        box-shadow: 0 0 5px rgba(42,82,152,0.4);
-    }
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 20px;
+    color: #333;
+}
 
-    .row {
-        display: flex;
-        
-    }
+input,
+select {
+    width: 90%;
+    padding: 10px;
+    color: rgb(28, 180, 180);
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    transition: 0.3s;
+    font-size: 15px;
+}
 
-    .row .field {
-        flex: 1;
-    }
+input:focus,
+select:focus {
+    border-color: #112952;
+    box-shadow: 0 0 5px rgba(42, 82, 152, 0.4);
+}
 
-    button {
-        width: 40%;
-        padding: 12px;
-        background: #183669;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-size: 16px;
-        cursor: pointer;
-        transition: 0.3s;
-        margin-bottom: 4px;
-    }
+.row {
+    display: flex;
 
-    button:hover {
-        background: rgba(7, 30, 70, 0.308);
-    }
+}
+
+.row .field {
+    flex: 1;
+}
+
+button {
+    width: 40%;
+    padding: 12px;
+    background: #183669;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-bottom: 4px;
+}
+
+button:hover {
+    background: rgba(7, 30, 70, 0.308);
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 15px;
+    text-align: center;
+}
