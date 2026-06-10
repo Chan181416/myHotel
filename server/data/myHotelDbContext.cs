@@ -50,22 +50,10 @@ namespace server.Data
            .HasForeignKey(r => r.RegisteredsId)
            .OnDelete(DeleteBehavior.Cascade);
 
-            // modelBuilder.Entity<Role>().HasData(
-            //     new Role
-            //     {
-            //         Id = Guid.Parse("11111111-1111-1111-1111-111111111111"),
-            //         Name = "דוד",
-            //         IdNumber = 123456,
-            //         Code = 2
-            //     }
-            // );
-
-            // base.OnModelCreating(modelBuilder);
-
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=localhost, 1434;Database=Hotel;User Id=SA;Password=1234567,Cb;MultipleActiveResultSets=true;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer("Server=localhost, 1434;Database=Hotel;User Id=SA;Password=1234567!Cb;MultipleActiveResultSets=true;TrustServerCertificate=True;");
         }
     }
 }
