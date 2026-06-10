@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./DataBase.css";
 import { Navigate, useNavigate } from "react-router-dom";
-// import { floor } from "firebase/firestore/pipelines";
 
 interface Condition {
   option: string;
@@ -331,27 +330,7 @@ export default function DataBase() {
       return;
     }
 
-    // שמירה לכל הטבלאות
-    // try {
-    //   for (const role of roles) {
-    //     const res = await fetch("http://localhost:5044/AddRole", {
-    //       method: "POST",
-    //       headers: { "Content-Type": "application/json" },
-    //       body: JSON.stringify(role),
-    //     });
-    //     if (!res.ok) {
-    //       const text = await res.text();
-    //       setMessage("Global", `Error saving role: ${text}`);
-    //       return;
-    //     }
-    //   }
 
-    //   console.log("Global save:", { roles, priceLists, conditions, rooms });
-    //   setMessage("Global", "All data saved successfully!");
-    // } catch (err) {
-    //   console.error(err);
-    //   setMessage("Global", "Error saving data: network or server problem.");
-    // }
   };
 
   return (
@@ -359,85 +338,87 @@ export default function DataBase() {
       {/* Roles */}
       <div className="container fullWidth">
         <h2>עובדים</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>שם</th>
-              <th>מספר זהות</th>
-              <th>קוד</th>
-            </tr>
-          </thead>
-          <tbody>
-            {roles.map((row, idx) => (
-              <tr key={idx}>
-                <td>
-                  <input
-                    type="text"
-                    value={row.name}
-                    onChange={(e) =>
-                      handleInputChange(e, idx, roles, setRoles, "name")
-                    }
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    inputMode="numeric"
-                    maxLength={9}
-                    placeholder="9 digits:"
-                    value={row.idNumber || ""}
-                    onChange={(e) => {
-                      const value = e.target.value.replace(/\D/g, "");
-                      if (value.length <= 9) {
-                        handleInputChange(
-                          {
-                            target: {
-                              value: value === "" ? "" : Number(value)
-                            }
-                          },
-                          idx,
-                          roles,
-                          setRoles,
-                          "idNumber"
-                        );
+        <div className="scrollableTable">
+          <table>
+            <thead>
+              <tr>
+                <th>שם</th>
+                <th>מספר זהות</th>
+                <th>קוד</th>
+              </tr>
+            </thead>
+            <tbody>
+              {roles.map((row, idx) => (
+                <tr key={idx}>
+                  <td>
+                    <input
+                      type="text"
+                      value={row.name}
+                      onChange={(e) =>
+                        handleInputChange(e, idx, roles, setRoles, "name")
                       }
-                    }}
-                  />
-                </td>
-                <td>
-                  <div className="codeToggle">
-                    {[1, 2].map((num) => (
-                      <button
-                        key={num}
-                        className={row.code === num ? "active" : ""}
-                        onClick={() =>
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      maxLength={9}
+                      placeholder="9 digits:"
+                      value={row.idNumber || ""}
+                      onChange={(e) => {
+                        const value = e.target.value.replace(/\D/g, "");
+                        if (value.length <= 9) {
                           handleInputChange(
-                            { target: { value: num } } as any,
+                            {
+                              target: {
+                                value: value === "" ? "" : Number(value)
+                              }
+                            },
                             idx,
                             roles,
                             setRoles,
-                            "code"
-                          )
+                            "idNumber"
+                          );
                         }
-                      >
-                        {num}
-                      </button>
-                    ))}
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <button
-          onClick={() =>
-            addRow(setRoles, roles, { name: "", idNumber: 0, code: 1 })
-          }
-        >
-          הוסף
-        </button>
-        <button onClick={handleSaveRoles}>שמור</button>
-        {rolesMessage && <p className="saveMessage">{rolesMessage}</p>}
+                      }}
+                    />
+                  </td>
+                  <td>
+                    <div className="codeToggle">
+                      {[1, 2].map((num) => (
+                        <button
+                          key={num}
+                          className={row.code === num ? "active" : ""}
+                          onClick={() =>
+                            handleInputChange(
+                              { target: { value: num } } as any,
+                              idx,
+                              roles,
+                              setRoles,
+                              "code"
+                            )
+                          }
+                        >
+                          {num}
+                        </button>
+                      ))}
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <button
+            onClick={() =>
+              addRow(setRoles, roles, { name: "", idNumber: 0, code: 1 })
+            }
+          >
+            הוסף
+          </button>
+          <button onClick={handleSaveRoles}>שמור</button>
+          {rolesMessage && <p className="saveMessage">{rolesMessage}</p>}
+        </div>
       </div>
 
       {/* PriceList + Conditions + Rooms */}

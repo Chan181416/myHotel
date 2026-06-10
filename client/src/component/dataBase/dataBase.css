@@ -29,7 +29,7 @@
     background: white;
     border-radius: 18px;
     padding: 20px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
     overflow: hidden;
 }
 
@@ -44,6 +44,25 @@ h2 {
     text-align: center;
     color: #183669;
     margin-bottom: 15px;
+}
+
+/* .scrollableTable table {
+  display: block;
+  width: 100%;
+} */
+
+.scrollableTable {
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: auto;
+    width: 100%;
+}
+
+.scrollableTable th,
+.scrollableTable td {
+    min-width: 100px;
+    /* או כל גודל שמתאים */
+    border: 1px solid #ccc;
 }
 
 /* טבלאות */
@@ -90,7 +109,7 @@ input[type="checkbox"] {
 /* focus */
 input:focus {
     border-color: #1c87a1;
-    box-shadow: 0 0 6px rgba(28,135,161,0.4);
+    box-shadow: 0 0 6px rgba(28, 135, 161, 0.4);
     outline: none;
 }
 
@@ -112,23 +131,23 @@ button:hover {
 }
 
 .globalSaveContainer {
-  text-align: center;
-  margin-top: 20px;
+    text-align: center;
+    margin-top: 20px;
 }
 
 .globalSaveBtn {
-  padding: 14px 28px;
-  font-size: 18px;
-  background-color: #183669;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: 0.3s;
+    padding: 14px 28px;
+    font-size: 18px;
+    background-color: #183669;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
 .globalSaveBtn:hover {
-  background-color: rgba(7, 30, 70, 0.5);
+    background-color: rgba(7, 30, 70, 0.5);
 }
 
 .globalSaveBtn:disabled {
@@ -138,31 +157,30 @@ button:hover {
 }
 
 .saveMessage {
-  margin-top: 10px;
-  color: black;
-  font-weight: bold;
-  font-size: 16px;
+    margin-top: 10px;
+    color: black;
+    font-weight: bold;
+    font-size: 16px;
 }
 
 .codeToggle {
-  display: flex;
-  gap: 4px;
+    display: flex;
+    gap: 4px;
 }
 
 .codeToggle button {
-  flex: 1;
-  padding: 6px 0;
-  border: 1px solid #ccc;
-  background-color: #fff;
-  cursor: pointer;
-  font-size: 14px;
-  border-radius: 4px;
-  transition: background-color 0.2s;
+    flex: 1;
+    padding: 6px 0;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
 }
 
 .codeToggle button.active {
-  background-color: #1c86a1d2;
-  color: white;
-  border-color: rgb(133, 9, 9);
+    background-color: #1c86a1d2;
+    color: white;
+    border-color: rgb(133, 9, 9);
 }
-

@@ -205,7 +205,7 @@ function Basis() {
             case "id":
                 return /^\d{9}$/.test(value) ? "" : "תעודת זהות חייבת להכיל 9 ספרות";
             case "name":
-                return /^[א-תa-zA-Z\s]+$/.test(value.trim()) ? "" : "שם חייב להכיל אותיות בלבד";
+                return /^[א-תa-zA-Z\s]+$/.test(value.trim()) ? "" : "שם לא תקין";
             case "phone":
                 return /^0\d{9}$/.test(value) ? "" : "מספר טלפון לא תקין";
             case "email":
