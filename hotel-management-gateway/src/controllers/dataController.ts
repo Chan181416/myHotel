@@ -75,12 +75,13 @@
 //     res.status(500).json({ message: error.message });
 //   }
 // };
-// controller/dataController.ts
-// controller/dataController.ts
+
+
+
 import axios from "axios";
 import { Request, Response } from "express";
 import { processBooking } from "../services/bookingService";
-
+import {Registereds,RoomDB,RoomLocation} from "../services/types"
 // טיפוס עבור הנתונים שמגיעים מהלקוח
 interface FormData {
   id?: string;
@@ -93,34 +94,11 @@ interface FormData {
   guests: number;
 }
 
-// טיפוסים לנתונים שמגיעים מ-C#
-interface RoomDB {
-  id: string;
-  roomNum: number;
-  floor: number;
-  sumbed: number;
-  capacity: number;
-  seaView: boolean;
-  conditionId: string;
-  // ... אפשר להוסיף שדות נוספים לפי הצורך
-}
-
-interface RoomLocation {
-  id: string;
-  rooms: string;
-  registeredsId: string;
-}
-
-interface Registereds {
-  id: string;
-  event?: {
-    event: string;
-  };
-}
 
 export const loadData = async (req: Request, res: Response) => {
   try {
     const formData: FormData = req.body;
+console.log(formData);
 
     // 🔹 שמירת הערכים המקוריים
     const originalTripType = formData.tripType;
@@ -156,7 +134,7 @@ export const loadData = async (req: Request, res: Response) => {
     const [registeredsResponse, roomsResponse, roomLocationsResponse] = await Promise.all([
       axios.get<Registereds[]>("http://localhost:5044/Registereds"),
       axios.get<RoomDB[]>("http://localhost:5044/RoomDB"),
-      axios.get<RoomLocation[]>("http://localhost:5044/RoomLocation")
+      axios.get<RoomLocation[]>("http://localhost:5044/api/RoomLocation")
     ]);
 
     const registereds = registeredsResponse.data;
@@ -192,3 +170,5 @@ export const loadData = async (req: Request, res: Response) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export {};

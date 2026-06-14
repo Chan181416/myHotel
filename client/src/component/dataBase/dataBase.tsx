@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./DataBase.css";
 import { Navigate, useNavigate } from "react-router-dom";
 
+
 interface Condition {
   option: string;
   price: number;
@@ -229,9 +230,7 @@ export default function DataBase() {
         );
 
         if (!response.ok) {
-
           const errorText = await response.text();
-
           setMessage(
             "Conditions",
             `Error saving condition: ${errorText}`
@@ -240,14 +239,11 @@ export default function DataBase() {
           return;
         }
       }
-
       setMessage(
         "Conditions",
         "Conditions saved successfully!"
       );
-
     }
-
     catch (error) {
 
       console.log(error);
@@ -267,7 +263,19 @@ export default function DataBase() {
     try {
 
       for (const room of rooms) {
+        const originalRoomType = room.extrta;
 
+        let conditionId: string | null = null;
+        try {
+          const conditionResponse = await fetch(
+            `http://localhost:5044/Condition/idbyoption/${encodeURIComponent(originalRoomType || "")}`
+          );
+          conditionId = conditionResponse.data;
+        }
+        catch (err) {
+          console.warn(`Condition '${originalRoomType}' לא נמצא. המשך עם null.`);
+        }
+        room.extrta =conditionId ;
         const response = await fetch(
           "http://localhost:3000/api/proxy/RoomDB",
           {
