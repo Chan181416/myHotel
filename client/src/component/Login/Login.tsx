@@ -140,7 +140,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loginUser, logout } from "../../api/userSlice";
-import "./login.css";
+import "./Login.css";
 
 export default function Login() {
   const [username, setUsername] = useState("");

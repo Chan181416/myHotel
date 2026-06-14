@@ -1,8 +1,44 @@
-#hotel-management-gateway
-FROM node:18
+# #hotel-management-gateway
+# FROM node:20-alpine
+# WORKDIR /app
+# COPY package.json ./
+# RUN npm install
+# COPY . .
+# EXPOSE 3000
+# CMD ["node", "src/server.ts"]
+
+
+# ---------- Build stage ----------
+FROM node:18-alpine AS builder
+
 WORKDIR /app
-COPY package.json ./
+
+# Install dependencies
+COPY package*.json ./
 RUN npm install
+
+# Copy source
 COPY . .
+
+# Build TypeScript
+RUN npm run build
+
+
+# ---------- Production stage ----------
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Install only production dependencies
+COPY package*.json ./
+RUN npm install --omit=dev
+
+# Copy build output
+COPY --from=builder /app/dist ./dist
+
+# If needed: copy static files / config
+# COPY --from=builder /app/public ./public
+
 EXPOSE 3000
-CMD ["node", "app.js"]
+
+CMD ["node", "dist/server.js"]

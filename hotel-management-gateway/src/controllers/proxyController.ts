@@ -106,7 +106,7 @@ import { Request, Response } from "express";
 export const addRole = async (req: Request, res: Response) => {
   try {
     const response = await axios.post(
-      "http://localhost:5044/api/Role/AddRole",
+      `${process.env.CSHARP_API}/api/Role/AddRole`,
       req.body
     );
 
@@ -126,7 +126,7 @@ export const addPriceList = async (req: Request, res: Response) => {
     console.log(req.body);
 
     const response = await axios.post(
-      "http://localhost:5044/PricesList",
+      `${process.env.CSHARP_API}/PricesList`,
       req.body
     );
 
@@ -153,7 +153,7 @@ export const addPriceList = async (req: Request, res: Response) => {
 export const addCondition = async (req: Request, res: Response) => {
   try {
     const response = await axios.post(
-      "http://localhost:5044/Condition",
+      `${process.env.CSHARP_API}/Condition`,
       req.body
     );
 
@@ -170,7 +170,7 @@ export const addCondition = async (req: Request, res: Response) => {
 export const addRoom = async (req: Request, res: Response) => {
   try {
     const response = await axios.post(
-      "http://localhost:5044/RoomDB",
+      `${process.env.CSHARP_API}/RoomDB`,
       req.body
     );
 

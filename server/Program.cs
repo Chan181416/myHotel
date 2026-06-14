@@ -3,12 +3,22 @@ using server.Model;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+Console.WriteLine("CONFIG VIEW:");
+Console.WriteLine(builder.Configuration.GetDebugView());
 
-// DbContext
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+Console.WriteLine(connectionString);
+
+if (string.IsNullOrEmpty(connectionString))
+{
+    throw new Exception("DefaultConnection is missing in appsettings.json");
+}
+
 builder.Services.AddDbContext<MyHotelDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("MyHotelDbContext")));
+    options.UseSqlServer(connectionString)
+);
 
-// Controllers
 builder.Services.AddControllers();
 
 // CORS
@@ -23,13 +33,11 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Swagger
 builder.Services.AddSwaggerGen();
 builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 
-// Swagger רק בסביבת פיתוח
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -39,33 +47,39 @@ if (app.Environment.IsDevelopment())
         c.RoutePrefix = string.Empty;
     });
 }
+//app.UseHttpsRedirection();
 
-app.UseHttpsRedirection();
-
-// CORS חייב להיות לפני Authorization
 app.UseCors("AllowFrontend");
 
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.MapGet("/", () => "Server is running");
 app.MapControllers();
 
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<MyHotelDbContext>();
-
-    if (!context.Roles.Any())
+    try
     {
-        context.Roles.Add(new Role
+        context.Database.Migrate();
+        if (!context.Roles.Any())
         {
-            Id = Guid.NewGuid(),
-            Name = "דוד",
-            IdNumber = 123456,
-            Code = 2
-        });
+            context.Roles.Add(new Role
+            {
+                Id = Guid.NewGuid(),
+                Name = "דוד",
+                IdNumber = 123456,
+                Code = 2
+            });
 
-        context.SaveChanges();
+            context.SaveChanges();
+        }
     }
-}
+    catch (Exception ex)
+    {
+        Console.WriteLine("DB INIT ERROR: " + ex.Message);
 
+    }
+
+}
 app.Run();

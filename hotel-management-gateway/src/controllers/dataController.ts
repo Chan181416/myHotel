@@ -108,7 +108,7 @@ console.log(formData);
     let tripTypeId: string | null = null;
     try {
       const eventResponse = await axios.get<string>(
-        `http://localhost:5044/PricesList/idbyevent/${encodeURIComponent(originalTripType || "")}`
+        `${process.env.CSHARP_API}/PricesList/idbyevent/${encodeURIComponent(originalTripType || "")}`
       );
       tripTypeId = eventResponse.data;
     } catch (err) {
@@ -120,7 +120,7 @@ console.log(formData);
     let conditionId: string | null = null;
     try {
       const conditionResponse = await axios.get<string>(
-        `http://localhost:5044/Condition/idbyoption/${encodeURIComponent(originalRoomType || "")}`
+        `${process.env.CSHARP_API}/Condition/idbyoption/${encodeURIComponent(originalRoomType || "")}`
       );
       conditionId = conditionResponse.data;
     } catch (err) {
@@ -132,9 +132,9 @@ console.log(formData);
 
     // 🔹 שליפת נתונים מהשרת
     const [registeredsResponse, roomsResponse, roomLocationsResponse] = await Promise.all([
-      axios.get<Registereds[]>("http://localhost:5044/Registereds"),
-      axios.get<RoomDB[]>("http://localhost:5044/RoomDB"),
-      axios.get<RoomLocation[]>("http://localhost:5044/api/RoomLocation")
+      axios.get<Registereds[]>(`${process.env.CSHARP_API}/Registereds`),
+      axios.get<RoomDB[]>(`${process.env.CSHARP_API}/RoomDB`),
+      axios.get<RoomLocation[]>(`${process.env.CSHARP_API}/api/roomLocation`)
     ]);
 
     const registereds = registeredsResponse.data;

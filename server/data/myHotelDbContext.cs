@@ -72,10 +72,14 @@ namespace server.Data
             // base.OnModelCreating(modelBuilder);
 
         }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Server=localhost, 1434;Database=Hotel;User Id=SA;Password=1234567,Cb;MultipleActiveResultSets=true;TrustServerCertificate=True;");
-        }
+        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        // {
+        //     var connectionString =
+        //    Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection");
+        //     Console.WriteLine(connectionString);
+        //     optionsBuilder.UseSqlServer(connectionString);
+        //     //             optionsBuilder.UseSqlServer("Server=localhost, 1434;Database=Hotel;User Id=SA;Password=1234567!Cb;MultipleActiveResultSets=true;TrustServerCertificate=True;");
+        // }
     }
 }
 

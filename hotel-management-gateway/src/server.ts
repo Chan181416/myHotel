@@ -31,7 +31,9 @@
 
 import dotenv from "dotenv";
 dotenv.config();
-
+import roleRoutes from "./routes/Role.routes";
+import dataRoutes from "./routes/dataRoutes";
+import proxyRoutes from "./routes/proxyRoutes";
 import express from "express";
 import cors from "cors";
 
@@ -41,14 +43,14 @@ app.use(cors());
 app.use(express.json());
 
 // Routes ישנים
-import roleRoutes from "./routes/Role.routes";
-import dataRoutes from "./routes/dataRoutes";
-import proxyRoutes from "./routes/proxyRoutes";
 
+app.get('/', (req, res)=>{
+  res.status(200).send('server works')
+})
 // app נוסף (registereds)
-import registeredApp from "./app";
+// import registeredApp from "./app";
 
-app.use(registeredApp);
+// app.use(registeredApp);
 
 // Register routes
 app.use("/api/Role", roleRoutes);

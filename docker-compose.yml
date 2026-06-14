@@ -1,27 +1,35 @@
-#docker-compose.yml
-version: '3.9'
+
 
 services:
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: myhotel_sql
     environment:
-      SA_PASSWORD: "YourStrong!Passw0rd"
+      SA_PASSWORD: "1234567!Cb"
       ACCEPT_EULA: "Y"
     ports:
-      - "1433:1433"
+      - "1434:1433"
     volumes:
       - sql_data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c '</dev/tcp/localhost/1433'"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 90s
 
   server:
     build: ./server
     container_name: myhotel_server
     depends_on:
-      - sqlserver
+        sqlserver:
+          condition: service_healthy
     environment:
-      ConnectionStrings__DefaultConnection: "Server=sqlserver;Database=Hotel;User Id=sa;Password=1234567,Cb;"
+      SERVER_URL: http://server:5044
+      ASPNETCORE_URLS: http://+:5044
+      ConnectionStrings__DefaultConnection: "Server=sqlserver;Database=Hotel;User Id=sa;Password=1234567!Cb;MultipleActiveResultSets=true;Encrypt=False;TrustServerCertificate=True;"
     ports:
-      - "1434:1434"
+      - "5011:5044"
 
   gateway:
     build: ./hotel-management-gateway
@@ -29,7 +37,7 @@ services:
     depends_on:
       - server
     ports:
-      - "3000:3000"
+      - "3001:3000"
 
   client:
     build: ./client
