@@ -23,9 +23,7 @@ interface RoomDB {
   roomNum: number;
   floor: number;
   beds: number;
-  onSea: boolean;
-  extrta: boolean;
-  // occupied?: string;
+  condition: string;
 }
 
 export default function DataBase() {
@@ -263,19 +261,19 @@ export default function DataBase() {
     try {
 
       for (const room of rooms) {
-        const originalRoomType = room.extrta;
+        // const originalRoomType = room.condition;
 
-        let conditionId: string | null = null;
-        try {
-          const conditionResponse = await fetch(
-            `http://localhost:5044/Condition/idbyoption/${encodeURIComponent(originalRoomType || "")}`
-          );
-          conditionId = conditionResponse.data;
-        }
-        catch (err) {
-          console.warn(`Condition '${originalRoomType}' לא נמצא. המשך עם null.`);
-        }
-        room.extrta =conditionId ;
+        // let conditionId :String || null;
+        // try {
+        //   const conditionResponse = await fetch(
+        //     `http://localhost:5044/Condition/idbyoption/${encodeURIComponent(originalRoomType)}`
+        //   );
+        //   conditionId = conditionResponse.json;
+        // }
+        // catch (err) {
+        //   console.warn(`Condition '${originalRoomType}' לא נמצא. המשך עם null.`);
+        // }
+        // room.condition = conditionId;
         const response = await fetch(
           "http://localhost:3000/api/proxy/RoomDB",
           {
@@ -337,10 +335,7 @@ export default function DataBase() {
       setMessage("Global", "All Codes in Roles must be greater than 0.");
       return;
     }
-
-
   };
-
   return (
     <div id="welcome">
       {/* Roles */}
@@ -618,7 +613,6 @@ export default function DataBase() {
                 <th>מספר חדר</th>
                 <th>קומה</th>
                 <th>מספר מיטות</th>
-                <th>נוף לים</th>
                 <th>תוספת</th>
               </tr>
             </thead>
@@ -685,33 +679,19 @@ export default function DataBase() {
                       }
                     />
                   </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      checked={row.onSea}
-                      onChange={(e) =>
-                        handleInputChange(
-                          e,
-                          idx,
-                          rooms,
-                          setRooms,
-                          "onSea"
-                        )
-                      }
-                    />
-                  </td>
+              
 
                   <td>
                     <input
                       type="checkbox"
-                      checked={row.extrta}
+                      value={row.condition}
                       onChange={(e) =>
                         handleInputChange(
                           e,
                           idx,
                           rooms,
                           setRooms,
-                          "extrta"
+                          "condition"
                         )
                       }
                     />
@@ -729,8 +709,7 @@ export default function DataBase() {
               addRow(setRooms, rooms, {
                 roomNum: 0,
                 floor: 0,
-                onSea: false,
-                extrta: false
+                condition: ""
               })
             }
           >
