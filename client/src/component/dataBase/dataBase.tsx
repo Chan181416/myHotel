@@ -664,7 +664,7 @@ export default function DataBase() {
                   <td>
                     <input
                       type="number"
-                      value={row.floor}
+                      value={row.beds}
                       onChange={(e) =>
                         handleInputChange(
                           e,
