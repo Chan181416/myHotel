@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./dataBase.css";
 import { Navigate, useNavigate } from "react-router-dom";
 
+const baseUrl = import.meta.env.VITE_API_URL;
 
 interface Condition {
   option: string;
@@ -140,7 +141,7 @@ export default function DataBase() {
 
     try {
       for (const role of roles) {
-        const response = await fetch("http://localhost:3000/api/proxy/Role/AddRole", {
+        const response = await fetch(`${baseUrl}/api/proxy/Role/AddRole`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(role),
@@ -166,7 +167,7 @@ export default function DataBase() {
     try {
       for (const price of priceLists) {
         const response = await fetch(
-          "http://localhost:3000/api/proxy/PricesList",
+          `${baseUrl}/api/proxy/PricesList`,
           {
             method: "POST",
             headers: {
@@ -217,7 +218,7 @@ export default function DataBase() {
       for (const condition of conditions) {
 
         const response = await fetch(
-          "http://localhost:3000/api/proxy/Condition",
+          `${baseUrl}/api/proxy/Condition`,
           {
             method: "POST",
             headers: {
@@ -275,7 +276,7 @@ export default function DataBase() {
         // }
         // room.condition = conditionId;
         const response = await fetch(
-          "http://localhost:3000/api/proxy/RoomDB",
+          `${baseUrl}0/api/proxy/RoomDB`,
           {
             method: "POST",
             headers: {
@@ -679,7 +680,7 @@ export default function DataBase() {
                       }
                     />
                   </td>
-              
+
 
                   <td>
                     <input

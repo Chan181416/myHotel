@@ -56,6 +56,7 @@ app.UseAuthorization();
 app.MapGet("/", () => "Server is running");
 app.MapControllers();
 
+
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<MyHotelDbContext>();

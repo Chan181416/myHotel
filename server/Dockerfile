@@ -35,8 +35,8 @@ WORKDIR /app
 COPY --from=build /app/out ./
 
 ENV ASPNETCORE_URLS=http://0.0.0.0:5044
+ENV ASPNETCORE_ENVIRONMENT=Development
 
 EXPOSE 5044
 
 ENTRYPOINT ["dotnet", "server.dll"]
-

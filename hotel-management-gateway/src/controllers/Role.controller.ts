@@ -23,7 +23,7 @@ export const getByNameAndId = async (req: Request, res: Response) => {
 
   try {
     const response = await api.get(
-      `Role/getByNameAndId/${username}/${idNumber}`
+      `/api/Role/getByNameAndId/${username}/${idNumber}`
     );
 
     res.status(200).json(response.data);

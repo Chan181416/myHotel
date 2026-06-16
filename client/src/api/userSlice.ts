@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
+const baseUrl = import.meta.env.VITE_API_URL;
 // login async thunk
 export const loginUser = createAsyncThunk(
   "user/loginUser",
   async ({ username, idNumber }, thunkAPI) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/Role/getByNameAndId/${username}/${idNumber}`, {
+      const response = await fetch(`${baseUrl}/api/Role/getByNameAndId/${username}/${idNumber}`, {
         method: "GET",
       });
 

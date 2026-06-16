@@ -115,6 +115,7 @@ namespace server.Controllers
         [HttpGet("getByNameAndId/{name}/{id}")]
         public async Task<IActionResult> getByNameAndId(string name,int id)
         {
+            Console.WriteLine($"HIT: {name} {id}");
             var role = await _context.Roles
                 .FirstOrDefaultAsync(r => r.Name == name && r.IdNumber==id);
                 

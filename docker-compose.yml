@@ -1,33 +1,26 @@
-
+version: "3.9"
 
 services:
-  sqlserver:
+
+  sql:
     image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: myhotel_sql
+    container_name: sqlserver
     environment:
       SA_PASSWORD: "1234567!Cb"
       ACCEPT_EULA: "Y"
     ports:
-      - "1434:1433"
+      - "1435:1433"
     volumes:
       - sql_data:/var/opt/mssql
-    healthcheck:
-      test: ["CMD-SHELL", "bash -c '</dev/tcp/localhost/1433'"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 90s
 
   server:
     build: ./server
     container_name: myhotel_server
     depends_on:
-        sqlserver:
-          condition: service_healthy
+      - sql
     environment:
-      SERVER_URL: http://server:5044
       ASPNETCORE_URLS: http://+:5044
-      ConnectionStrings__DefaultConnection: "Server=sqlserver;Database=Hotel;User Id=sa;Password=1234567!Cb;MultipleActiveResultSets=true;Encrypt=False;TrustServerCertificate=True;"
+      ConnectionStrings__DefaultConnection: "Server=sql,1433;Database=Hotel;User Id=sa;Password=1234567!Cb;TrustServerCertificate=True;"
     ports:
       - "5011:5044"
 
@@ -36,6 +29,9 @@ services:
     container_name: myhotel_gateway
     depends_on:
       - server
+    environment:
+      PORT: 3000
+      CSHARP_API: http://server:5044
     ports:
       - "3001:3000"
 
@@ -44,6 +40,8 @@ services:
     container_name: myhotel_client
     depends_on:
       - gateway
+    environment:
+      VITE_API_URL: http://localhost:3001
     ports:
       - "80:80"
 
