@@ -5,8 +5,6 @@ export interface RoomDB {
   floor: number;             // קומה
   conditionId: string;       // Guid ל־Condition
   sumbed: number;            // מספר מיטות בחדר
-  seaView?: boolean;         // האם מול הים (נתון שמחשבים או מגיע מה־Condition)
-  type?: string;             // סוג החדר, לדוגמה 'double' אם זוגי
 }
 
 // טיפוסים עבור RoomLocation
@@ -25,7 +23,7 @@ export interface Registereds {
   totalPrice: number;        // מחיר כולל
   priceListId: string;       // Guid ל־PricesList
   event?: PricesList;        // הקשר ל־Event
-  conditionId: number;       // Guid ל־Condition
+  conditionId: string;       // Guid ל־Condition
   condition?: Condition;     // קשר ל־Condition
   rooms?: RoomLocation[];    // רשימת חדרים שמוקצים למתארח
 }
@@ -47,10 +45,9 @@ export interface PricesList {
 // טיפוס בקשה ל־bookingService
 export interface BookingRequest {
   guests: number;
-//   startDate: string;
-//   endDate: string;
-  seaView?: boolean;
-  doubleRoom?: boolean;
+  //   startDate: string;
+  //   endDate: string;
+  enent?: string;
   preferredFloor?: number | null;
   accessibility?: boolean;
   event: string;             // Event Name
