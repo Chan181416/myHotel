@@ -263,19 +263,19 @@ export default function DataBase() {
 
       for (const room of rooms) {
 
-        const originalRoomType = room.condition;
+        // const originalRoomType = room.condition;
 
-        let conditionId :String || null;
-        try {
-          const conditionResponse = await fetch(
-            `http://localhost:5044/Condition/idbyoption/${encodeURIComponent(originalRoomType)}`
-          );
-          conditionId = conditionResponse.json;
-        }
-        catch (err) {
-          console.warn(`Condition '${originalRoomType}' לא נמצא. המשך עם null.`);
-        }
-        room.condition = conditionId;
+        // let conditionId :String | null;
+        // try {
+        //   const conditionResponse = await fetch(
+        //     `http://localhost:5044/Condition/idbyoption/${encodeURIComponent(originalRoomType)}`
+        //   );
+        //   conditionId = conditionResponse.json;
+        // }
+        // catch (err) {
+        //   console.warn(`Condition '${originalRoomType}' לא נמצא. המשך עם null.`);
+        // }
+        // room.condition = conditionId;
 
         
         const response = await fetch(

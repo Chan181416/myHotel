@@ -1,9 +1,6 @@
 import { Condition, RoomDB } from "../services/types";
 
-export function calculateScore(
-  room: RoomDB & { condition?: Condition },
-  request: any
-): number {
+export function calculateScore(room: any, request: any): number{
 
   let score = 0;
 
