@@ -198,6 +198,7 @@ function Basis() {
         phone: "",
         email: ""
     });
+    const baseUrl = import.meta.env.VITE_API_URL;
 
     // פונקציה לבדיקה בזמן אמת של כל שדה
     const validateField = (name, value) => {
@@ -261,7 +262,7 @@ function Basis() {
         if (!confirmed) return;
 
         try {
-            const response = await fetch("http://localhost:3000/api/data/loadData", {
+            const response = await fetch(`${baseUrl}/api/data/loadData`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),

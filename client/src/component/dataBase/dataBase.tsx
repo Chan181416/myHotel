@@ -254,7 +254,7 @@ export default function DataBase() {
     }
   };
 
-  /* שמירת Rooms לשרת */
+  /*$$$$$$$$$ שמירת Rooms לשרת $$$$$$$$$*/
   const handleSaveRooms = async () => {
     if (!validateRows(rooms, "Rooms")) return;
 
