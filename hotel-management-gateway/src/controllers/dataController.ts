@@ -17,7 +17,8 @@ interface FormData {
 export const loadData = async (req: Request, res: Response) => {
   try {
     const formData: FormData = req.body;
-
+console.log({formData});
+    console.log(process.env.CSHARP_API);
     const [registeredsRes, roomsRes, conditionsRes, roomLocationsRes] =
       await Promise.all([
         axios.get<Registereds[]>(`${process.env.CSHARP_API}/Registereds`),
@@ -25,7 +26,7 @@ export const loadData = async (req: Request, res: Response) => {
         axios.get<Condition[]>(`${process.env.CSHARP_API}/Condition`),
         axios.get<RoomLocation[]>(`${process.env.CSHARP_API}/api/roomLocation`)
       ]);
-
+console.log({registeredsRes, roomsRes, conditionsRes, roomLocationsRes});
     const registereds = registeredsRes.data;
     const rooms = roomsRes.data;
     const conditions = conditionsRes.data;
@@ -58,10 +59,11 @@ export const loadData = async (req: Request, res: Response) => {
       enrichedRooms,
       registeredMap
     );
+    return result;
 
-    res.json(result);
+    
 
   } catch (error: any) {
-    res.status(500).json({ message: error.message });
+   return error
   }
 };

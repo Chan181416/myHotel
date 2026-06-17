@@ -17,6 +17,7 @@
 
 import { Router } from "express";
 import axios from "axios";
+import { loadData } from "../controllers/dataController";
 
 const router = Router();
 
@@ -35,5 +36,16 @@ router.get("/getByNameAndId/:name/:id", async (req, res) => {
     res.status(500).json({ error: "Gateway failed", details: err.message });
   }
 });
+
+router.post('/loaddata', async (req, res) => {
+  try {
+    const response = await loadData(req, res);
+    res.json(response);
+  }
+  catch (err: any) {
+    res.status(500).json({ error: "Gateway failed", details: err.message });
+  }
+}
+)
 
 export default router;
