@@ -6,6 +6,7 @@ export const loginUser = createAsyncThunk(
   async ({ username, idNumber }, thunkAPI) => {
     console.log({baseUrl})
     try {
+      console.log(`loginUser called with: ${baseUrl}/api/Role/getByNameAndId/${username}/${idNumber}`, { username, idNumber });
       const response = await fetch(`${baseUrl}/api/Role/getByNameAndId/${username}/${idNumber}`, {
         method: "GET",
       });

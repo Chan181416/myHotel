@@ -22,7 +22,10 @@ app.get('/', (req, res)=>{
 // import registeredApp from "./app";
 
 // app.use(registeredApp);
-
+app.use((req, res, next) => {
+  console.log("Joker request URL:", req.originalUrl);
+  next();
+});
 // Register routes
 app.use("/api/Role", roleRoutes);
 app.use("/api/data", dataRoutes);
