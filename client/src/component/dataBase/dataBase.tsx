@@ -107,25 +107,25 @@ export default function DataBase() {
         setGlobalMessage(msg);
         break;
     }
-    setTimeout(() => {
-      switch (tableName) {
-        case "Roles":
-          setRolesMessage("");
-          break;
-        case "Price List":
-          setPriceMessage("");
-          break;
-        case "Conditions":
-          setConditionMessage("");
-          break;
-        case "Rooms":
-          setRoomMessage("");
-          break;
-        case "Global":
-          setGlobalMessage("");
-          break;
-      }
-    }, 3000);
+    // setTimeout(() => {
+    //   switch (tableName) {
+    //     case "Roles":
+    //       setRolesMessage("");
+    //       break;
+    //     case "Price List":
+    //       setPriceMessage("");
+    //       break;
+    //     case "Conditions":
+    //       setConditionMessage("");
+    //       break;
+    //     case "Rooms":
+    //       setRoomMessage("");
+    //       break;
+    //     case "Global":
+    //       setGlobalMessage("");
+    //       break;
+    //   }
+    // }, 3000);
   };
 
   /* שמירה לשרת עבור Roles */

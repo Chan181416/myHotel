@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
 
   sql:
@@ -30,10 +28,10 @@ services:
     depends_on:
       - server
     environment:
-      PORT: 3000
+      PORT: 3001
       CSHARP_API: http://server:5044
     ports:
-      - "3001:3000"
+      - "3001:3001"
 
   client:
     build: ./client
