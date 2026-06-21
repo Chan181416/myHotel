@@ -1,9 +1,9 @@
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using server.Model;
+using server.Models;
 
-namespace server.model
+namespace server.Models
 {
     public class Registereds
     {

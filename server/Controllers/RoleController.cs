@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using server.Data;
-using server.Model;
+using server.Models;
 
 namespace server.Controllers
 {
@@ -77,7 +77,8 @@ namespace server.Controllers
 
                     role.IdNumber = num;
                     break;
-                case "Code":
+
+                case "code":
                     if (!int.TryParse(newValue, out int number))
                     {
                         return BadRequest("Invalid number");
@@ -85,6 +86,7 @@ namespace server.Controllers
 
                     role.Code = number;
                     break;
+
                 default:
                     return BadRequest("Invalid field name");
             }
