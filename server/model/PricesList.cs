@@ -15,7 +15,6 @@ namespace server.model
     }
     public class PricesListDTO
     {
-       
         public int Price { get; set; }
         public string? Event { get; set; }
     }

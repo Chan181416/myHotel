@@ -17,6 +17,14 @@ namespace server.Controller
         {
             _context = context;
         }
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<PricesList>>> GetConditions(int skip = 0, int take = 10)
+        {
+            var Event = await _context.PricesLists
+                .ToListAsync();
+            return Ok(Event);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreatePrice([FromBody] PricesListDTO dto)
         {

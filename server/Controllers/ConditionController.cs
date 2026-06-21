@@ -19,15 +19,17 @@ namespace server.Controller
             _Context = context;
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Condition>>> GetConditions(int skip = 0, int take = 10)
+        public async Task<ActionResult<IEnumerable<Condition>>> GetConditions()
         {
-            return await _Context.Conditions.Skip(skip).Take(take).ToListAsync();
-        }
+            var condition = await _Context.Conditions
+                   
+                .ToListAsync();
 
+            return Ok(condition);
+            }
 
         [HttpPost]
         public async Task<ActionResult<Condition>> CreateCondition(ConditionDTO condition)
-
         {
             if (condition.Price < 0)
             {

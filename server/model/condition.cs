@@ -12,15 +12,16 @@ namespace server.Model
         public string? Option { get; set; }
         public int Price { get; set; }
 
-        public List<Registereds> Registrations { get; set; }=[];
+        public virtual List<Registereds> Registrations { get; set; } = [];
     }
-     public class ConditionDTO
+    public class ConditionDTO
     {
+        public Guid Id { get; set; }
         public string? Option { get; set; }
         public int Price { get; set; }
     }
-    
-       
+
+
 }
 
 

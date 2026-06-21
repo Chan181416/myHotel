@@ -51,11 +51,22 @@ namespace server.Controller
         public async Task<IActionResult> GetAllRooms()
         {
             var rooms = await _context.RoomsDBs
-                                      .Include(r => r.RoomLocations)
+                                   .Include(r => r.RoomLocations)
                                       .Include(r => r.Condition)
                                       .ToListAsync();
+            var hasLocation = rooms.Where(r => r.RoomLocations.Count > 0);
+            var map = rooms.Select(r => new RoomsDBDTO
+            {
+                Id = r.Id,
+                ConditionId = r.ConditionId,
+                Floor = r.Floor,
+                RoomNum = r.RoomNum,
+                Sumbed = r.Sumbed,
+                RoomLocations = r.RoomLocations.Select(rl => rl.Id).ToList()
+            });
 
-            return Ok(rooms);
+
+            return Ok(map);
         }
 
         // עדכון (נשאר כמו שהיה - לא נוגע כי אין שדות ישנים)

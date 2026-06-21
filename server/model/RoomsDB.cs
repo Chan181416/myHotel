@@ -11,25 +11,23 @@ namespace server.model
 
         public int RoomNum { get; set; }
         public int Floor { get; set; }
-        // public bool OnSea { get; set; }
-        // public bool Extrta { get; set; }
-
-        public Guid ConditionId { get; set; }
+                public Guid ConditionId { get; set; }
         [ForeignKey("ConditionId")]
         public Condition? Condition { get; set; }
 
-        public int Sumbed{ get; set; }
+        public int Sumbed { get; set; }
         public List<RoomLocation> RoomLocations { get; set; } = [];
 
     }
 
     public class RoomsDBDTO
     {
-
+        public Guid Id { get; set; }
         public int RoomNum { get; set; }
         public int Floor { get; set; }
         public Guid ConditionId { get; set; }
-        public int Sumbed{ get; set; }
+        public int Sumbed { get; set; }
+        public List<Guid> RoomLocations { get; set; } = [];
 
     }
 
