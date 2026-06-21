@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loginUser, logout } from "../../api/userSlice";
@@ -14,27 +14,18 @@ export default function Login() {
   const navigate = useNavigate();
 
   const user = useSelector((state) => state?.user);
-  const { status, error } = user;
+  const { status, error, type } = user;
 
   const isFormValid =
     username.trim().length > 0 && idNumber.trim().length > 0;
 
   const showError = touched && !isFormValid;
-
-  const handleLogin = async () => {
-    setTouched(true);
-
-    if (!isFormValid) return;
-
-    const resultAction = await dispatch(
-      loginUser({ username, idNumber })
-    );
-
-    if (loginUser.fulfilled.match(resultAction)) {
-      const type = resultAction.payload.code;
+  useEffect(() => {
+    if (status === 'succeeded') {
+      const code = type;
 
 
-      if (!type) {
+      if (!code) {
         {
           showError && (
             <div className="errorText">
@@ -43,12 +34,27 @@ export default function Login() {
           )
         }
       }
-      if (Number(type) === 1) {
+      if (Number(code) === 1) {
         navigate("/basis");
-      } else if (Number(type) === 2) {
+      } else if (Number(code) === 2) {
         navigate("/dataBase");
       }
     }
+    if (status === 'failed') {
+      console.log('error')
+    }
+  }, [status])
+
+  const handleLogin = async () => {
+    setTouched(true);
+
+    if (!isFormValid) return;
+
+    const resultAction = dispatch(
+      loginUser({ username, idNumber })
+    );
+
+
   };
 
   const handleLogout = () => {

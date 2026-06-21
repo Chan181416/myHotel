@@ -4,6 +4,7 @@ const baseUrl = import.meta.env.VITE_API_URL;
 export const loginUser = createAsyncThunk(
   "user/loginUser",
   async ({ username, idNumber }, thunkAPI) => {
+    console.log({baseUrl})
     try {
       const response = await fetch(`${baseUrl}/api/Role/getByNameAndId/${username}/${idNumber}`, {
         method: "GET",
