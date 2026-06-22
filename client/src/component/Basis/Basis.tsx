@@ -102,8 +102,7 @@ function Basis() {
 
     return (
         <div id="welcome">
-            <div id="container">
-                <div className="form">
+            <div className="contain">
                     <h2>רישום אורח למלון</h2>
 
                     <div className="row">
@@ -208,7 +207,6 @@ function Basis() {
                     <button onClick={handleSubmit} disabled={!isFormValid}>
                         לאישור
                     </button>
-                </div>
             </div>
         </div>
     );
