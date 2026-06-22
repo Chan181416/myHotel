@@ -14,5 +14,6 @@ namespace server.Tests.Helpers
 
             return new MyHotelDbContext(options);
         }
+        
     }
 }
