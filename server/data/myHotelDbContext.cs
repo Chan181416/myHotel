@@ -2,8 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 
-using server.model;
-using server.Model;
+using server.Models;
 
 namespace server.Data
 {

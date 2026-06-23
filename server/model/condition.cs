@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using server.model;
+using server.Models;
 
 
-namespace server.Model
+namespace server.Models
 {
     public class Condition
     {

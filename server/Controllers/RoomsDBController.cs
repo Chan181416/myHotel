@@ -1,13 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using server.Data;
-using server.model;
+using server.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using System;
 
-namespace server.Controller
+namespace server.Controllers
 {
     [ApiController]
     [Route("[controller]")]
