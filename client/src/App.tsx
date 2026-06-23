@@ -13,7 +13,7 @@ const router = createBrowserRouter([{
   element: <Root />,
   children: [
 
-    { index: true, element: <Login /> },  // / → Basis
+    { index: true, element: <Login /> }, 
 
 
 
