@@ -117,4 +117,6 @@ export const loadData = async (req: Request, res: Response) => {
             message: error.message
         });
     }
+
+    // רק לבדוק כאן למה הוא הוריד את הevent להזכיר שזה חלק מה דרך שהוא צריך לעבור הוא מקבל guid לא string
 };
