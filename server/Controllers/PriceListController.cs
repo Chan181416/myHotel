@@ -17,6 +17,7 @@ namespace server.Controller
         {
             _context = context;
         }
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PricesList>>> GetConditions(int skip = 0, int take = 10)
         {
@@ -87,7 +88,19 @@ namespace server.Controller
             if (price == 0) return NotFound();
             return Ok(price);
         }
+        [HttpGet("eventById{id}")]
+        public async Task<IActionResult> Get(Guid id)
+        {
+            var eventt = await _context.PricesLists
+                                      .Where(p => p.IdPrice == id)
+                                      .Select(p => p.Event)
+                                      .FirstOrDefaultAsync();
 
+            if (eventt == null)
+                return NotFound();
+
+            return Ok(eventt);
+        }
         [HttpGet("idbyevent/{eventName}")]
         public async Task<IActionResult> GetIdByEvent(string eventName)
         {

@@ -4,6 +4,7 @@ export interface RoomDB {
   floor: number;
   conditionId: string;
   sumbed: number;
+  roomlocation:string []
 }
 
 export interface RoomLocation {

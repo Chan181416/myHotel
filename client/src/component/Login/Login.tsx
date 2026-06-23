@@ -25,24 +25,22 @@ export default function Login() {
       const code = type;
 
 
-      if (!code) {
-        {
-          showError && (
-            <div className="errorText">
-              אתה עוד לא רשום פנה למנהל
-            </div>
-          )
-        }
-      }
+      // if (!code) {
+      //   {
+      //     showError && (
+      //       <div className="errorText">
+      //         אתה עוד לא רשום פנה למנהל
+      //       </div>
+      //     )
+      //   }
+      // }
       if (Number(code) === 1) {
         navigate("/basis");
       } else if (Number(code) === 2) {
         navigate("/dataBase");
       }
     }
-    if (status === 'failed') {
-      console.log('error')
-    }
+    
   }, [status])
 
   const handleLogin = async () => {
@@ -66,59 +64,69 @@ export default function Login() {
 
   return (
     <div className="page">
-      <h1 className="title">מערכת כניסה</h1>
+      <div className="loginCard">
+        <h1 className="title">מערכת כניסה</h1>
 
-      {!user.type ? (
-        <>
-          <div className="inputGroup">
-            <label>שם משתמש</label>
-            <input
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              onBlur={() => setTouched(true)}
-              className="input"
-            />
-          </div>
-
-          <div className="inputGroup">
-            <label>תעודת זהות</label>
-            <input
-              value={idNumber}
-              onChange={(e) => setIdNumber(e.target.value)}
-              onBlur={() => setTouched(true)}
-              className="input"
-            />
-          </div>
-
-          {showError && (
-            <div className="errorText">
-              יש למלא את כל השדות לפני ההמשך
+        {/* <p className="subtitle">
+          התחבר למערכת עדכון פרטי ההרשמה
+        </p> */}
+        {!user.type ? (
+          <>
+            <div className="inputGroup">
+              <label>שם משתמש</label>
+              <input
+                value={username}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setUsername(e.target.value)
+                }
+                onBlur={() => setTouched(true)}
+                className="input"
+              />
             </div>
-          )}
 
-          <button
-            onClick={handleLogin}
-            disabled={!isFormValid || status === "loading"}
-            className="loginBtn"
-          >
-            {status === "loading" ? "מתחבר..." : "כניסה למערכת"}
-          </button>
+            <div className="inputGroup">
+              <label>תעודת זהות</label>
+              <input
+                value={idNumber}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setIdNumber(e.target.value)
+                }
+                onBlur={() => setTouched(true)}
+                className="input"
+              />
+            </div>
 
-          {error && <div className="errorText">{error}</div>}
-        </>
-      ) : (
-        <div className="userBox">
-          <h3>משתמש מחובר</h3>
+            {showError && (
+              <div className="errorText">
+                יש למלא את כל השדות לפני ההמשך
+              </div>
+            )}
 
-          <p>שם משתמש: {user.username}</p>
-          <p>תעודת זהות: {user.idNumber}</p>
-          <p>סוג משתמש: {user.type}</p>
+            <button
+              onClick={handleLogin}
+              disabled={!isFormValid || status === "loading"}
+              className="loginBtn"
+            >
+              {status === "loading" ? "מתחבר..." : "כניסה למערכת"}
+            </button>
 
-          <button onClick={handleLogout} className="logoutBtn">
-            התנתקות
-          </button>
-        </div>
-      )}
+            {error && <div className="errorText">{error}</div>}
+          </>
+        ) : (
+          <div className="userBox">
+            <h3>משתמש מחובר</h3>
+
+            <p>שם משתמש: {user.username}</p>
+            <p>תעודת זהות: {user.idNumber}</p>
+            <p>סוג משתמש: {user.type}</p>
+
+            <button onClick={handleLogout} className="logoutBtn">
+              התנתקות
+            </button>
+          </div>
+        )}
+      </div>
     </div>
+
   );
 }

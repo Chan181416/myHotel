@@ -27,6 +27,16 @@ namespace server.model
 
     public class RegisteredsCreateDTO
     {
+        public string? NumberId { get; set; }
+        public string? Name { get; set; }
+        public int SumPlace { get; set; }
+        public int TotalPrice { get; set; }
+        public Guid Event { get; set; }
+        public Guid Condition { get; set; }
+    }
+
+     public class RegisteredsCreateDTOs
+    {
         public Guid Id { get; set; }
         public string? NumberId { get; set; }
         public string? Name { get; set; }
@@ -35,6 +45,7 @@ namespace server.model
         public Guid Event { get; set; }
         public Guid Condition { get; set; }
     }
+
     public class RegisteredsHistory
     {
         [Key]

@@ -48,7 +48,10 @@ namespace server.Controllers
 
             await _context.SaveChangesAsync();
 
-            return Ok(registered);
+            return Ok(new
+            {
+                id = registered.Id
+            });
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
@@ -180,7 +183,7 @@ namespace server.Controllers
                 .Include(r => r.Rooms)        // כולל את הרשימה של החדרים
                 .ToListAsync();
 
-            var map = registereds.Select(r => new RegisteredsCreateDTO
+            var map = registereds.Select(r => new RegisteredsCreateDTOs
             {
                 Id = r.Id,
                 NumberId = r.NumberId,

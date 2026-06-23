@@ -55,7 +55,7 @@ namespace server.Controller
                                       .Include(r => r.Condition)
                                       .ToListAsync();
             var hasLocation = rooms.Where(r => r.RoomLocations.Count > 0);
-            var map = rooms.Select(r => new RoomsDBDTO
+            var map = rooms.Select(r => new RoomsDBDTOs
             {
                 Id = r.Id,
                 ConditionId = r.ConditionId,
@@ -116,6 +116,56 @@ namespace server.Controller
                 return NotFound();
 
             return Ok(room);
+        }
+        [HttpPut("add-room-location")]
+        public async Task<IActionResult> AddRoomLocation(AddRoomLocationDTO dto)
+        {
+            var room = await _context.RoomsDBs
+                .Include(r => r.RoomLocations)
+                .FirstOrDefaultAsync(r => r.Id == dto.RoomId);
+
+            if (room == null)
+                return NotFound("Room not found");
+
+            var roomLocation = await _context.RoomLocations
+                .FirstOrDefaultAsync(r => r.Id == dto.RoomLocationId);
+
+            if (roomLocation == null)
+                return NotFound("RoomLocation not found");
+
+            room.RoomLocations.Add(roomLocation);
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+        [HttpGet("allRoomsFull")]
+        public async Task<bool> AllRoomsFull()
+        {
+            var rooms = await _context.RoomsDBs
+                .Include(r => r.RoomLocations)
+                .ToListAsync();
+
+            foreach (var room in rooms)
+            {
+                if (room.RoomLocations.Count > 1)
+                    continue;
+
+                if (room.RoomLocations.Count == 1)
+                {
+                    var roomLocation = room.RoomLocations.First();
+
+                    var eventData = await _context.PricesLists
+                        .FirstOrDefaultAsync(e => e.IdPrice == roomLocation.Id);
+
+                    if (eventData != null && eventData.Event == "נופש_מלא")
+                        continue;
+                }
+
+                return false;
+            }
+
+            return true;
         }
     }
 }

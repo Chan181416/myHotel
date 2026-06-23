@@ -16,7 +16,6 @@ namespace server.Model
     }
     public class ConditionDTO
     {
-        public Guid Id { get; set; }
         public string? Option { get; set; }
         public int Price { get; set; }
     }

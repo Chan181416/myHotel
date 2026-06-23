@@ -1,110 +1,185 @@
 :root {
-    --bg1: #070b16;
-    --bg2: #0d1630;
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
 
-    --card: rgba(255, 255, 255, 0.06);
-    --card-border: rgba(255, 255, 255, 0.12);
+    --bg-start: #f8fbff;
+    --bg-end: #e9f4ff;
 
-    --text: #e5e7eb;
-    --muted: #9ca3af;
+    --card-bg: #ffffff;
+    --border: #e5e7eb;
 
-    --primary: #5b8cff;
-    --primary2: #7c5cff;
+    --text: #1f2937;
+    --text-light: #6b7280;
 
-    --danger: #ef4444;
+    --danger: #dc2626;
 
     --radius: 18px;
 }
 
-#welcome {
+* {
+    box-sizing: border-box;
+}
+
+body {
     margin: 0;
-    width: 100%;
+}
+
+#welcome {
     min-height: 100vh;
+    width: 100%;
 
     display: flex;
     justify-content: center;
     align-items: center;
 
-    font-family: Arial, sans-serif;
-    background: red !important;
-    /* background:
-        radial-gradient(circle at 10% 20%, rgba(91,140,255,0.25), transparent 35%),
-        radial-gradient(circle at 90% 80%, rgba(124,92,255,0.25), transparent 40%),
-        linear-gradient(135deg, #070b16, #0d1630); */
+    padding: 40px;
+
+    font-family: "Segoe UI", Arial, sans-serif;
+
+    background:
+        radial-gradient(circle at top right,
+            rgba(59, 130, 246, 0.15),
+            transparent 30%),
+        radial-gradient(circle at bottom left,
+            rgba(14, 165, 233, 0.15),
+            transparent 30%),
+        linear-gradient(180deg,
+            var(--bg-start),
+            var(--bg-end));
 }
 
-/* טופס כמעט מסך שלם */
 .contain {
-    width: min(1100px, 95vw);
-    min-height: 70vh;
+    width: min(1200px, 95vw);
+
+    background: var(--card-bg);
+
+    border-radius: 28px;
 
     padding: 50px;
 
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 20px;
-
-    backdrop-filter: blur(20px);
-
     box-shadow:
-        0 40px 120px rgba(0,0,0,0.6);
+        0 25px 60px rgba(0, 0, 0, 0.08);
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    border: 1px solid var(--border);
 }
 
-/* כותרת יותר “מערכת” */
 h2 {
-    font-size: 30px;
-    margin-bottom: 35px;
+    margin: 0 0 40px 0;
+
     text-align: center;
-    color: #e5e7eb;
+
+    color: var(--text);
+
+    font-size: 2rem;
+    font-weight: 700;
 }
 
-/* שדות גדולים יותר */
-input,
-select {
-    padding: 16px;
-    font-size: 15px;
-    border-radius: 12px;
-}
-
-/* ריווח חזק יותר */
-.field {
-    margin-bottom: 20px;
-}
-
-/* שורות יותר מרווחות */
 .row {
     display: flex;
-    gap: 20px;
+    gap: 24px;
 }
 
-/* כפתור יותר בולט */
+.field {
+    flex: 1;
+    margin-bottom: 24px;
+}
+
+label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: var(--text);
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+input,
+select {
+    width: 100%;
+
+    padding: 14px 16px;
+
+    border: 1px solid var(--border);
+    border-radius: 14px;
+
+    background: #fff;
+
+    color: var(--text);
+
+    font-size: 1rem;
+
+    transition:
+        border-color 0.2s,
+        box-shadow 0.2s;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+
+    border-color: var(--primary);
+
+    box-shadow:
+        0 0 0 4px rgba(37, 99, 235, 0.12);
+}
 
 button {
     width: 100%;
-    padding: 16px;
-    font-size: 16px;
-    border-radius: 12px;
-    margin-top: 15px;
 
-    background: linear-gradient(90deg, var(--primary), var(--primary2));
-    color: white;
+    margin-top: 10px;
+
+    padding: 16px;
+
     border: none;
+    border-radius: 14px;
+
+    background: var(--primary);
+
+    color: white;
+
+    font-size: 1rem;
+    font-weight: 700;
 
     cursor: pointer;
-    transition: 0.25s ease;
+
+    transition:
+        all 0.2s ease;
 }
 
-button:hover {
+button:hover:not(:disabled) {
+    background: var(--primary-hover);
     transform: translateY(-2px);
-    filter: brightness(1.05);
 }
 
 button:disabled {
-    opacity: 0.4;
+    opacity: 0.5;
     cursor: not-allowed;
-    transform: none;
+}
+
+.error-message {
+    margin-top: 6px;
+
+    color: var(--danger);
+
+    font-size: 0.85rem;
+}
+
+@media (max-width: 900px) {
+    .contain {
+        padding: 30px;
+    }
+
+    .row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+}
+
+.subtitle {
+    text-align: center;
+    color: var(--text-light);
+    margin-top: -20px;
+    margin-bottom: 35px;
 }
