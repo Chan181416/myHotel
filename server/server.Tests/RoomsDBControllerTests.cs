@@ -241,4 +241,52 @@ public class RoomDBControllerTests
 
         Assert.IsType<NotFoundResult>(result);
     }
+
+    // -----------------------------
+// UPDATE OCCUPIED - success
+// -----------------------------
+[Fact]
+public async Task UpdateOccupied_ReturnsOk_WhenRoomExists()
+{
+    var context = GetContext();
+    var controller = GetController(context);
+
+    var room = new RoomsDB
+    {
+        Id = Guid.NewGuid(),
+        RoomNum = 300,
+        Floor = 1,
+        Sumbed = 2,
+        RoomLocations = new List<RoomLocation>()
+    };
+
+    context.RoomsDBs.Add(room);
+
+    await context.SaveChangesAsync();
+
+    var result = await controller.UpdateOccupied(
+        room.Id,
+        "occupied");
+
+    var ok = Assert.IsType<OkObjectResult>(result);
+    var value = Assert.IsType<RoomsDB>(ok.Value);
+
+    Assert.Equal(room.Id, value.Id);
+}
+
+// -----------------------------
+// UPDATE OCCUPIED - not found
+// -----------------------------
+[Fact]
+public async Task UpdateOccupied_ReturnsNotFound_WhenRoomMissing()
+{
+    var context = GetContext();
+    var controller = GetController(context);
+
+    var result = await controller.UpdateOccupied(
+        Guid.NewGuid(),
+        "occupied");
+
+    Assert.IsType<NotFoundResult>(result);
+}
 }
