@@ -254,68 +254,64 @@ export default function DataBase() {
     }
   };
 
-  /* שמירת Rooms לשרת */
+  /*$$$$$$$$$ שמירת Rooms לשרת $$$$$$$$$*/
   const handleSaveRooms = async () => {
-
     if (!validateRows(rooms, "Rooms")) return;
 
     try {
-
       for (const room of rooms) {
-        // const originalRoomType = room.condition;
+        const originalCondition = room.condition;
 
-        // let conditionId :String || null;
-        // try {
-        //   const conditionResponse = await fetch(
-        //     `http://localhost:5044/Condition/idbyoption/${encodeURIComponent(originalRoomType)}`
-        //   );
-        //   conditionId = conditionResponse.json;
-        // }
-        // catch (err) {
-        //   console.warn(`Condition '${originalRoomType}' לא נמצא. המשך עם null.`);
-        // }
-        // room.condition = conditionId;
-        const response = await fetch(
-          `${baseUrl}0/api/proxy/RoomDB`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(room),
+        let conditionId: string | null = null;
+
+        if (originalCondition !== "ללא") {
+          try {
+            const conditionResponse = await fetch(
+              `${baseUrl}/Condition/idbyoption/${encodeURIComponent(originalCondition)}`
+            );
+
+            if (!conditionResponse.ok) {
+              throw new Error("Condition not found");
+            }
+
+            const data = await conditionResponse.json();
+            conditionId = data; // מניח שהשרת מחזיר GUID ישירות
+          } catch (err) {
+            console.warn(`Condition '${originalCondition}' לא נמצא. נשלח null.`);
+            conditionId = null;
           }
-        );
+        }
+
+        const payload = {
+          roomNum: room.roomNum,
+          floor: room.floor,
+          sumbed: room.beds,
+          conditionId: conditionId
+        };
+
+        const response = await fetch(`${baseUrl}/api/proxy/RoomDB`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
 
         if (!response.ok) {
-
           const errorText = await response.text();
-
-          setMessage(
-            "Rooms",
-            `Error saving room: ${errorText}`
-          );
-
+          setMessage("Rooms", `Error saving room: ${errorText}`);
           return;
         }
       }
 
-      setMessage(
-        "Rooms",
-        "Rooms saved successfully!"
-      );
-
+      setMessage("Rooms", "Rooms saved successfully!");
     }
-
     catch (error) {
-
       console.log(error);
-
-      setMessage(
-        "Rooms",
-        "Server error while saving Rooms."
-      );
+      setMessage("Rooms", "Server error while saving Rooms.");
     }
   };
+
 
   /* שמירה רגילה לכל הטבלאות ללא שליחה לשרת */
   const handleSaveTable = (state: any[], tableName: string) => {
@@ -614,7 +610,7 @@ export default function DataBase() {
                 <th>מספר חדר</th>
                 <th>קומה</th>
                 <th>מספר מיטות</th>
-                <th>תוספת</th>
+                <th>תנאי נוסף</th>
               </tr>
             </thead>
 
@@ -668,7 +664,7 @@ export default function DataBase() {
                   <td>
                     <input
                       type="number"
-                      value={row.floor}
+                      value={row.beds}
                       onChange={(e) =>
                         handleInputChange(
                           e,
@@ -681,10 +677,8 @@ export default function DataBase() {
                     />
                   </td>
 
-
                   <td>
-                    <input
-                      type="checkbox"
+                    <select
                       value={row.condition}
                       onChange={(e) =>
                         handleInputChange(
@@ -695,7 +689,11 @@ export default function DataBase() {
                           "condition"
                         )
                       }
-                    />
+                    >
+                      <option value="no">ללא</option>
+                      <option value="double">זוגי</option>
+                      <option value="seeViue">מול_הים</option>
+                    </select>
                   </td>
 
                 </tr>
