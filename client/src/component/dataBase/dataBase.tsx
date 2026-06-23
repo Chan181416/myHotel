@@ -691,7 +691,7 @@ export default function DataBase() {
                       }
                     >
                       <option value="no">ללא</option>
-                      <option value="double">זוגי</option>
+                      <option value="double">אקסטרה</option>
                       <option value="seeViue">מול_הים</option>
                     </select>
                   </td>
