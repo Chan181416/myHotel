@@ -2,11 +2,10 @@ using Microsoft.EntityFrameworkCore;
 
 using Microsoft.AspNetCore.Mvc;
 using server.Data;
-using server.Controller;
-using server.model;
-using server.Model;
+using server.Controllers;
+using server.Models;
 
-namespace server.Controller
+namespace server.Controllers
 {
     [ApiController]
     [Route("[controller]")]
