@@ -131,6 +131,46 @@ public class PricesListControllerTests
     }
 
     // -------------------------
+    // UPDATE - duplicate event
+    // -------------------------
+    [Fact]
+    public async Task UpdatePrice_ReturnsBadRequest_WhenEventAlreadyExists()
+    {
+        var context = GetDbContext();
+
+        var first = new PricesList
+        {
+            IdPrice = Guid.NewGuid(),
+            Price = 100,
+            Event = "Wedding"
+        };
+
+        var second = new PricesList
+        {
+            IdPrice = Guid.NewGuid(),
+            Price = 200,
+            Event = "Party"
+        };
+
+        context.PricesLists.Add(first);
+        context.PricesLists.Add(second);
+
+        await context.SaveChangesAsync();
+
+        var controller = GetController(context);
+
+        var dto = new PricesListDTO
+        {
+            Price = 300,
+            Event = "Party"
+        };
+
+        var result = await controller.UpdatePrice(first.IdPrice, dto);
+
+        Assert.IsType<BadRequestObjectResult>(result);
+    }
+
+    // -------------------------
     // GET price by event
     // -------------------------
     [Fact]
@@ -196,6 +236,20 @@ public class PricesListControllerTests
     }
 
     // -------------------------
+    // GET id by event - not found
+    // -------------------------
+    [Fact]
+    public async Task GetIdByEvent_ReturnsNotFound_WhenMissing()
+    {
+        var context = GetDbContext();
+        var controller = GetController(context);
+
+        var result = await controller.GetIdByEvent("DoesNotExist");
+
+        Assert.IsType<NotFoundResult>(result);
+    }
+
+    // -------------------------
     // GET price by id
     // -------------------------
     [Fact]
@@ -222,6 +276,20 @@ public class PricesListControllerTests
     }
 
     // -------------------------
+    // GET price by id - not found
+    // -------------------------
+    [Fact]
+    public async Task GetPriceById_ReturnsNotFound_WhenMissing()
+    {
+        var context = GetDbContext();
+        var controller = GetController(context);
+
+        var result = await controller.GetPriceById(Guid.NewGuid());
+
+        Assert.IsType<NotFoundResult>(result);
+    }
+
+    // -------------------------
     // DELETE - success + history
     // -------------------------
     [Fact]
@@ -243,10 +311,14 @@ public class PricesListControllerTests
 
         var result = await controller.DeletePrice(price.IdPrice);
 
-        var ok = Assert.IsType<OkObjectResult>(result);
+        Assert.IsType<OkObjectResult>(result);
 
         Assert.Empty(context.PricesLists);
-        Assert.Single(context.PricesListHistories);
+
+        var history = Assert.Single(context.PricesListHistories);
+        Assert.Equal(price.IdPrice, history.IdPrice);
+        Assert.Equal(price.Price, history.Price);
+        Assert.Equal(price.Event, history.Event);
     }
 
     // -------------------------
