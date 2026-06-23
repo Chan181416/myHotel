@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using server.Data;       // DbContext שלך
-using server.model;      // המחלקות PricesList, PricesListDTO, DeletedPrices
+using server.Models;      // המחלקות PricesList, PricesListDTO, DeletedPrices
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
-namespace server.Controller
+namespace server.Controllers
 {
     [ApiController]
     [Route("[controller]")]

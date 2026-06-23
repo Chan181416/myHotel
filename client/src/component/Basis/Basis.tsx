@@ -351,6 +351,7 @@ function Basis() {
         phone: "",
         email: ""
     });
+    const baseUrl = import.meta.env.VITE_API_URL;
 
     const [previewResult, setPreviewResult] = useState<any>(null);
     const [showPreviewModal, setShowPreviewModal] = useState(false);
