@@ -1,73 +1,253 @@
-#page {
-    height: 100vh;
+/* ===== Login.css — גרסה מעוצבת מחדש ===== */
+.page {
+    min-height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #0f172a, #1e293b);
+    background: linear-gradient(135deg, #062b50 0%, #14598d 50%, #3196d1 100%);
+    direction: rtl;
+    font-family: 'Segoe UI', 'Rubik', system-ui, sans-serif;
+    padding: 1.5rem;
+    box-sizing: border-box;
 }
 
-#container { 
-    width: 380px;
-    padding: 40px;
-    border-radius: 20px;
-    background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255,255,255,0.12);
-    color:white;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+/* ===== כרטיס הכניסה – בולט ומודרני ===== */
+.loginCard {
+    width: 620px;
+    max-width: 100%;
+    height: 550px;
+    padding: 2.5rem 2rem;
+    border-radius: 24px;
+    background: rgba(250, 2, 2, 0.06);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    transition: all 0.3s ease;
+    position: relative;
 }
 
-title {
+/* אפקט מיתאר זוהר עדין */
+/* .inputGroup::before {
+  content: '';
+  position: absolute;
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+  border-radius: 24px;
+  background: linear-gradient(
+      145deg,
+      rgba(79, 195, 247, 0.2) 0%,
+      transparent 40%,
+      transparent 60%,
+      rgba(79, 195, 247, 0.1) 100%
+      );
+      z-index: -1;
+      pointer-events: none;
+    } */
+
+/* ===== כותרת ===== */
+.title {
     text-align: center;
-    margin-bottom: 30px;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #e8f4f8;
+    margin: 0 0 0.5rem;
+    letter-spacing: 0.3px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-#inputGroup {
-    margin-bottom: 20px;
-}
-
-.label {
+.title::after {
+    content: '';
     display: block;
-    margin-bottom: 8px;
-    font-size: 14px;
+    width: 180px;
+    height: 3px;
+    background: linear-gradient(90deg, #4fc3f7, transparent);
+    border-radius: 4px;
+    margin: 0.6rem auto 1.5rem;
+}
+
+/* ===== שדות קלט – שניהם זהים לחלוטין ===== */
+.inputGroup {
+    margin-bottom: 1.25rem;
+    width: 100%;
+}
+
+.inputWrapper {
+    position: relative;
+}
+
+.inputWrapper::before {
+    content: '';
+    position: absolute;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    border-radius: 24px;
+    background: linear-gradient(145deg,
+            rgba(79, 194, 247, 0.11) 0%,
+            transparent 40%,
+            transparent 60%,
+            rgba(79, 194, 247, 0.11) 100%);
+    z-index: -1;
+    pointer-events: none;
+}
+
+.inputWrapper label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #b4d7f0;
+    letter-spacing: 0.3px;
 }
 
 .input {
-    width: 100%;
-    padding: 14px;
+    width: 50%;
+    padding: 0.85rem 1rem;
     border-radius: 12px;
-    border:2px;
-    outline: black;
-    background: rgba(255,255,255,0.12);
-    color: rgb(209, 40, 40);
-    font-size: 16px;
-    
+    border: 2px solid rgba(79, 195, 247, 0.3);
+    outline: none;
+    background: rgba(255, 255, 255, 0.08);
+    color: #e8f4f8;
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    direction: rtl;
 }
 
+.input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.input:focus {
+    border-color: #4fc3f7;
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 0 3px rgba(79, 195, 247, 0.15), 0 4px 16px rgba(79, 195, 247, 0.1);
+}
+
+/* ===== טקסט שגיאה ===== */
+.errorText {
+    color: #d13a3a;
+    font-size: 0.95rem;
+    margin-top: 1.2rem;
+    text-align: center;
+}
+
+/* ===== כפתור כניסה ===== */
 .loginBtn {
     width: 100%;
-    padding: 14px;
+    padding: 0.85rem 1.5rem;
+    margin-top: 1.25rem;
     border: none;
     border-radius: 12px;
-    background-color: #3b82f6;
-    color: white;
-    font-size: 16px;
+    background: linear-gradient(135deg, #3ca7d8, #1b79d1);
+    color: #0a2a4a;
+    font-size: 1.05rem;
+    font-weight: 700;
     cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    box-shadow: 0 4px 16px rgba(79, 195, 247, 0.25);
+    letter-spacing: 0.3px;
 }
 
-#userBox {
-    background: rgba(255,255,255,0.08);
-    padding: 20px;
-    border-radius: 14px;
+.loginBtn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(79, 195, 247, 0.35);
+    background: linear-gradient(135deg, #126d9b, #2b8fb6);
 }
 
-.logoutBtn{
-    margin-top: 20px;
+.loginBtn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.loginBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.4);
+    box-shadow: none;
+}
+
+/* ===== מצב מחובר ===== */
+.userBox {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(8px);
+    padding: 1.5rem;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+}
+
+.userBox h3 {
+    color: #e8f4f8;
+    font-size: 1.15rem;
+    margin: 0 0 1rem;
+    font-weight: 600;
+}
+
+.userBox h3::after {
+    content: '✓';
+    display: inline-block;
+    margin-right: 0.5rem;
+    color: #4ade80;
+    font-size: 1.2rem;
+}
+
+.userBox p {
+    color: #c8dce8;
+    font-size: 0.95rem;
+    margin: 0.5rem 0;
+    line-height: 1.6;
+}
+
+.userBox p strong {
+    color: #e0f0fa;
+    font-weight: 600;
+}
+
+/* ===== כפתור התנתקות ===== */
+.logoutBtn {
     width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 10px;
-    background: #ef4444;
-    color: white;
+    padding: 0.75rem 1.5rem;
+    margin-top: 1.25rem;
+    border: 1px solid rgba(248, 113, 113, 0.4);
+    border-radius: 12px;
+    background: rgba(239, 68, 68, 0.12);
+    color: #fca5a5;
+    font-size: 0.95rem;
+    font-weight: 600;
     cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.logoutBtn:hover {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: rgba(248, 113, 113, 0.6);
+    transform: translateY(-1px);
+}
+
+/* ===== רספונסיביות ===== */
+@media (max-width: 480px) {
+
+    .page>form,
+    .page>div:first-of-type {
+        padding: 2rem 1.25rem;
+        border-radius: 18px;
+    }
+
+    .title {
+        font-size: 1.4rem;
+    }
+
+    .input {
+        padding: 0.75rem 0.9rem;
+        font-size: 0.9rem;
+    }
 }
