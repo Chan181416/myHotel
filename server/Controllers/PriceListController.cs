@@ -34,7 +34,7 @@ namespace server.Controllers
                                        .AnyAsync(p => p.Event == dto.Event);
 
             if (exists)
-                return BadRequest($"Event '{dto.Event}' כבר קיים במערכת.");
+                return BadRequest($"ארוע:  '{dto.Event}' כבר קיים במערכת.");
 
             var price = new PricesList
             {

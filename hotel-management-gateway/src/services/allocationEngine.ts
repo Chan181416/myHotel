@@ -1,218 +1,162 @@
 
-// // import eventMap from "../utils/eventMap";
-// // import { calculateScore } from "../utils/scoreUtil";
-// // import { Registereds } from "./types";
 
-// // export function processBookingEngine(
-// //   request: any,
-// //   rooms: any[],
-// //   registeredMap: Map<string, Registereds>,
-// //   rank: number = 0
-// // ) {
-// // function isRoomFree(room: any): boolean {
-// //   const bookings = room.bookings || [];
-
-// //   const requestParts = eventMap[request.event] || [];
-
-// //   for (const b of bookings) {
-// //     const reg = registeredMap.get(b.registeredsId);
-// //     if (!reg) continue;
-
-// //     const occupiedParts = eventMap[reg.event?.event || ""] || [];
-
-// //     const overlap = requestParts.some(part =>
-// //       occupiedParts.includes(part)
-// //     );
-
-// //     // אם יש חפיפה בין האירועים → החדר לא פנוי להזמנה הזו
-// //     if (overlap) {
-// //       return false;
-// //     }
-// //   }
-
-// //   return true;
-// // }
-
-// //   const availableRooms = rooms.filter(
-// //     (room) =>
-// //       room.sumbed >= request.guests &&
-// //       isRoomFree(room)
-// //   );
-
-// //   const scored = availableRooms.map((room) => ({
-// //     room,
-// //     score: calculateScore(room, request)
-// //   }));
-
-// //   scored.sort((a, b) => b.score - a.score);
-
-// //   if (!scored.length) {
-// //     return {
-// //       success: false,
-// //       type: "no-match"
-// //     };
-// //   }
-// //   // const best = scored[0];
-
-// //   if (rank >= scored.length) {
-// //     return {
-// //       success: false,
-// //       type: "no-match"
-// //     };
-// //   }
-
-// //   return {
-// //     success: true,
-// //     type: rank === 0 ? "best-match" : "alternative",
-// //     room: scored[rank].room,
-// //     score: scored[rank].score
-// //   };
-
-// // }
 // import eventMap from "../utils/eventMap";
 // import { calculateScore } from "../utils/scoreUtil";
 // import { Registereds } from "./types";
 
-// /**
-//  * בודק אם יש חפיפה בין אירועים של חדר לבקשה חדשה
-//  */
-// function isRoomFree(room: any, request: any, registeredMap: Map<string, Registereds>): boolean {
-//   const bookings = room.bookings || [];
+// function isRoomFree(
+//     room: any,
+//     request: any,
+//     registeredMap: Map<string, Registereds>,
+//     eventsMap: Map<string, Event>
+// ): boolean {
+//     const bookings = room.bookings || [];
+//     const requestParts = eventMap[request.tripType] || [];
 
-//   const requestParts = eventMap[request.event] || [];
+//     for (const b of bookings) {
+//         const reg = registeredMap.get(b.registeredsId);
 
-//   for (const b of bookings) {
-//     const reg = registeredMap.get(b.registeredsId);
-//     if (!reg) continue;
+//         if (!reg) continue;
 
-//     const occupiedParts = eventMap[reg.event?.event || ""] || [];
+//         // שלב א - לקחת את מזהה האירוע מההרשמה
+//         const eventId = reg.Id;
 
-//     const overlap = requestParts.some(part =>
-//       occupiedParts.includes(part)
-//     );
+//         // שלב ב - למצוא את האירוע בטבלת Event
+//         const eventEntity = eventsMap.get(eventId);
 
-//     if (overlap) {
-//       return false;
+//         if (!eventEntity) continue;
+
+//         // שלב ג - לקחת את שם האירוע
+//         const occupiedEventName = eventEntity.;
+
+//         // שלב ד - להמיר לשדות החפיפה דרך eventMap
+//         const occupiedParts =
+//             eventMap[occupiedEventName || ""] || [];
+
+//         const overlap = requestParts.some(part =>
+//             occupiedParts.includes(part)
+//         );
+
+//         if (overlap) return false;
 //     }
-//   }
 
-//   return true;
+//     return true;
 // }
 
-// /**
-//  * מנוע שיבוץ חדרים לפי דירוג + חלוקת guests
-//  */
 // export function processBookingEngine(
-//   request: any,
-//   rooms: any[],
-//   registeredMap: Map<string, Registereds>
+//     request: any,
+//     rooms: any[],
+//     registeredMap: Map<string, Registereds>,
+//     eventsMap: Map<string, Event>
 // ) {
 
-//   // ==============================
-//   // 1. סינון חדרים פנויים לוגית
-//   // ==============================
-//   const availableRooms = rooms.filter(room =>
-//     isRoomFree(room, request, registeredMap)
-//   );
+//     const availableRooms = rooms.filter(room =>
+//         isRoomFree(room, request, registeredMap)
+//     );
 
-//   // ==============================
-//   // 2. דירוג חדרים
-//   // ==============================
-//   const scored = availableRooms.map(room => ({
-//     room,
-//     score: calculateScore(room, request)
-//   }));
+//     const scored = availableRooms.map(room => ({
+//         room,
+//         score: calculateScore(room, request)
+//     }));
 
-//   scored.sort((a, b) => b.score - a.score);
+//     scored.sort((a, b) => b.score - a.score);
 
-//   // ==============================
-//   // 3. בדיקה שאין בכלל חדרים
-//   // ==============================
-//   if (scored.length === 0) {
+//     if (!scored.length) {
+//         return {
+//             success: false,
+//             type: "no-match",
+//             allocations: []
+//         };
+//     }
+
+//     let remainingGuests = request.guests;
+//     const allocations: any[] = [];
+
+//     for (const item of scored) {
+//         if (remainingGuests <= 0) break;
+
+//         const room = item.room;
+//         const capacity = room.sumbed || 0;
+
+//         const assigned = Math.min(capacity, remainingGuests);
+
+//         if (assigned <= 0) continue;
+
+//         allocations.push({
+//             roomId: room.id,
+//             roomNum: room.roomNum,
+//             assignedGuests: assigned,
+//             score: item.score
+//         });
+
+//         remainingGuests -= assigned;
+//     }
+
+//     if (remainingGuests > 0) {
+//         return {
+//             success: false,
+//             type: "partial-allocation",
+//             allocations,
+//             remainingGuests,
+//             message: `נשארו ${remainingGuests} אורחים ללא שיבוץ`
+//         };
+//     }
+
 //     return {
-//       success: false,
-//       type: "no-match",
-//       message: "אין חדרים מתאימים לפי חפיפות"
+//         success: true,
+//         type: "allocated",
+//         allocations
 //     };
-//   }
-
-//   // ==============================
-//   // 4. שיבוץ guests לחדרים
-//   // ==============================
-//   let remainingGuests = request.guests;
-//   const allocations: any[] = [];
-
-//   for (const item of scored) {
-//     if (remainingGuests <= 0) break;
-
-//     const room = item.room;
-
-//     const capacity = room.sumbed || 0;
-
-//     // כמה אפשר להכניס לחדר הזה
-//     const assigned = Math.min(capacity, remainingGuests);
-
-//     if (assigned <= 0) continue;
-
-//     allocations.push({
-//       roomId: room.id,
-//       roomNum: room.roomNum,
-
-//       assignedGuests: assigned,
-//       score: item.score
-//     });
-
-//     remainingGuests -= assigned;
-//   }
-
-//   // ==============================
-//   // 5. אם לא הצלחנו לשבץ את כולם
-//   // ==============================
-//   if (remainingGuests > 0) {
-//     return {
-//       success: false,
-//       type: "partial-allocation",
-
-//       message: `לא נמצא מקום לכל האורחים. נשארו ${remainingGuests} ללא שיבוץ`,
-
-//       allocations,
-
-//       suggestion: {
-//         text: "ניתן ליצור הזמנה נוספת עבור האורחים שנותרו",
-//         remainingGuests
-//       }
-//     };
-//   }
-
-//   // ==============================
-//   // 6. הצלחה מלאה
-//   // ==============================
-//   return {
-//     success: true,
-//     type: "allocated",
-//     allocations
-//   };
 // }
 
 import eventMap from "../utils/eventMap";
 import { calculateScore } from "../utils/scoreUtil";
-import { Registereds } from "./types";
+import { Registereds, PricesList, Condition } from "./types";
 
-function isRoomFree(room: any, request: any, registeredMap: Map<string, Registereds>): boolean {
+function isRoomFree(
+    room: any,
+    request: any,
+    registeredMap: Map<string, Registereds>,
+    eventsMap: Map<string, PricesList>
+): boolean {
+
     const bookings = room.bookings || [];
-    const requestParts = eventMap[request.tripType] || [];
+
+    const requestParts =
+        eventMap[request.tripType] || [];
 
     for (const b of bookings) {
-        const reg = registeredMap.get(b.registeredsId);
+
+        const reg =
+            registeredMap.get(b.registeredsId);
+
         if (!reg) continue;
 
-        const occupiedParts = eventMap[reg.event?.event || ""] || [];
+        // GUID של האירוע מההרשמה
+        const eventId = reg.priceListId;
 
-        const overlap = requestParts.some(part =>
-            occupiedParts.includes(part)
-        );
+        // שליפת האירוע מטבלת PricesList
+        const eventEntity =
+            eventsMap.get(eventId);
 
-        if (overlap) return false;
+        if (!eventEntity) continue;
+
+        // שם האירוע
+        const occupiedEventName =
+            eventEntity.event || "";
+
+        // המרה לימים לצורך בדיקת חפיפה
+        const occupiedParts =
+            eventMap[occupiedEventName] || [];
+
+        const overlap =
+            requestParts.some(part =>
+                occupiedParts.includes(part)
+            );
+
+        if (overlap) {
+            return false;
+        }
     }
 
     return true;
@@ -221,11 +165,19 @@ function isRoomFree(room: any, request: any, registeredMap: Map<string, Register
 export function processBookingEngine(
     request: any,
     rooms: any[],
-    registeredMap: Map<string, Registereds>
+    registeredMap: Map<string, Registereds>,
+    eventsMap: Map<string, PricesList>,
+    // eventMap: Map<string, PricesList>,
+    // conditionMap: Map<string, Condition>
 ) {
 
     const availableRooms = rooms.filter(room =>
-        isRoomFree(room, request, registeredMap)
+        isRoomFree(
+            room,
+            request,
+            registeredMap,
+            eventsMap
+        )
     );
 
     const scored = availableRooms.map(room => ({
@@ -235,7 +187,7 @@ export function processBookingEngine(
 
     scored.sort((a, b) => b.score - a.score);
 
-    if (!scored.length) {
+    if (scored.length === 0) {
         return {
             success: false,
             type: "no-match",
@@ -244,17 +196,25 @@ export function processBookingEngine(
     }
 
     let remainingGuests = request.guests;
+
     const allocations: any[] = [];
 
     for (const item of scored) {
-        if (remainingGuests <= 0) break;
+
+        if (remainingGuests <= 0) {
+            break;
+        }
 
         const room = item.room;
+
         const capacity = room.sumbed || 0;
 
-        const assigned = Math.min(capacity, remainingGuests);
+        const assigned =
+            Math.min(capacity, remainingGuests);
 
-        if (assigned <= 0) continue;
+        if (assigned <= 0) {
+            continue;
+        }
 
         allocations.push({
             roomId: room.id,

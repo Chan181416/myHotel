@@ -2,6 +2,9 @@
 
 import dotenv from "dotenv";
 dotenv.config();
+
+import bookingRoutes from "./routes/bookingRoutes";
+
 import roleRoutes from "./routes/Role.routes";
 import dataRoutes from "./routes/dataRoutes";
 import proxyRoutes from "./routes/proxyRoutes";
@@ -27,6 +30,8 @@ app.use((req, res, next) => {
   next();
 });
 // Register routes
+
+app.use("/api/booking", bookingRoutes);
 app.use("/api/Role", roleRoutes);
 app.use("/api/data", dataRoutes);
 app.use("/api/proxy", proxyRoutes);
