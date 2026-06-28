@@ -1,6 +1,6 @@
 import { Condition, RoomDB } from "../services/types";
 
-export function calculateScore(room: any, request: any): number{
+export function calculateScore(room: any, request: any): number {
 
   let score = 0;
 
@@ -9,11 +9,11 @@ export function calculateScore(room: any, request: any): number{
   const conditionOption = room.condition?.option;
 
   // תנאי חדר (GUID → option)
-  if (request.seaView && conditionOption === "מול הים") {
+  if (request.roomType && conditionOption === "מול_הים") {
     score += 80;
   }
 
-  if (request.doubleRoom && conditionOption === "זוגי") {
+  if (request.roomType && conditionOption === "אקסטרה") {
     score += 80;
   }
 
