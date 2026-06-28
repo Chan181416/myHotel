@@ -255,43 +255,56 @@ export default function DataBase() {
   };
 
   /* שמירת Rooms לשרת */
-  const handleSaveRooms = async () => {
-
+    const handleSaveRooms = async () => {
     if (!validateRows(rooms, "Rooms")) return;
 
     try {
-
       for (const room of rooms) {
 
-        // const originalRoomType = room.condition;
+        const originalCondition = room.condition;
 
-        // let conditionId :String | null;
-        // try {
-        //   const conditionResponse = await fetch(
-        //     `http://localhost:5044/Condition/idbyoption/${encodeURIComponent(originalRoomType)}`
-        //   );
-        //   conditionId = conditionResponse.json;
-        // }
-        // catch (err) {
-        //   console.warn(`Condition '${originalRoomType}' לא נמצא. המשך עם null.`);
-        // }
-        // room.condition = conditionId;
+        let conditionId: string | null = null;
 
-        
-        const response = await fetch(
-          `${baseUrl}0/api/proxy/RoomDB`,
+        if (originalCondition && originalCondition !== "no") {
+          try {
+
+            const conditionResponse = await fetch(
+              `${baseUrl}/api/proxy/Condition/idbyoption/${encodeURIComponent(
+                originalCondition
+              )}`
+            );
+
+            if (conditionResponse.ok) {
+              conditionId = await conditionResponse.json();
+            }
+
+          } catch (err) {
+            console.warn(
+              `Condition '${originalCondition}' not found`
+            );
+          }
+        }
+
+        const payload = {
+          roomNum: room.roomNum,
+          floor: room.floor,
+          sumbed: room.beds,
+          conditionId
+        };
+
+        const roomResponse = await fetch(
+          `${baseUrl}/api/proxy/RoomDB`,
           {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
+              "Content-Type": "application/json"
             },
-            body: JSON.stringify(room),
+            body: JSON.stringify(payload)
           }
         );
 
-        if (!response.ok) {
-
-          const errorText = await response.text();
+        if (!roomResponse.ok) {
+          const errorText = await roomResponse.text();
 
           setMessage(
             "Rooms",
@@ -307,11 +320,9 @@ export default function DataBase() {
         "Rooms saved successfully!"
       );
 
-    }
+    } catch (error) {
 
-    catch (error) {
-
-      console.log(error);
+      console.error(error);
 
       setMessage(
         "Rooms",
@@ -319,6 +330,49 @@ export default function DataBase() {
       );
     }
   };
+
+        
+  //       const response = await fetch(
+  //         `${baseUrl}0/api/proxy/RoomDB`,
+  //         {
+  //           method: "POST",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //           body: JSON.stringify(room),
+  //         }
+  //       );
+
+  //       if (!response.ok) {
+
+  //         const errorText = await response.text();
+
+  //         setMessage(
+  //           "Rooms",
+  //           `Error saving room: ${errorText}`
+  //         );
+
+  //         return;
+  //       }
+  //     }
+
+  //     setMessage(
+  //       "Rooms",
+  //       "Rooms saved successfully!"
+  //     );
+
+  //   }
+
+  //   catch (error) {
+
+  //     console.log(error);
+
+  //     setMessage(
+  //       "Rooms",
+  //       "Server error while saving Rooms."
+  //     );
+  //   }
+  // };
 
   /* שמירה רגילה לכל הטבלאות ללא שליחה לשרת */
   const handleSaveTable = (state: any[], tableName: string) => {
