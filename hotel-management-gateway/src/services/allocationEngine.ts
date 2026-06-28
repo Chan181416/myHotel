@@ -167,8 +167,6 @@ export function processBookingEngine(
     rooms: any[],
     registeredMap: Map<string, Registereds>,
     eventsMap: Map<string, PricesList>,
-    // eventMap: Map<string, PricesList>,
-    // conditionMap: Map<string, Condition>
 ) {
 
     const availableRooms = rooms.filter(room =>
