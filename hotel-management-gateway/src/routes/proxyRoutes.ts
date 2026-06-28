@@ -18,6 +18,7 @@ import {
   addCondition,
   addRoom,
   getId,
+  check,
 } from "../controllers/proxyController";
 
 const router = Router();
@@ -30,6 +31,8 @@ router.get("/Condition/idbyoption/:option", getId);
 
 router.post("/Condition/add", addCondition);
 
-router.post("/RoomDB", addRoom);
+router.post("/RoomDB", addRoom)
+
+// router.get("/checkTableController", check)
 
 export default router;

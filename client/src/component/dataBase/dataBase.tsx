@@ -1040,21 +1040,10 @@ export default function DataBase() {
          
         let conditionId: string | null = null;
 
-        if (originalCondition !== "no") {
           try {
-            //  console.log(originalCondition);
-            
             const conditionResponse = await fetch(`${baseUrl}/api/proxy/Condition/idbyoption/${encodeURIComponent(originalCondition)}`
-              //  `${baseUrl}/api/proxy/Condition/idbyoption/מול_הים`
             );
-
-            // if (!conditionResponse.ok) {
-            //   throw new Error("Condition not found");
-            // }
-            // console.log(conditionResponse.status);
-
             const data = await conditionResponse.json();
-           
             conditionId = data;
           } 
           
@@ -1062,13 +1051,7 @@ export default function DataBase() {
             console.log(`Condition '${originalCondition}' לא נמצא. נשלח null.`);
             // conditionId = nll;
           }
-        }
-        // console.log({
-        //   roomNum: room.roomNum,
-        //   floor: room.floor,
-        //   sumbed: room.beds,
-        //   conditionId
-        // });
+       
         const payload = {
           roomNum: room.roomNum,
           floor: room.floor,

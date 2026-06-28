@@ -3,6 +3,32 @@
 import axios from "axios";
 import { Request, Response } from "express";
 
+
+
+export const checkAllTablesHaveData = async () => {
+
+    try {
+      const response = await fetch(
+        `${process.env.CSHARP_API}/api/checkTableController/allTablesHaveData`,
+        {
+          method: "GET",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to check database");
+      }
+
+      const data = await response.json();
+
+      // data הוא true או false
+      return data;
+    } catch (error) {
+     console.log(error);
+     
+    }
+  }
+
 export const getId = async (req: Request, res: Response) => {
   const option = req.params.option;
   console.log("option:", option);
