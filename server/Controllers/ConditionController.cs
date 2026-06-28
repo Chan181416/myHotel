@@ -21,11 +21,11 @@ namespace server.Controllers
         public async Task<ActionResult<IEnumerable<Condition>>> GetConditions()
         {
             var condition = await _Context.Conditions
-                   
+
                 .ToListAsync();
 
             return Ok(condition);
-            }
+        }
 
         [HttpPost]
         public async Task<ActionResult<Condition>> CreateCondition(ConditionDTO condition)
@@ -72,9 +72,9 @@ namespace server.Controllers
             Console.WriteLine($"Searching for option: '{option}'");
 
             var item = await _Context.Conditions
-                                     .Where(c => c.Option == option)
-                                     .FirstOrDefaultAsync();
-
+           .FirstOrDefaultAsync(c =>
+             c.Option == option
+            );
             if (item == null)
             {
                 Console.WriteLine("Condition not found!");

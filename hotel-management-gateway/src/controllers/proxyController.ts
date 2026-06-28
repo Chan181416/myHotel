@@ -3,6 +3,21 @@
 import axios from "axios";
 import { Request, Response } from "express";
 
+export const getId = async (req: Request, res: Response) => {
+  const option = req.params.option;
+  console.log("option:", option);
+
+  try {
+    const response = await axios.get(
+      `${process.env.CSHARP_API}/Condition/idbyoption/${option}`
+    );
+
+    res.json(response.data);
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export const addRole = async (req: Request, res: Response) => {
   try {
     const response = await axios.post(
@@ -19,6 +34,8 @@ export const addRole = async (req: Request, res: Response) => {
     });
   }
 };
+
+
 
 export const addPriceList = async (req: Request, res: Response) => {
   try {
