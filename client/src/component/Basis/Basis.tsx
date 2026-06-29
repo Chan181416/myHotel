@@ -1,4 +1,4 @@
-
+import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import "./Basis.css";
 
@@ -15,7 +15,7 @@ function Basis() {
         roomType: "אקסטרה",
         guests: 1
     });
-
+    const navigate = useNavigate();
     const [errors, setErrors] = useState({
         id: "",
         name: "",
@@ -122,8 +122,15 @@ function Basis() {
 
             const result = await response.json();
 
-            setPreviewResult(result.result);
-            setShowPreviewModal(true);
+            // setPreviewResult(result.result);
+            // setShowPreviewModal(true);
+
+            navigate("/bookingPreview", {
+                state: {
+                    previewResult: result.result,
+                    formData
+                }
+            });
 
         } catch (error) {
             console.error(

@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { data, useNavigate } from "react-router-dom";
 import { loginUser, logout } from "../../api/userSlice";
 import "./Login.css";
 
@@ -20,27 +20,41 @@ export default function Login() {
     username.trim().length > 0 && idNumber.trim().length > 0;
 
   const showError = touched && !isFormValid;
+
+  const check = async () => {
+    try {
+      const response = await fetch(
+        `${baseUrl}/api/CheckTablesController`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type":
+              "application/json"
+          },
+        }
+      );
+      const result =  await response.json();
+      if(result===false){
+        setTouched("אין אפשרות להתחיל ברישום אם אתה עובד פנה למנהל")
+      }
+    }
+    catch (err) {
+      console.log(err);
+    }
+  }
+
+  check()
+
   useEffect(() => {
     if (status === 'succeeded') {
       const code = type;
-
-
-      // if (!code) {
-      //   {
-      //     showError && (
-      //       <div className="errorText">
-      //         אתה עוד לא רשום פנה למנהל
-      //       </div>
-      //     )
-      //   }
-      // }
-      if (Number(code) === 1) {
-        navigate("/basis");
-      } else if (Number(code) === 2) {
+      if (Number(code) === 2 ) {
         navigate("/dataBase");
       }
+      else if (Number(code) === 1) {
+        navigate("/basis");
+      }
     }
-    
   }, [status])
 
   const handleLogin = async () => {
