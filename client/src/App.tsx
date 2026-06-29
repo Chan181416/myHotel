@@ -4,6 +4,7 @@ import Basis from './component/Basis/Basis.tsx';
 import Home from './component/Home/Home.tsx';
 import About from './component/About/About.tsx';
 import Login from './component/Login/Login.tsx';
+import BookingPreview from './component/BookingPreview/BookingPreview.tsx';
 
 import Root from './root';
 import DataBase from './component/dataBase/dataBase.tsx';
@@ -25,6 +26,10 @@ const router = createBrowserRouter([{
       path: "/basis",
       element: <Basis />,
     },
+    {
+  path: "/bookingPreview",
+  element: <BookingPreview />,
+},
     {
       path: "/about",
       element: <About />

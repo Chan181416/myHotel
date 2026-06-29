@@ -21,6 +21,7 @@ namespace server.Data
                    : base(options)
 
         {
+            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

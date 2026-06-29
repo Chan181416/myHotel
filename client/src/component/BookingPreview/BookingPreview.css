@@ -1,0 +1,132 @@
+.preview-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: linear-gradient(
+        135deg,
+        #dff6ff,
+        #b3e5fc,
+        #e0f7fa
+    );
+
+    font-family: "Segoe UI", sans-serif;
+    padding: 30px;
+}
+
+.preview-card {
+    width: min(900px, 95vw);
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 25px;
+    padding: 40px;
+
+    box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    backdrop-filter: blur(8px);
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 2rem;
+    color: #0077b6;
+}
+
+.header p {
+    color: #555;
+    margin-top: 8px;
+}
+
+.guest-box {
+    background: #f1fbff;
+    border: 1px solid #d0ecff;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.rooms-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #023e8a;
+}
+
+.rooms-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.room-card {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    border-radius: 12px;
+
+    background: white;
+    border: 1px solid #e3f2fd;
+
+    transition: 0.2s;
+}
+
+.room-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.room-num {
+    font-weight: 600;
+    color: #0077b6;
+}
+
+.room-info {
+    color: #555;
+}
+
+.actions {
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+}
+
+.btn {
+    flex: 1;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.btn.primary {
+    background: #00b4d8;
+    color: white;
+}
+
+.btn.primary:hover {
+    background: #0096c7;
+}
+
+.btn.secondary {
+    background: #e9f7ff;
+    color: #0077b6;
+}
+
+.btn.secondary:hover {
+    background: #d6f0ff;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 50px;
+}

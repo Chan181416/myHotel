@@ -48,7 +48,10 @@ namespace server.Controllers
 
             await _context.SaveChangesAsync();
 
-            return Ok(registered);
+            return Ok(new
+            {
+                id = registered.Id
+            });
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
@@ -175,12 +178,24 @@ namespace server.Controllers
         public async Task<ActionResult<IEnumerable<Registereds>>> GetAllRegistereds()
         {
             var registereds = await _context.Registereds
-                .Include(r => r.Event)        // כולל את האירוע (PriceList)
-                .Include(r => r.Condition)    // כולל את ה-Condition
+                // .Include(r => r.Event)        // כולל את האירוע (PriceList)
+                // .Include(r => r.Condition)    // כולל את ה-Condition
                 .Include(r => r.Rooms)        // כולל את הרשימה של החדרים
                 .ToListAsync();
 
-            return Ok(registereds);
+            var map = registereds.Select(r => new RegisteredsCreateDTOs
+            {
+                Id = r.Id,
+                NumberId = r.NumberId,
+                Name = r.Name,
+                SumPlace = r.SumPlace,
+                TotalPrice = r.TotalPrice,
+
+                Event = r.PriceListId,     // ✔ GUID
+                Condition = r.ConditionId  // ✔ GUID
+            });
+
+            return Ok(map);
         }
     }
 }

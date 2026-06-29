@@ -69,7 +69,7 @@ using (var scope = app.Services.CreateScope())
             {
                 Id = Guid.NewGuid(),
                 Name = "דוד",
-                IdNumber = 123456,
+                IdNumber = 123456789,
                 Code = 2
             });
 

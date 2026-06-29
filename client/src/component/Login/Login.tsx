@@ -17,7 +17,7 @@ export default function Login() {
   const navigate = useNavigate();
 
   const user = useSelector((state) => state?.user);
-  const { status, error } = user;
+  const { status, error, type } = user;
 
   const handleAdminContinue = () => {
     setShowAdminModal(false);
@@ -38,6 +38,42 @@ export default function Login() {
     username.trim().length > 0 && idNumber.trim().length > 0;
 
   const isIdValid = /^\d{9}$/.test(idNumber);
+
+  const check = async () => {
+    try {
+      const response = await fetch(
+        `${baseUrl}/api/CheckTablesController`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type":
+              "application/json"
+          },
+        }
+      );
+      const result =  await response.json();
+      if(result===false){
+        setTouched("אין אפשרות להתחיל ברישום אם אתה עובד פנה למנהל")
+      }
+    }
+    catch (err) {
+      console.log(err);
+    }
+  }
+
+  check()
+
+  useEffect(() => {
+    if (status === 'succeeded') {
+      const code = type;
+      if (Number(code) === 2 ) {
+        navigate("/dataBase");
+      }
+      else if (Number(code) === 1) {
+        navigate("/basis");
+      }
+    }
+  }, [status])
 
   const handleLogin = async () => {
     if (isSubmitting) return;

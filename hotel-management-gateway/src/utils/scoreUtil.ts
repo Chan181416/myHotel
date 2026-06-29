@@ -1,48 +1,28 @@
-// utils/scoreUtil.ts
+import { Condition, RoomDB } from "../services/types";
 
-export const SCORE_WEIGHTS = {
-    seaView: 80,
-    exactCapacity: 20,
-    nearCapacity: 10
-};
+export function calculateScore(room: any, request: any): number {
 
-export function calculateScore(
-    room: any,
-    request: any
-): number {
+  let score = 0;
 
-    let score = 0;
+  if (!room) return 0;
 
-    // הגנה בסיסית
-    if (!room) {
-        return 0;
-    }
+  const conditionOption = room.condition?.option;
 
-    // לא מספיק מיטות
-    if (room.sumbed < request.guests) {
-        return 0;
-    }
+  // תנאי חדר (GUID → option)
+  if (request.roomType && conditionOption === "מול_הים") {
+    score += 80;
+  }
 
-    // מול הים
-    if (
-        request.seaView === true &&
-        room.condition?.option === "מול הים"
-    ) {
-        score += SCORE_WEIGHTS.seaView;
-    }
+  if (request.roomType && conditionOption === "אקסטרה") {
+    score += 80;
+  }
 
-    // התאמה מדויקת לכמות אורחים
-    if (room.sumbed === request.guests) {
-        score += SCORE_WEIGHTS.exactCapacity;
-    }
+  // התאמת קיבולת
+  const diff = Math.abs(room.sumbed - request.guests);
 
-    // חדר גדול יותר אבל עדיין סביר
-    else if (
-        room.sumbed > request.guests &&
-        room.sumbed - request.guests <= 2
-    ) {
-        score += SCORE_WEIGHTS.nearCapacity;
-    }
+  if (diff === 0) score += 20;
+  else if (diff === 1) score += 15;
+  else if (diff === 2) score += 10;
 
-    return score;
+  return score;
 }

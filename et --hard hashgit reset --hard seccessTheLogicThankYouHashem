@@ -1,0 +1,28 @@
+[33m61efc28[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdev[m[33m, [m[1;31morigin/find-room[m[33m, [m[1;32mfind-room[m[33m)[m HEAD@{0}: reset: moving to HEAD@{6}
+[33m88bcea7[m[33m ([m[1;31morigin/dev[m[33m)[m HEAD@{1}: pull: Fast-forward
+[33mfcb9371[m HEAD@{2}: checkout: moving from screen-design to dev
+[33m3dc403b[m[33m ([m[1;32mscreen-design[m[33m)[m HEAD@{3}: commit: kjkj
+[33m7b908b2[m HEAD@{4}: commit: seccessTheLogicThankYouHashem
+[33m81b58c4[m HEAD@{5}: commit: the design is stuck
+[33m61efc28[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdev[m[33m, [m[1;31morigin/find-room[m[33m, [m[1;32mfind-room[m[33m)[m HEAD@{6}: checkout: moving from find-room to screen-design
+[33m61efc28[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdev[m[33m, [m[1;31morigin/find-room[m[33m, [m[1;32mfind-room[m[33m)[m HEAD@{7}: commit: hello
+[33mc50118e[m HEAD@{8}: pull: Merge made by the 'ort' strategy.
+[33m7be244d[m HEAD@{9}: commit: some changes in port
+[33ma1724a1[m HEAD@{10}: reset: moving to HEAD
+[33ma1724a1[m HEAD@{11}: commit: bybyby
+[33mbc09214[m HEAD@{12}: checkout: moving from dev to find-room
+[33mfcb9371[m HEAD@{13}: commit: goodDay
+[33mee4ad77[m[33m ([m[1;31morigin/startTheNode[m[33m)[m HEAD@{14}: checkout: moving from insert-room to dev
+[33m8296151[m[33m ([m[1;32minsert-room[m[33m)[m HEAD@{15}: commit: errrrorrrr
+[33m4c8c6b3[m HEAD@{16}: checkout: moving from find-room to insert-room
+[33mbc09214[m HEAD@{17}: checkout: moving from dev to find-room
+[33mee4ad77[m[33m ([m[1;31morigin/startTheNode[m[33m)[m HEAD@{18}: checkout: moving from find-room to dev
+[33mbc09214[m HEAD@{19}: checkout: moving from dev to find-room
+[33mee4ad77[m[33m ([m[1;31morigin/startTheNode[m[33m)[m HEAD@{20}: checkout: moving from find-room to dev
+[33mbc09214[m HEAD@{21}: reset: moving to HEAD
+[33mbc09214[m HEAD@{22}: reset: moving to HEAD
+[33mbc09214[m HEAD@{23}: commit: try
+[33mb99d5d0[m HEAD@{24}: commit: sloely-computer
+[33mee4ad77[m[33m ([m[1;31morigin/startTheNode[m[33m)[m HEAD@{25}: checkout: moving from dev to find-room
+[33mee4ad77[m[33m ([m[1;31morigin/startTheNode[m[33m)[m HEAD@{26}: checkout: moving from main to dev
+[33m8163b5d[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{27}: clone: from https://github.com/Chan181416/myHotel.git

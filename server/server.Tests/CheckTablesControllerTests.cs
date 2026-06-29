@@ -6,6 +6,7 @@ using server.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+
 public class CheckTablesControllerTests
 {
     private MyHotelDbContext GetDbContext()
@@ -22,7 +23,6 @@ public class CheckTablesControllerTests
         return new CheckTablesController(context);
     }
 
-    // 1. כל הטבלאות מלאות -> true
     [Fact]
     public async Task AllTablesHaveData_ReturnsTrue_WhenAllTablesHaveData()
     {
@@ -45,16 +45,14 @@ public class CheckTablesControllerTests
         Assert.True(value);
     }
 
-    // 2. טבלה אחת ריקה -> false
     [Fact]
-    public async Task AllTablesHaveData_ReturnsFalse_WhenOneTableIsEmpty()
+    public async Task AllTablesHaveData_ReturnsFalse_WhenConditionsTableIsEmpty()
     {
         var context = GetDbContext();
 
-        context.Conditions.Add(new Condition());
         context.PricesLists.Add(new PricesList());
         context.RoomsDBs.Add(new RoomsDB());
-        // Roles ריק
+        context.Roles.Add(new Role());
 
         await context.SaveChangesAsync();
 
@@ -68,11 +66,74 @@ public class CheckTablesControllerTests
         Assert.False(value);
     }
 
-    // 3. כל הטבלאות ריקות -> false
+    [Fact]
+    public async Task AllTablesHaveData_ReturnsFalse_WhenPricesListsTableIsEmpty()
+    {
+        var context = GetDbContext();
+
+        context.Conditions.Add(new Condition());
+        context.RoomsDBs.Add(new RoomsDB());
+        context.Roles.Add(new Role());
+
+        await context.SaveChangesAsync();
+
+        var controller = GetController(context);
+
+        var result = await controller.AllTablesHaveData();
+
+        var okResult = Assert.IsType<OkObjectResult>(result);
+        var value = Assert.IsType<bool>(okResult.Value);
+
+        Assert.False(value);
+    }
+
+    [Fact]
+    public async Task AllTablesHaveData_ReturnsFalse_WhenRoomsDBsTableIsEmpty()
+    {
+        var context = GetDbContext();
+
+        context.Conditions.Add(new Condition());
+        context.PricesLists.Add(new PricesList());
+        context.Roles.Add(new Role());
+
+        await context.SaveChangesAsync();
+
+        var controller = GetController(context);
+
+        var result = await controller.AllTablesHaveData();
+
+        var okResult = Assert.IsType<OkObjectResult>(result);
+        var value = Assert.IsType<bool>(okResult.Value);
+
+        Assert.False(value);
+    }
+
+    [Fact]
+    public async Task AllTablesHaveData_ReturnsFalse_WhenRolesTableIsEmpty()
+    {
+        var context = GetDbContext();
+
+        context.Conditions.Add(new Condition());
+        context.PricesLists.Add(new PricesList());
+        context.RoomsDBs.Add(new RoomsDB());
+
+        await context.SaveChangesAsync();
+
+        var controller = GetController(context);
+
+        var result = await controller.AllTablesHaveData();
+
+        var okResult = Assert.IsType<OkObjectResult>(result);
+        var value = Assert.IsType<bool>(okResult.Value);
+
+        Assert.False(value);
+    }
+
     [Fact]
     public async Task AllTablesHaveData_ReturnsFalse_WhenAllTablesAreEmpty()
     {
         var context = GetDbContext();
+
         var controller = GetController(context);
 
         var result = await controller.AllTablesHaveData();

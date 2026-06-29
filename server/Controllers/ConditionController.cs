@@ -18,15 +18,17 @@ namespace server.Controllers
             _Context = context;
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Condition>>> GetConditions(int skip = 0, int take = 10)
+        public async Task<ActionResult<IEnumerable<Condition>>> GetConditions()
         {
-            return await _Context.Conditions.Skip(skip).Take(take).ToListAsync();
-        }
+            var condition = await _Context.Conditions
 
+                .ToListAsync();
+
+            return Ok(condition);
+        }
 
         [HttpPost]
         public async Task<ActionResult<Condition>> CreateCondition(ConditionDTO condition)
-
         {
             if (condition.Price < 0)
             {
@@ -70,9 +72,9 @@ namespace server.Controllers
             Console.WriteLine($"Searching for option: '{option}'");
 
             var item = await _Context.Conditions
-                                     .Where(c => c.Option == option)
-                                     .FirstOrDefaultAsync();
-
+           .FirstOrDefaultAsync(c =>
+             c.Option == option
+            );
             if (item == null)
             {
                 Console.WriteLine("Condition not found!");
@@ -81,6 +83,8 @@ namespace server.Controllers
 
             return Ok(item.Id); // Id של Condition
         }
+
+       
 
     }
 
