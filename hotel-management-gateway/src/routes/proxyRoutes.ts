@@ -17,6 +17,7 @@ import {
   addPriceList,
   addCondition,
   addRoom,
+  getId,
 } from "../controllers/proxyController";
 
 const router = Router();
@@ -25,7 +26,9 @@ router.post("/Role/AddRole", addRole);
 
 router.post("/PricesList", addPriceList);
 
-router.post("/Condition", addCondition);
+router.get("/Condition/idbyoption/:option", getId);
+
+router.post("/Condition/add", addCondition);
 
 router.post("/RoomDB", addRoom);
 

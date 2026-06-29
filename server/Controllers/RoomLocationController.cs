@@ -66,8 +66,8 @@ namespace server.Controllers
         public async Task<IActionResult> GetAll()
         {
             var list = await _context.RoomLocations
-                .Include(r => r.Room)
-                .Include(r => r.Registereds)
+                // .Include(r => r.Room)
+                // .Include(r => r.Registereds)
                 .ToListAsync();
 
             return Ok(list);

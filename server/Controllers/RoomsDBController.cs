@@ -51,11 +51,22 @@ namespace server.Controllers
         public async Task<IActionResult> GetAllRooms()
         {
             var rooms = await _context.RoomsDBs
-                                      .Include(r => r.RoomLocations)
+                                   .Include(r => r.RoomLocations)
                                       .Include(r => r.Condition)
                                       .ToListAsync();
+            var hasLocation = rooms.Where(r => r.RoomLocations.Count > 0);
+            var map = rooms.Select(r => new RoomsDBDTOs
+            {
+                Id = r.Id,
+                ConditionId = r.ConditionId,
+                Floor = r.Floor,
+                RoomNum = r.RoomNum,
+                Sumbed = r.Sumbed,
+                RoomLocations = r.RoomLocations.Select(rl => rl.Id).ToList()
+            });
 
-            return Ok(rooms);
+
+            return Ok(map);
         }
 
         // עדכון (נשאר כמו שהיה - לא נוגע כי אין שדות ישנים)
@@ -105,6 +116,56 @@ namespace server.Controllers
                 return NotFound();
 
             return Ok(room);
+        }
+        [HttpPut("add-room-location")]
+        public async Task<IActionResult> AddRoomLocation(AddRoomLocationDTO dto)
+        {
+            var room = await _context.RoomsDBs
+                .Include(r => r.RoomLocations)
+                .FirstOrDefaultAsync(r => r.Id == dto.RoomId);
+
+            if (room == null)
+                return NotFound("Room not found");
+
+            var roomLocation = await _context.RoomLocations
+                .FirstOrDefaultAsync(r => r.Id == dto.RoomLocationId);
+
+            if (roomLocation == null)
+                return NotFound("RoomLocation not found");
+
+            room.RoomLocations.Add(roomLocation);
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+        [HttpGet("allRoomsFull")]
+        public async Task<bool> AllRoomsFull()
+        {
+            var rooms = await _context.RoomsDBs
+                .Include(r => r.RoomLocations)
+                .ToListAsync();
+
+            foreach (var room in rooms)
+            {
+                if (room.RoomLocations.Count > 1)
+                    continue;
+
+                if (room.RoomLocations.Count == 1)
+                {
+                    var roomLocation = room.RoomLocations.First();
+
+                    var eventData = await _context.PricesLists
+                        .FirstOrDefaultAsync(e => e.IdPrice == roomLocation.Id);
+
+                    if (eventData != null && eventData.Event == "נופש_מלא")
+                        continue;
+                }
+
+                return false;
+            }
+
+            return true;
         }
     }
 }

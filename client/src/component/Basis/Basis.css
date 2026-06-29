@@ -1,115 +1,185 @@
-#welcome {
-    width: 700px;
-    /* font-size: 15px;
-    margin: 30px;    
-    color: rgb(211, 91, 115);
-    align-items: center; */
+:root {
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
 
+    --bg-start: #f8fbff;
+    --bg-end: #e9f4ff;
+
+    --card-bg: #ffffff;
+    --border: #e5e7eb;
+
+    --text: #1f2937;
+    --text-light: #6b7280;
+
+    --danger: #dc2626;
+
+    --radius: 18px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #1c87a1, #2a5298);
-    width: 600px;
-    height: 900px;
+}
+
+#welcome {
+    min-height: 100vh;
+    width: 100%;
+
     display: flex;
     justify-content: center;
     align-items: center;
+
+    padding: 40px;
+
+    font-family: "Segoe UI", Arial, sans-serif;
+
+    background:
+        radial-gradient(circle at top right,
+            rgba(59, 130, 246, 0.15),
+            transparent 30%),
+        radial-gradient(circle at bottom left,
+            rgba(14, 165, 233, 0.15),
+            transparent 30%),
+        linear-gradient(180deg,
+            var(--bg-start),
+            var(--bg-end));
 }
 
-.basic {
+.contain {
+    width: min(1200px, 95vw);
 
-    /* margin: 0;
-        font-family: Arial, sans-serif;
-        background: linear-gradient(135deg, #1c87a1, #2a5298);
-        width: 600px;
-        height: 900px;
-        display: flex;
-        justify-content: center;
-        align-items: center; */
-    /* min-height: 100vh; */
-}
+    background: var(--card-bg);
 
-.form {
-    /* border: 2px solid black; */
+    border-radius: 28px;
 
-}
+    padding: 50px;
 
-.container {
-    border: 2px solid black;
+    box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.08);
 
-    background: #ffffff;
-    padding: 30px;
-    border: 2px solid black;
-    border-radius: 16px;
-    width: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border);
 }
 
 h2 {
+    margin: 0 0 40px 0;
+
     text-align: center;
-    margin-bottom: 20px;
-    color: rgb(16, 16, 99);
-}
 
-.field {
-    margin-bottom: 15px;
-}
+    color: var(--text);
 
-label {
-    display: block;
-    margin-bottom: 5px;
-    font-size: 20px;
-    color: #333;
-}
-
-input,
-select {
-    width: 90%;
-    padding: 10px;
-    color: rgb(28, 180, 180);
-    border: 2px solid #ccc;
-    border-radius: 8px;
-    outline: none;
-    transition: 0.3s;
-    font-size: 15px;
-}
-
-input:focus,
-select:focus {
-    border-color: #112952;
-    box-shadow: 0 0 5px rgba(42, 82, 152, 0.4);
+    font-size: 2rem;
+    font-weight: 700;
 }
 
 .row {
     display: flex;
-
+    gap: 24px;
 }
 
-.row .field {
+.field {
     flex: 1;
+    margin-bottom: 24px;
+}
+
+label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: var(--text);
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+input,
+select {
+    width: 100%;
+
+    padding: 14px 16px;
+
+    border: 1px solid var(--border);
+    border-radius: 14px;
+
+    background: #fff;
+
+    color: var(--text);
+
+    font-size: 1rem;
+
+    transition:
+        border-color 0.2s,
+        box-shadow 0.2s;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+
+    border-color: var(--primary);
+
+    box-shadow:
+        0 0 0 4px rgba(37, 99, 235, 0.12);
 }
 
 button {
-    width: 40%;
-    padding: 12px;
-    background: #183669;
-    color: white;
+    width: 100%;
+
+    margin-top: 10px;
+
+    padding: 16px;
+
     border: none;
-    border-radius: 8px;
-    font-size: 16px;
+    border-radius: 14px;
+
+    background: var(--primary);
+
+    color: white;
+
+    font-size: 1rem;
+    font-weight: 700;
+
     cursor: pointer;
-    transition: 0.3s;
-    margin-bottom: 4px;
+
+    transition:
+        all 0.2s ease;
 }
 
-button:hover {
-    background: rgba(7, 30, 70, 0.308);
+button:hover:not(:disabled) {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .error-message {
-    color: rgb(153, 26, 26);
-    font-size: 15px;
-    margin-bottom: 15px;
-    text-align: center;
-    margin-top: 4px;
+    margin-top: 6px;
 
+    color: var(--danger);
+
+    font-size: 0.85rem;
+}
+
+@media (max-width: 900px) {
+    .contain {
+        padding: 30px;
+    }
+
+    .row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+}
+
+.subtitle {
+    text-align: center;
+    color: var(--text-light);
+    margin-top: -20px;
+    margin-bottom: 35px;
 }

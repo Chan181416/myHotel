@@ -1,22 +1,8 @@
-// const router = require("express").Router();
 
-// const dataController = require("../controllers/dataController");
-
-// router.post("/loadData", dataController.loadData);
-
-// module.exports = router;
-
-// import { Router } from "express";
-// import { loadData } from "../controllers/dataController";
-
-// const router = Router();
-
-// router.post("/loadData", loadData);
-
-// export default router;
 
 import { Router } from "express";
 import axios from "axios";
+import { loadData } from "../controllers/dataController";
 
 const router = Router();
 
@@ -35,5 +21,7 @@ router.get("/getByNameAndId/:name/:id", async (req, res) => {
     res.status(500).json({ error: "Gateway failed", details: err.message });
   }
 });
+
+router.post('/loaddata', loadData);
 
 export default router;

@@ -11,14 +11,11 @@ namespace server.Models
 
         public int RoomNum { get; set; }
         public int Floor { get; set; }
-        // public bool OnSea { get; set; }
-        // public bool Extrta { get; set; }
-
         public Guid ConditionId { get; set; }
         [ForeignKey("ConditionId")]
         public Condition? Condition { get; set; }
 
-        public int Sumbed{ get; set; }
+        public int Sumbed { get; set; }
         public List<RoomLocation> RoomLocations { get; set; } = [];
 
     }
@@ -29,8 +26,23 @@ namespace server.Models
         public int RoomNum { get; set; }
         public int Floor { get; set; }
         public Guid ConditionId { get; set; }
-        public int Sumbed{ get; set; }
+        public int Sumbed { get; set; }
+        public List<Guid> RoomLocations { get; set; } = [];
 
     }
 
+    public class RoomsDBDTOs
+    {
+        public Guid Id { get; set; }
+        public int RoomNum { get; set; }
+        public int Floor { get; set; }
+        public Guid ConditionId { get; set; }
+        public int Sumbed { get; set; }
+        public List<Guid> RoomLocations { get; set; } = [];
+    }
+    public class AddRoomLocationDTO
+    {
+        public Guid RoomId { get; set; }
+        public Guid RoomLocationId { get; set; }
+    }
 }

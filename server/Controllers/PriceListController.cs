@@ -17,6 +17,15 @@ namespace server.Controllers
         {
             _context = context;
         }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<PricesList>>> GetConditions(int skip = 0, int take = 10)
+        {
+            var Event = await _context.PricesLists
+                .ToListAsync();
+            return Ok(Event);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreatePrice([FromBody] PricesListDTO dto)
         {
@@ -25,7 +34,7 @@ namespace server.Controllers
                                        .AnyAsync(p => p.Event == dto.Event);
 
             if (exists)
-                return BadRequest($"Event '{dto.Event}' כבר קיים במערכת.");
+                return BadRequest($"ארוע:  '{dto.Event}' כבר קיים במערכת.");
 
             var price = new PricesList
             {
@@ -79,7 +88,19 @@ namespace server.Controllers
             if (price == 0) return NotFound();
             return Ok(price);
         }
+        [HttpGet("eventById{id}")]
+        public async Task<IActionResult> Get(Guid id)
+        {
+            var eventt = await _context.PricesLists
+                                      .Where(p => p.IdPrice == id)
+                                      .Select(p => p.Event)
+                                      .FirstOrDefaultAsync();
 
+            if (eventt == null)
+                return NotFound();
+
+            return Ok(eventt);
+        }
         [HttpGet("idbyevent/{eventName}")]
         public async Task<IActionResult> GetIdByEvent(string eventName)
         {

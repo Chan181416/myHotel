@@ -1,11 +1,3 @@
-# #hotel-management-gateway
-# FROM node:20-alpine
-# WORKDIR /app
-# COPY package.json ./
-# RUN npm install
-# COPY . .
-# EXPOSE 3000
-# CMD ["node", "src/server.ts"]
 
 
 # ---------- Build stage ----------
@@ -39,6 +31,6 @@ COPY --from=builder /app/dist ./dist
 # If needed: copy static files / config
 # COPY --from=builder /app/public ./public
 
-EXPOSE 3000
+EXPOSE 3001
 
 CMD ["node", "dist/server.js"]
