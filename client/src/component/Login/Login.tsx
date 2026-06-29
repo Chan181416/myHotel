@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { loginUser, logout } from "../../api/userSlice";
+import { loginUser, logout, checkAllTablesHaveData } from "../../api/userSlice";
 import "./Login.css";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [idNumber, setIdNumber] = useState("");
   const [submitted, setSubmitted] = useState(false); // ← שיניתי מ-touched
+  const [showAdminModal, setShowAdminModal] = useState(false);
+  const [showWorkerBlock, setShowWorkerBlock] = useState(false);
+  const [allTablesHaveData, setAllTablesHaveData] = useState<boolean | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -15,28 +19,67 @@ export default function Login() {
   const user = useSelector((state) => state?.user);
   const { status, error } = user;
 
+  const handleAdminContinue = () => {
+    setShowAdminModal(false);
+    navigate("/dataBase");
+  };
+
+  const handleAdminCancel = () => {
+    setShowAdminModal(false);
+    handleLogout();
+  };
+
+  const handleWorkerClose = () => {
+    setShowWorkerBlock(false);
+    handleLogout();
+  };
+
   const isFormValid =
     username.trim().length > 0 && idNumber.trim().length > 0;
 
   const isIdValid = /^\d{9}$/.test(idNumber);
 
   const handleLogin = async () => {
-    setSubmitted(true); // ← סימון שהיה ניסיון שליחה
+    if (isSubmitting) return;
 
-    if (!isFormValid || !isIdValid) return;
+    setIsSubmitting(true);
+    setSubmitted(true);
 
-    const resultAction = await dispatch(
-      loginUser({ username, idNumber })
-    );
+    try {
+      if (!isFormValid || !isIdValid) return;
 
-    if (loginUser.fulfilled.match(resultAction)) {
-      const type = resultAction.payload.code;
+      const resultAction = await dispatch(loginUser({ username, idNumber }));
 
-      if (Number(type) === 1) {
+      if (!loginUser.fulfilled.match(resultAction)) return;
+
+      const type = Number(resultAction.payload.code);
+
+      const checkAction = await dispatch(checkAllTablesHaveData());
+
+      if (!checkAllTablesHaveData.fulfilled.match(checkAction)) {
+        alert("שגיאה בבדיקת נתוני מערכת");
+        return;
+      }
+
+      const hasData = checkAction.payload;
+
+      if (type === 1) {
+        if (!hasData) {
+          setShowWorkerBlock(true);
+          return;
+        }
         navigate("/basis");
-      } else if (Number(type) === 2) {
+      }
+
+      if (type === 2) {
+        if (!hasData) {
+          setShowAdminModal(true);
+          return;
+        }
         navigate("/dataBase");
       }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -103,11 +146,15 @@ export default function Login() {
               disabled={status === "loading"}
               className="loginBtn"
             >
-              {status === "loading" ? "מתחבר..." : "כניסה למערכת"}
+              {status === "loading" ? (
+                <>
+                  <span className="spinner"></span>
+                  <span>מתחבר...</span>
+                </>
+              ) : (
+                "כניסה למערכת"
+              )}
             </button>
-
-            {/* שגיאה מהשרת */}
-            {error && <div className="errorText">{error}</div>}
           </>
         ) : (
           <div className="userBox">
@@ -123,6 +170,53 @@ export default function Login() {
           </div>
         )}
       </div>
+      {showAdminModal && (
+        <div className="modalOverlay">
+          <div className="modalBox admin">
+
+            <div className="modalTitle">⚠ אזהרה</div>
+
+            <div className="modalText">
+              המערכת אינה מלאה.<br />
+              יש להשלים את נתוני הבסיס.<br />
+              האם להמשיך בכל זאת?
+            </div>
+
+            <div className="modalActions">
+              <button className="modalBtn primary" onClick={handleAdminContinue}>
+                המשך
+              </button>
+
+              <button className="modalBtn danger" onClick={handleAdminCancel}>
+                ביטול
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
+      {showWorkerBlock && (
+        <div className="modalOverlay">
+          <div className="modalBox worker">
+
+            <div className="modalTitle dangerText">
+              אין אפשרות להיכנס למערכת
+            </div>
+
+            <div className="modalText">
+              חסרים נתוני בסיס.<br />
+              יש לפנות למנהל המערכת.
+            </div>
+
+            <div className="modalActions">
+              <button className="modalBtn primary" onClick={handleWorkerClose}>
+                אישור
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
     </div>
   )
 }

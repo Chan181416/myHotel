@@ -24,6 +24,32 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+// בדיקה האם כל טבלאות הבסיס מכילות נתונים
+export const checkAllTablesHaveData = createAsyncThunk(
+  "user/checkAllTablesHaveData",
+  async (_, thunkAPI) => {
+    try {
+      const response = await fetch(
+        `${baseUrl}/api/checkTableController/allTablesHaveData`,
+        {
+          method: "GET",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to check database");
+      }
+
+      const data = await response.json();
+
+      // data הוא true או false
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState: {

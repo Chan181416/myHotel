@@ -1,45 +1,72 @@
+version: "3.9"
+
 services:
 
   sql:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: sqlserver
+    restart: unless-stopped
+
     environment:
-      SA_PASSWORD: "1234567!Cb"
       ACCEPT_EULA: "Y"
+      SA_PASSWORD: "1234567!Cb"
+
     ports:
       - "1435:1433"
+
     volumes:
       - sql_data:/var/opt/mssql
 
   server:
-    build: ./server
+    build:
+      context: ./server
+
     container_name: myhotel_server
+
     depends_on:
       - sql
+
+    restart: unless-stopped
+
     environment:
+      ASPNETCORE_ENVIRONMENT: Production
       ASPNETCORE_URLS: http://+:5044
       ConnectionStrings__DefaultConnection: "Server=sql,1433;Database=Hotel;User Id=sa;Password=1234567!Cb;TrustServerCertificate=True;"
+
     ports:
       - "5011:5044"
 
   gateway:
-    build: ./hotel-management-gateway
+    build:
+      context: ./hotel-management-gateway
+
     container_name: myhotel_gateway
+
     depends_on:
       - server
+
+    restart: unless-stopped
+
     environment:
       PORT: 3000
       CSHARP_API: http://server:5044
+
     ports:
       - "3001:3000"
 
   client:
-    build: ./client
+    build:
+      context: ./client
+      args:
+        VITE_API_URL: http://localhost:3001
+
     container_name: myhotel_client
+
     depends_on:
       - gateway
-    environment:
-      VITE_API_URL: http://localhost:3001
+
+    restart: unless-stopped
+
     ports:
       - "80:80"
 

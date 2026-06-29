@@ -1,11 +1,14 @@
 /* ===== Login.css — גרסה מעוצבת מחדש ===== */
 .page {
-    min-height: 100vh;
+    min-height: 96vh;
+    width: 1500px;
+    border: 1px solid rgb(245, 244, 244);
+    border-radius: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #062b50 0%, #14598d 50%, #3196d1 100%);
+    background: linear-gradient(135deg, #0b335c 15%, #14598d 50%, #3196d1 100%);
     direction: rtl;
     font-family: 'Segoe UI', 'Rubik', system-ui, sans-serif;
     padding: 1.5rem;
@@ -22,32 +25,13 @@
     background: rgba(250, 2, 2, 0.06);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 2px solid rgba(255, 255, 255, 0.295);
     box-shadow:
         0 20px 60px rgba(0, 0, 0, 0.35),
         inset 0 1px 0 rgba(255, 255, 255, 0.08);
     transition: all 0.3s ease;
     position: relative;
 }
-
-/* אפקט מיתאר זוהר עדין */
-/* .inputGroup::before {
-  content: '';
-  position: absolute;
-  left: -1px;
-  right: -1px;
-  bottom: -1px;
-  border-radius: 24px;
-  background: linear-gradient(
-      145deg,
-      rgba(79, 195, 247, 0.2) 0%,
-      transparent 40%,
-      transparent 60%,
-      rgba(79, 195, 247, 0.1) 100%
-      );
-      z-index: -1;
-      pointer-events: none;
-    } */
 
 /* ===== כותרת ===== */
 .title {
@@ -249,5 +233,121 @@
     .input {
         padding: 0.75rem 0.9rem;
         font-size: 0.9rem;
+    }
+}
+
+/* ===== מודלים כלליים ===== */
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+/* ===== קופסת מודל ===== */
+
+.modalBox {
+    width: 420px;
+    max-width: 90%;
+    border-radius: 18px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    animation: modalFadeIn 0.25s ease-out;
+}
+
+/* ===== מנהל ===== */
+
+.modalBox.admin {
+    background: linear-gradient(135deg, #0f2a3f, #163a56);
+    border: 1px solid rgba(79, 195, 247, 0.3);
+}
+
+/* ===== עובד (חסימה) ===== */
+
+.modalBox.worker {
+    background: linear-gradient(135deg, #3a0f0f, #5a1a1a);
+    border: 1px solid rgba(248, 113, 113, 0.4);
+}
+
+/* ===== כותרת ===== */
+
+.modalTitle {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #e8f4f8;
+    margin-bottom: 1rem;
+}
+
+.modalTitle.dangerText {
+    color: #ffb4b4;
+}
+
+/* ===== טקסט ===== */
+
+.modalText {
+    font-size: 1rem;
+    color: #d7e6f0;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+/* ===== כפתורים ===== */
+
+.modalActions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.modalBtn {
+    padding: 0.6rem 1.2rem;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+.modalBtn.primary {
+    background: #3ca7d8;
+    color: #0a2a4a;
+}
+
+.modalBtn.primary:hover {
+    transform: translateY(-2px);
+    background: #2b8fb6;
+}
+
+.modalBtn.danger {
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: #fca5a5;
+}
+
+.modalBtn.danger:hover {
+    background: rgba(239, 68, 68, 0.25);
+    transform: translateY(-2px);
+}
+
+/* ===== אנימציה ===== */
+
+@keyframes modalFadeIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
     }
 }

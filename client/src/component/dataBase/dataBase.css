@@ -1,186 +1,186 @@
-#welcome {
-    width: 100%;
-    min-height: 100vh;
+:root {
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+
+    --bg-start: #f8fbff;
+    --bg-end: #e9f4ff;
+
+    --card-bg: #ffffff;
+    --border: #e5e7eb;
+
+    --text: #1f2937;
+    --text-light: #6b7280;
+
+    --danger: #dc2626;
+
+    --radius: 18px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
     margin: 0;
-    padding: 30px;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #0c2f53ce 0%, #1a4a6e 50%, #1e7db4 100%);
+}
+
+#welcome {
+    min-height: 100vh;
+    width: 100%;
+
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 40px;
+
+    font-family: "Segoe UI", Arial, sans-serif;
+
+    background:
+        radial-gradient(circle at top right,
+            rgba(59, 130, 246, 0.15),
+            transparent 30%),
+        radial-gradient(circle at bottom left,
+            rgba(14, 165, 233, 0.15),
+            transparent 30%),
+        linear-gradient(180deg,
+            var(--bg-start),
+            var(--bg-end));
 }
 
-/* Roles */
-.fullWidth {
-    width: 100%;
-    margin-bottom: 25px;
+.contain {
+    width: min(1200px, 95vw);
+
+    background: var(--card-bg);
+
+    border-radius: 28px;
+
+    padding: 50px;
+
+    box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.08);
+
+    border: 1px solid var(--border);
 }
 
-/* שורת 3 טבלאות */
-.tablesRow {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 20px;
-}
-
-/* container כללי */
-.container {
-    background: white;
-    border-radius: 18px;
-    padding: 20px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
-    overflow: hidden;
-}
-
-/* טבלאות קטנות */
-.smallTable {
-    width: 100%;
-    min-width: 0;
-}
-
-/* כותרות */
 h2 {
+    margin: 0 0 40px 0;
+
     text-align: center;
-    color: #183669;
-    margin-bottom: 15px;
+
+    color: var(--text);
+
+    font-size: 2rem;
+    font-weight: 700;
 }
 
-/* .scrollableTable table {
-  display: block;
-  width: 100%;
-} */
-
-.scrollableTable {
-    max-height: 400px;
-    overflow-y: auto;
-    overflow-x: auto;
-    width: 100%;
-}
-
-.scrollableTable th,
-.scrollableTable td {
-    min-width: 100px;
-    /* או כל גודל שמתאים */
-    border: 1px solid #ccc;
-}
-
-/* טבלאות */
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-/* גלילה */
-.tableBodyWrapper {
-    max-height: 300px;
-    overflow-y: auto;
-}
-
-/* תאים */
-th,
-td {
-    border: 1px solid #d6d6d6;
-    padding: 10px;
-    text-align: center;
-}
-
-/* כותרות */
-th {
-    background: #183669;
-    color: white;
-}
-
-/* inputs */
-input[type="text"],
-input[type="number"] {
-    width: 95%;
-    padding: 8px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-}
-
-/* checkbox */
-input[type="checkbox"] {
-    transform: scale(1.2);
-}
-
-/* focus */
-input:focus {
-    border-color: #1c87a1;
-    box-shadow: 0 0 6px rgba(28, 135, 161, 0.4);
-    outline: none;
-}
-
-/* buttons */
-button {
-    margin-top: 7px;
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 10px;
-    background: #183669;
-    color: white;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-button:hover {
-    background: #1c87a1;
-}
-
-.globalSaveContainer {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.globalSaveBtn {
-    padding: 14px 28px;
-    font-size: 18px;
-    background-color: #183669;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.globalSaveBtn:hover {
-    background-color: rgba(7, 30, 70, 0.5);
-}
-
-.globalSaveBtn:disabled {
-    background: gray;
-    cursor: not-allowed;
-    opacity: 0.7;
-}
-
-.saveMessage {
-    margin-top: 10px;
-    color: black;
-    font-weight: bold;
-    font-size: 16px;
-}
-
-.codeToggle {
+.row {
     display: flex;
-    gap: 4px;
+    gap: 24px;
 }
 
-.codeToggle button {
+.field {
     flex: 1;
-    padding: 6px 0;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    cursor: pointer;
-    font-size: 14px;
-    border-radius: 4px;
-    transition: background-color 0.2s;
+    margin-bottom: 24px;
 }
 
-.codeToggle button.active {
-    background-color: #1c86a1d2;
-    color: white;
-    border-color: rgb(133, 9, 9);
+label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: var(--text);
+    font-weight: 600;
+    font-size: 0.95rem;
 }
+
+input,
+select {
+    width: 100%;
+
+    padding: 14px 16px;
+
+    border: 1px solid var(--border);
+    border-radius: 14px;
+
+    background: #fff;
+
+    color: var(--text);
+
+    font-size: 1rem;
+
+    transition:
+        border-color 0.2s,
+        box-shadow 0.2s;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+
+    border-color: var(--primary);
+
+    box-shadow:
+        0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+button {
+    width: 100%;
+
+    margin-top: 10px;
+
+    padding: 16px;
+
+    border: none;
+    border-radius: 14px;
+
+    background: var(--primary);
+
+    color: white;
+
+    font-size: 1rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        all 0.2s ease;
+}
+
+button:hover:not(:disabled) {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.error-message {
+    margin-top: 6px;
+
+    color: var(--danger);
+
+    font-size: 0.85rem;
+}
+
+@media (max-width: 900px) {
+    .contain {
+        padding: 30px;
+    }
+
+    .row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+}
+
+.subtitle {
+    text-align: center;
+    color: var(--text-light);
+    margin-top: -20px;
+    margin-bottom: 35px;
+}
+
