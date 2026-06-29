@@ -1,6 +1,7 @@
 import { Condition, RoomDB } from "../services/types";
 
 export function calculateScore(room: any, request: any): number {
+  console.log({"request": request });
 
   let score = 0;
 

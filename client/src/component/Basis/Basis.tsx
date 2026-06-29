@@ -142,38 +142,38 @@ function Basis() {
         }
     };
 
-    const confirmBooking = async () => {
-        try {
-            setLoading(true);
+    // const confirmBooking = async () => {
+    //     try {
+    //         setLoading(true);
 
-            const response = await fetch(
-                `${baseUrl}/api/booking/confirm-booking`,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type":
-                            "application/json"
-                    },
-                    body: JSON.stringify({
-                        formData,
-                        allocations:
-                            previewResult?.allocations || []
-                    })
-                }
-            );
+    //         const response = await fetch(
+    //             `${baseUrl}/api/booking/confirm-booking`,
+    //             {
+    //                 method: "POST",
+    //                 headers: {
+    //                     "Content-Type":
+    //                         "application/json"
+    //                 },
+    //                 body: JSON.stringify({
+    //                     formData,
+    //                     allocations:
+    //                         previewResult?.allocations || []
+    //                 })
+    //             }
+    //         );
 
-            const result = await response.json();
+    //         const result = await response.json();
 
-            console.log(result);
+    //         console.log(result);
 
-            setShowPreviewModal(false);
+    //         setShowPreviewModal(false);
 
-        } catch (error) {
-            console.error(error);
-        } finally {
-            setLoading(false);
-        }
-    };
+    //     } catch (error) {
+    //         console.error(error);
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
 
     const isFormValid = [
         "id",
