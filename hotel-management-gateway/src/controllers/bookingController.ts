@@ -17,9 +17,16 @@ export const confirmBooking = async (req: Request, res: Response) => {
 
 
             const conditionGuid = await axios.get(`${process.env.CSHARP_API}/Condition/idbyoption/${formData.roomType}`)
-            console.log("הצלחת");
-            console.log({ conditionGuid });
+         
 
+
+            const price1 = await axios.get(`${process.env.CSHARP_API}/PricesList/price/${eventGuid.data}`)
+           
+
+
+            const price2 = await axios.get(`${process.env.CSHARP_API}/Condition/${conditionGuid.data}`)
+            
+            const price = Number(price1.data) + Number(price2.data);
 
             const regRes = await axios.post(
                 `${process.env.CSHARP_API}/registereds`,
@@ -28,12 +35,13 @@ export const confirmBooking = async (req: Request, res: Response) => {
                     NumberId: formData.id,
                     Name: formData.name,
                     SumPlace: alloc.assignedGuests,
-                    TotalPrice: 0,
+                    TotalPrice: price,
                     Event: eventGuid.data,
                     Condition: conditionGuid.data,
 
                 }
             );
+
             console.log("נכנס לרגי");
 
             const registeredId = regRes.data.id;
@@ -61,14 +69,14 @@ export const confirmBooking = async (req: Request, res: Response) => {
             break;
         }
         console.log("נכנס ללוקי");
-    // }
-    //     catch (err: any) {
-    //         return res.status(500).json({
-    //             success: false,
-    //             message: err.message,
-    //             stack: err.stack
-    //         });
-    //     }
+        // }
+        //     catch (err: any) {
+        //         return res.status(500).json({
+        //             success: false,
+        //             message: err.message,
+        //             stack: err.stack
+        //         });
+        //     }
     } catch (error: any) {
 
         console.error("FULL ERROR");

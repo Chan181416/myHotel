@@ -218,7 +218,8 @@ export function processBookingEngine(
             roomId: room.id,
             roomNum: room.roomNum,
             assignedGuests: assigned,
-            score: item.score
+            score: item.score,
+            condition: room.conditionId
         });
 
         remainingGuests -= assigned;

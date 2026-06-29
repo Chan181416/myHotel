@@ -1,10 +1,12 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import "./BookingPreview.css";
 
+import React, { useState } from "react";
+
 function BookingPreview() {
     const location = useLocation();
     const navigate = useNavigate();
-
+    const [loading, setLoading] = useState(false);
     const previewResult = location.state?.previewResult;
     const formData = location.state?.formData;
 
@@ -20,6 +22,36 @@ function BookingPreview() {
     }
 
     const allocations = previewResult.allocations || [];
+
+    const confirmBooking = async () => {
+        try {
+            setLoading(true);
+
+            const response = await fetch(
+                `${import.meta.env.VITE_API_URL}/api/booking/confirm-booking`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        formData,
+                        allocations: previewResult?.allocations || []
+                    })
+                }
+            );
+
+            const result = await response.json();
+
+            console.log("BOOKING CONFIRMED:", result);
+
+            navigate("/basis"); // או למסך הצלחה אם יש לך
+        } catch (error) {
+            console.error("confirmBooking error:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="preview-page">
@@ -51,8 +83,15 @@ function BookingPreview() {
                             <div className="room-num">
                                 חדר {room.roomNum}
                             </div>
+
+
                             <div className="room-info">
-                                {room.assignedGuests} אורחים
+                                {room.conditionId} שדרוג
+                            </div>
+
+
+                            <div className="room-info">
+                                {room.assignedGuests} מקומות
                             </div>
                         </div>
                     ))}
@@ -68,9 +107,10 @@ function BookingPreview() {
 
                     <button
                         className="btn primary"
-                        onClick={() => console.log("confirm booking")}
+                        onClick={confirmBooking}
+                        disabled={loading}
                     >
-                        אישור הזמנה 🌴
+                        {loading ? "מבצע הזמנה..." : "אישור הזמנה 🌴"}
                     </button>
                 </div>
 
