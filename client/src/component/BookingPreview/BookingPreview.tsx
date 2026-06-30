@@ -213,7 +213,7 @@ function BookingPreview() {
                             </div>
 
                             <div className="room-info">
-                                {room.conditionId} שדרוג
+                                {room.conditionOption} שדרוג
                             </div>
 
                             <div className="room-info">
