@@ -1,25 +1,33 @@
+
 # ---------- Build stage ----------
-FROM node:20-alpine AS builder
+FROM node:18-alpine AS builder
 
 WORKDIR /app
 
+# Install dependencies
 COPY package*.json ./
 RUN npm install
-
+# Copy source
 COPY . .
 
+# Build TypeScript
 RUN npm run build
 
 # ---------- Production stage ----------
-FROM node:20-alpine
+FROM node:18-alpine
 
 WORKDIR /app
 
+# Install only production dependencies
 COPY package*.json ./
 RUN npm install --omit=dev
 
+# Copy build output
 COPY --from=builder /app/dist ./dist
 
-EXPOSE 3000
+# If needed: copy static files / config
+# COPY --from=builder /app/public ./public
+
+EXPOSE 3001
 
 CMD ["node", "dist/server.js"]

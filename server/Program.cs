@@ -62,7 +62,14 @@ using (var scope = app.Services.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<MyHotelDbContext>();
     try
     {
-        context.Database.Migrate();
+        Console.WriteLine(">>> SEED STARTED");
+
+        // קודם: יוצר את המסד ואת הטבלאות
+        context.Database.EnsureCreated();
+
+        // עכשיו אפשר לבדוק ולמלא נתונים
+        Console.WriteLine("ROLES COUNT: " + context.Roles.Count());
+        
         if (!context.Roles.Any())
         {
             context.Roles.Add(new Role
@@ -74,13 +81,13 @@ using (var scope = app.Services.CreateScope())
             });
 
             context.SaveChanges();
+            Console.WriteLine(">>> SEED FINISHED");
         }
     }
     catch (Exception ex)
     {
-        Console.WriteLine("DB INIT ERROR: " + ex.Message);
-
+        Console.WriteLine("DB INIT ERROR:");
+        Console.WriteLine(ex.ToString());
     }
-
 }
 app.Run();
