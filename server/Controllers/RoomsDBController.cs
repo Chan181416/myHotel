@@ -96,6 +96,21 @@ namespace server.Controllers
             return Ok(room);
         }
 
+        [HttpGet("full/{id}")]
+        public async Task<IActionResult> GetRoomFillById(Guid id)
+        {
+            var locations = _context.RoomLocations.Where(r => r.Room != null && r.Room.Id == id);
+
+
+
+            if (locations == null) return NotFound();
+
+            return Ok(locations);
+
+
+
+        }
+
         // שליפת שדות לפי RoomNum
         [HttpGet("fields/{roomNum}")]
         public async Task<IActionResult> GetRoomFields(int roomNum)
@@ -117,28 +132,28 @@ namespace server.Controllers
 
             return Ok(room);
         }
-        [HttpPut("add-room-location")]
-        public async Task<IActionResult> AddRoomLocation(AddRoomLocationDTO dto)
-        {
-            var room = await _context.RoomsDBs
-                .Include(r => r.RoomLocations)
-                .FirstOrDefaultAsync(r => r.Id == dto.RoomId);
+        // [HttpPut("add-room-location")]
+        // public async Task<IActionResult> AddRoomLocation(AddRoomLocationDTO dto)
+        // {
+        //     var room = await _context.RoomsDBs
+        //         .Include(r => r.RoomLocations)
+        //         .FirstOrDefaultAsync(r => r.Id == dto.RoomId);
 
-            if (room == null)
-                return NotFound("Room not found");
+        //     if (room == null)
+        //         return NotFound("Room not found");
 
-            var roomLocation = await _context.RoomLocations
-                .FirstOrDefaultAsync(r => r.Id == dto.RoomLocationId);
+        //     var roomLocation = await _context.RoomLocations
+        //         .FirstOrDefaultAsync(r => r.Id == dto.RoomLocationId);
 
-            if (roomLocation == null)
-                return NotFound("RoomLocation not found");
+        //     if (roomLocation == null)
+        //         return NotFound("RoomLocation not found");
 
-            room.RoomLocations.Add(roomLocation);
+        //     room.RoomLocations.Add(roomLocation);
 
-            await _context.SaveChangesAsync();
+        //     await _context.SaveChangesAsync();
 
-            return Ok();
-        }
+        //     return Ok();
+        // }
         [HttpGet("allRoomsFull")]
         public async Task<bool> AllRoomsFull()
         {

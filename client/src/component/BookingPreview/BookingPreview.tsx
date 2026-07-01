@@ -1,3 +1,4 @@
+
 import { useLocation, useNavigate } from "react-router-dom";
 import "./BookingPreview.css";
 
@@ -7,13 +8,15 @@ function BookingPreview() {
     const location = useLocation();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const [showeok, setshoweok] = useState(false);
+
     const previewResult = location.state?.previewResult;
     const formData = location.state?.formData;
 
-    if (!previewResult) {
+    if (previewResult.allocations.length === 0) {
         return (
             <div className="empty-state">
-                <h2>אין נתוני הזמנה</h2>
+                <h2>אין חדרים פנויים להזמנה תודה ולהתראות</h2>
                 <button onClick={() => navigate("/basis")}>
                     חזרה להזמנה
                 </button>
@@ -24,9 +27,9 @@ function BookingPreview() {
     const allocations = previewResult.allocations || [];
 
     const confirmBooking = async () => {
-        try {
-            setLoading(true);
+        setLoading(true);
 
+        try {
             const response = await fetch(
                 `${import.meta.env.VITE_API_URL}/api/booking/confirm-booking`,
                 {
@@ -40,16 +43,20 @@ function BookingPreview() {
                     })
                 }
             );
+            if (!response.ok) {
+                throw new Error(`Request failed: ${response.status}`);
+            }
 
             const result = await response.json();
-
             console.log("BOOKING CONFIRMED:", result);
-
-            navigate("/basis"); // או למסך הצלחה אם יש לך
+            setshoweok(result)
         } catch (error) {
             console.error("confirmBooking error:", error);
-        } finally {
+        }
+        finally {
             setLoading(false);
+            navigate("/basis");
+
         }
     };
 
@@ -84,11 +91,9 @@ function BookingPreview() {
                                 חדר {room.roomNum}
                             </div>
 
-
                             <div className="room-info">
-                                {room.conditionId} שדרוג
+                                {room.conditionOption} שדרוג
                             </div>
-
 
                             <div className="room-info">
                                 {room.assignedGuests} מקומות
@@ -97,6 +102,7 @@ function BookingPreview() {
                     ))}
                 </div>
 
+                {/* <div> {previewResult.message} הודעה </div> */}
                 <div className="actions">
                     <button
                         className="btn secondary"
@@ -112,6 +118,9 @@ function BookingPreview() {
                     >
                         {loading ? "מבצע הזמנה..." : "אישור הזמנה 🌴"}
                     </button>
+                    <div className="room-info">
+                        {showeok}
+                    </div>
                 </div>
 
             </div>

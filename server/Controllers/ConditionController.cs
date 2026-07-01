@@ -84,7 +84,24 @@ namespace server.Controllers
             return Ok(item.Id); // Id של Condition
         }
 
-       
+        [HttpGet("getEvent/{id}")]
+        public async Task<IActionResult> getEventById(Guid id)
+        {
+            // מחפש את הרשומה לפי IdPrice
+            var price = await _Context.Conditions
+                                      .Where(p => p.Id == id)
+
+                                      .FirstOrDefaultAsync();
+
+            // אם הרשומה לא קיימת מחזירים 404
+            if (price == null)
+                return NotFound();
+
+            // מחזיר את הערך של Price בלבד
+            return Ok(price.Price);
+        }
+
+
 
     }
 

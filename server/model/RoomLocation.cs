@@ -20,4 +20,18 @@ namespace server.Models
         public Guid RegisteredsId { get; set; }
 
     }
+    public class RoomLocationViewDTO
+    {
+        public Guid Id { get; set; }
+
+        // Registered
+        public string? Name { get; set; }
+        public string? Phone { get; set; } // או NumberId אצלך
+        public string? Event { get; set; }
+
+        // Room
+        public int RoomNum { get; set; }
+        public int Floor { get; set; }
+        public string? RoomCondition { get; set; }
+    }
 }
