@@ -20,13 +20,11 @@ interface Role {
   code: number;
 }
 
-type ConditionType = null | "אקסטרה" | "מול_הים";
-
 interface RoomDB {
   roomNum: number;
   floor: number;
   beds: number;
-  condition: ConditionType;
+  condition: string;
 }
 
 export default function DataBase() {
@@ -264,20 +262,11 @@ export default function DataBase() {
       for (const room of rooms) {
         const originalCondition = room.condition;
 
-        let conditionId: string | null = null;
+        const conditionResponse = await fetch(
+          `${baseUrl}/api/proxy/Condition/idbyoption/${encodeURIComponent(room.condition)}`
+        );
 
-        if (originalCondition !== "orginal") {
-          try {
-            const conditionResponse = await fetch(
-              `${baseUrl}/api/proxy/Condition/idbyoption/${encodeURIComponent(originalCondition)}`
-            );
-
-            const data = await conditionResponse.json();
-            conditionId = data;
-          } catch (err) {
-            console.log(`Condition '${originalCondition}' לא נמצא. נשלח null.`);
-          }
-        }
+        const conditionId = await conditionResponse.json();
 
         // console.log({
         //   roomNum: room.roomNum,
@@ -547,9 +536,6 @@ export default function DataBase() {
 
                   <td>
                     <input
-
-
-
                       type="text"
                       inputMode="numeric"
                       placeholder="00000"
@@ -682,14 +668,10 @@ export default function DataBase() {
 
                   <td>
                     <select
-                      value={row.condition ?? "null"}
+                      value={row.condition}
                       onChange={(e) =>
                         handleInputChange(
-                          {
-                            target: {
-                              value: e.target.value === "null" ? null : e.target.value
-                            }
-                          },
+                          e,
                           idx,
                           rooms,
                           setRooms,
@@ -697,7 +679,7 @@ export default function DataBase() {
                         )
                       }
                     >
-                      <option value="orginal">רגיל</option>
+                      <option value="רגיל">רגיל</option>
                       <option value="אקסטרה">אקסטרה</option>
                       <option value="מול_הים">מול הים</option>
                     </select>
@@ -716,7 +698,7 @@ export default function DataBase() {
                 roomNum: 0,
                 floor: 0,
                 beds: 0,
-                condition: null
+                condition: ""
               })
             }
           >
