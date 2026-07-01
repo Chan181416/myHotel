@@ -1,75 +1,85 @@
 import { useEffect, useState, useMemo } from "react";
 
 export interface RoomLocationViewDTO {
-  id: string;
-  name: string;
-  phone: string;
-  roomNum: number;
-  floor: number;
-  roomCondition: string;
+    id: string;
+    name: string;
+    phone: string;
+    roomNum: number;
+    floor: number;
+    roomCondition: string;
 }
 
 export default function RoomLocationsTable() {
-  const [data, setData] = useState<RoomLocationViewDTO[]>([]);
-  const [search, setSearch] = useState("");
+    const [data, setData] = useState<RoomLocationViewDTO[]>([]);
+    const [search, setSearch] = useState("");
+    const baseUrl = import.meta.env.VITE_API_URL;
 
-  useEffect(() => {
-    fetch("/api/room-location/view")
-      .then((res) => res.json())
-      .then(setData);
-  }, []);
+    useEffect(() => {
+        fetch(`${baseUrl}/api/room-location/view`)
+            .then((res) => res.json())
+            .then(setData);
+    }, []);
 
-  // 🔍 סינון חי
-  const filteredData = useMemo(() => {
-    const q = search.toLowerCase();
+    // 🔍 סינון חי
+    const filteredData = useMemo(() => {
+        const q = search.toLowerCase();
 
-    return data.filter((item) => {
-      return (
-        item.name?.toLowerCase().includes(q) ||
-        String(item.roomNum).includes(q)
-      );
-    });
-  }, [data, search]);
+        return data.filter((item) => {
+            return (
+                item.name?.toLowerCase().includes(q) ||
+                String(item.roomNum).includes(q)
+            );
+        });
+    }, [data, search]);
 
-  return (
-    <div>
-      {/* 🔎 שדה חיפוש */}
-      <input
-        type="text"
-        placeholder="חיפוש לפי שם או מספר חדר..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        style={{
-          marginBottom: "10px",
-          padding: "6px",
-          width: "250px",
-        }}
-      />
+    return (
+        <div>
+            {/* 🔎 שדה חיפוש */}
+            <input
+                type="text"
+                placeholder="חיפוש לפי שם או מספר חדר..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                style={{
+                    marginBottom: "10px",
+                    padding: "6px",
+                    width: "250px",
+                }}
+            />
 
-      {/* 📊 טבלה */}
-      <table border={1} cellPadding={8}>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Room</th>
-            <th>Floor</th>
-            <th>Status</th>
-          </tr>
-        </thead>
+            {/* 📊 טבלה */}
+            <table border={1} cellPadding={8}>
+                <thead>
+                    <tr>
+                        <th>שם</th>
+                        <th>פלאפון</th>
+                        <th>מספר חדר</th>
+                        <th>קומה</th>
+                        <th>שדרוג</th>
+                        <th>מסלול</th>
 
-        <tbody>
-          {filteredData.map((item) => (
-            <tr key={item.id}>
-              <td>{item.name}</td>
-              <td>{item.phone}</td>
-              <td>{item.roomNum}</td>
-              <td>{item.floor}</td>
-              <td>{item.roomCondition}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {filteredData.map((item) => (
+                        <tr key={item.id}>
+                            <td>{item.name}</td>
+                            <td>{item.phone}</td>
+                            <td>{item.roomNum}</td>
+                            <td>{item.floor}</td>
+                            <td>{item.roomCondition}</td>
+                            <td>{item.event}</td>
+
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    );
 }
+
+
+// fetch("/api/room-location/view")
+//     .then(r => r.text())
+//     .then(console.log)
