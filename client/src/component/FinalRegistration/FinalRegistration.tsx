@@ -52,7 +52,7 @@ export default function RoomLocationsTable() {
                 <thead>
                     <tr>
                         <th>שם</th>
-                        <th>פלאפון</th>
+                        <th>תעודת זהות</th>
                         <th>מספר חדר</th>
                         <th>קומה</th>
                         <th>שדרוג</th>
@@ -80,6 +80,3 @@ export default function RoomLocationsTable() {
 }
 
 
-// fetch("/api/room-location/view")
-//     .then(r => r.text())
-//     .then(console.log)

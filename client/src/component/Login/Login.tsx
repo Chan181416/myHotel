@@ -50,7 +50,7 @@ export default function Login() {
     if (status === 'succeeded') {
       const code = type;
       if (Number(code) === 2) {
-        navigate("/FinalRegistration");
+        navigate("/admin");
       }
       else if (Number(code) === 1) {
         navigate("/basis");

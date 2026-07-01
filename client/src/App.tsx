@@ -9,6 +9,7 @@ import BookingPreview from './component/BookingPreview/BookingPreview.tsx';
 import Root from './root';
 import DataBase from './component/dataBase/dataBase.tsx';
 import RoomLocationsTable from './component/FinalRegistration/FinalRegistration.tsx';
+import AdminDashboard from './component/AdminDashboard/AdminDashboard.tsx';
 
 const router = createBrowserRouter([{
   path: "/",
@@ -26,6 +27,10 @@ const router = createBrowserRouter([{
     {
       path: "/basis",
       element: <Basis />,
+    },
+    {
+      path: "/admin",
+      element: <AdminDashboard />,
     },
     {
       path: "/bookingPreview",

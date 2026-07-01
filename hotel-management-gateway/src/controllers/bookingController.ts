@@ -129,15 +129,6 @@ export const confirmBooking = async (req: Request, res: Response) => {
         console.log(`מחיר בסיס: ${basePrice}, סה"כ: ${totalPrice}`);
 
         // ─── שלב 3: יצירת registered ───
-        console.log({
-            numberId: formData.id,
-            name: formData.name,
-            sumPlace: Number(formData.guests),
-            totalPrice: totalPrice,
-            priceListId: eventGuid,
-            conditionId: conditionGuid
-        });
-
         const regRes = await axios.post(
             `${process.env.CSHARP_API}/registereds`,
             {
@@ -149,7 +140,6 @@ export const confirmBooking = async (req: Request, res: Response) => {
                 condition: conditionGuid
             }
         );
-
         const registeredId = regRes.data.id;
         console.log("✅ נוצר registered עם ID:", registeredId);
 
@@ -174,15 +164,7 @@ export const confirmBooking = async (req: Request, res: Response) => {
                 createdRoomLocationIds.push(roomLocationId);
                 console.log(`  ✅ נוצר RoomLocation ID: ${roomLocationId}`);
 
-                // 4ב: עדכון החדר - הוספת ה-RoomLocation לרשימה
-                // await axios.put(
-                //     `${process.env.CSHARP_API}/RoomDB/add-room-location`,
-                //     {
-                //         roomId: alloc.roomId,
-                //         roomLocationId: roomLocationId
-                //     }
-                // );
-                console.log(`  ✅ עודכן חדר ${alloc.roomNum}`);
+             
 
                 createdRoomLocations.push({
                     roomId: alloc.roomId,
