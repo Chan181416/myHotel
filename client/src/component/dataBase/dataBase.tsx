@@ -43,6 +43,11 @@ export default function DataBase() {
   const addRow = (setter: any, state: any, newRow: any) => {
     setter([...state, newRow]);
   };
+  const deleteRow = (setter: any, state: any, index: number) => {
+    const newState = [...state];
+    newState.splice(index, 1);
+    setter(newState);
+  };
 
   /* שינוי ערכים */
   const handleInputChange = (
@@ -338,6 +343,7 @@ export default function DataBase() {
                 <th>שם</th>
                 <th>מספר זהות</th>
                 <th>קוד</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -398,6 +404,14 @@ export default function DataBase() {
                       ))}
                     </div>
                   </td>
+                  <td className="rowActions">
+                    <button
+                      className="deleteBtn"
+                      onClick={() => deleteRow(setRoles, roles, idx)}
+                    >
+                      ✕
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -427,6 +441,7 @@ export default function DataBase() {
               <tr>
                 <th>אירוע</th>
                 <th>מחיר</th>
+                <th></th>
               </tr>
             </thead>
 
@@ -472,7 +487,14 @@ export default function DataBase() {
                       }}
                     />
                   </td>
-
+                  <td className="rowActions">
+                    <button
+                      className="deleteBtn"
+                      onClick={() => deleteRow(setPriceLists, priceLists, idx)}
+                    >
+                      ✕
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -511,6 +533,7 @@ export default function DataBase() {
               <tr>
                 <th>סוג חדר</th>
                 <th>מחיר</th>
+                <th></th>
               </tr>
             </thead>
 
@@ -558,7 +581,14 @@ export default function DataBase() {
                       }}
                     />
                   </td>
-
+                  <td className="rowActions">
+                    <button
+                      className="deleteBtn"
+                      onClick={() => deleteRow(setConditions, conditions, idx)}
+                    >
+                      ✕
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -600,6 +630,7 @@ export default function DataBase() {
                 <th>קומה</th>
                 <th>מספר מיטות</th>
                 <th>תנאי נוסף</th>
+                <th></th>
               </tr>
             </thead>
 
@@ -684,7 +715,14 @@ export default function DataBase() {
                       <option value="מול_הים">מול הים</option>
                     </select>
                   </td>
-
+                  <td className="rowActions">
+                    <button
+                      className="deleteBtn"
+                      onClick={() => deleteRow(setRooms, rooms, idx)}
+                    >
+                      ✕
+                    </button>
+                  </td>
                 </tr>
               ))}
 
