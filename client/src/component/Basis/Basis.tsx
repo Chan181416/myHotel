@@ -12,7 +12,7 @@ function Basis() {
         email: "",
         date: "",
         tripType: "נופש_מלא",
-        roomType: "אקסטרה",
+        roomType: "רגיל",
         guests: 1
     });
     const navigate = useNavigate();
@@ -328,6 +328,10 @@ function Basis() {
                             value={formData.roomType}
                             onChange={handleChange}
                         >
+                            <option value="רגיל">
+                                רגיל
+                            </option>
+
                             <option value="אקסטרה">
                                 אקסטרה
                             </option>
