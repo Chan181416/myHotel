@@ -1,0 +1,290 @@
+/* ===== OptionCard.css ===== */
+/* רקע כללי – תכלת עמוק */
+.option-card-container {
+  background: linear-gradient(135deg, #0a2a4a 0%, #1a4a6e 50%, #2a6a8e 100%);
+  min-height: 100vh;
+  padding: 2.5rem 1.5rem;
+  direction: rtl;
+  font-family: 'Segoe UI', 'Rubik', system-ui, sans-serif;
+  box-sizing: border-box;
+}
+
+.option-card-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #e8f4f8;
+  margin: 0 0 0.25rem;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.option-card-subtitle {
+  text-align: center;
+  font-size: 1.05rem;
+  color: #b8d4e8;
+  margin: 0 0 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+/* ===== רשת כרטיסים ===== */
+.option-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.75rem;
+  max-width: 1200px;
+  margin: 0 auto 2rem;
+}
+
+/* ===== כרטיס בודד ===== */
+.option-card {
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 1.75rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.option-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
+}
+
+.option-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* ===== כרטיס נבחר ===== */
+.option-card--selected {
+  border-color: #4fc3f7;
+  background: rgba(79, 195, 247, 0.12);
+  box-shadow: 0 0 0 2px rgba(79, 195, 247, 0.4), 0 12px 32px rgba(79, 195, 247, 0.15);
+}
+
+/* ===== תגית סוג ===== */
+.option-card__badge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: rgba(255, 255, 255, 0.15);
+  color: #e0f0fa;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.3rem 0.75rem;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4px);
+}
+
+/* ===== עיגול ניקוד ===== */
+.option-card__score-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.option-card__score-circle {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  background: conic-gradient(
+    #4fc3f7 0deg,
+    #4fc3f7 calc(var(--score-deg, 270deg)),
+    rgba(255, 255, 255, 0.15) calc(var(--score-deg, 270deg))
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  animation: scoreAppear 0.8s ease-out forwards;
+}
+
+.option-card__score-circle::before {
+  content: '';
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #0d2f4a;
+}
+
+.option-card__score-value {
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: #e8f4f8;
+  z-index: 1;
+  line-height: 1;
+}
+
+.option-card__score-label {
+  font-size: 0.7rem;
+  color: #9bc4dc;
+  z-index: 1;
+  margin-top: 2px;
+}
+
+@keyframes scoreAppear {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ===== פרטי חדר ===== */
+.option-card__details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  width: 100%;
+}
+
+.option-card__detail {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: #c8dce8;
+  font-size: 0.95rem;
+}
+
+.option-card__detail-icon {
+  font-size: 1.3rem;
+  width: 32px;
+  text-align: center;
+}
+
+.option-card__detail-label {
+  display: block;
+  font-size: 0.7rem;
+  color: #8ab0c8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.option-card__detail-value {
+  display: block;
+  font-weight: 600;
+  color: #e0f0fa;
+  font-size: 1.05rem;
+}
+
+/* ===== כפתורי פעולה ===== */
+.option-card__button {
+  width: 100%;
+  padding: 0.75rem 1.25rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.12);
+  color: #e0f0fa;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-family: inherit;
+}
+
+.option-card__button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.02);
+}
+
+.option-card__button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.option-card__button--selected {
+  background: #4fc3f7;
+  color: #0a2a4a;
+  border-color: #4fc3f7;
+  box-shadow: 0 4px 16px rgba(79, 195, 247, 0.35);
+  cursor: default;
+}
+
+/* ===== כפתורי ביטול תחתונים ===== */
+.option-card-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.option-card__cancel {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #a0c4d8;
+  padding: 0.7rem 2rem;
+  border-radius: 30px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.option-card__cancel:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #e0f0fa;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* ===== רספונסיביות ===== */
+@media (max-width: 640px) {
+  .option-card-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .option-card-title {
+    font-size: 1.5rem;
+  }
+
+  .option-card-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .option-card__score-circle {
+    width: 78px;
+    height: 78px;
+  }
+
+  .option-card__score-circle::before {
+    width: 68px;
+    height: 68px;
+  }
+
+  .option-card__score-value {
+    font-size: 1.4rem;
+  }
+}

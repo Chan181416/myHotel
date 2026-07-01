@@ -8,40 +8,42 @@ import BookingPreview from './component/BookingPreview/BookingPreview.tsx';
 
 import Root from './root';
 import DataBase from './component/dataBase/dataBase.tsx';
+import AdminDashboard from './component/AdminDashboard/AdminDashboard.tsx';
 
 const router = createBrowserRouter([{
   path: "/",
   element: <Root />,
   children: [
 
-    { index: true, element: <Login /> }, 
-
-
+    { index: true, element: <Login /> },
 
     {
       path: "/home",
       element: <Home />,
     },
     {
+      path: "/admin",
+      element: <AdminDashboard />,
+    },
+    {
       path: "/basis",
       element: <Basis />,
     },
     {
-  path: "/bookingPreview",
-  element: <BookingPreview />,
-},
+      path: "/bookingPreview",
+      element: <BookingPreview />,
+    },
     {
       path: "/about",
       element: <About />
-    }, {
+    }, 
+    {
       path: '/dataBase',
       element: <DataBase />
     }
 
   ]
 }
-
-
 
 ]);
 export default function App() {
@@ -52,6 +54,4 @@ export default function App() {
   //   </>
 
   // )
-
-
 }
