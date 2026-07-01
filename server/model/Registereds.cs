@@ -23,6 +23,7 @@ namespace server.Models
         public Condition? Condition { get; set; }
 
         public virtual List<RoomLocation> Rooms { get; set; } = [];
+        
     }
 
     public class RegisteredsCreateDTO

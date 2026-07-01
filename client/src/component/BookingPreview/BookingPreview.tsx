@@ -223,6 +223,7 @@ function BookingPreview() {
                     ))}
                 </div>
 
+                {/* <div> {previewResult.message} הודעה </div> */}
                 <div className="actions">
                     <button
                         className="btn secondary"

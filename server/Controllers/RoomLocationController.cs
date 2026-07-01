@@ -73,6 +73,34 @@ namespace server.Controllers
             return Ok(list);
         }
 
+        [HttpGet("view")]
+        public async Task<IActionResult> GetAllView()
+        {
+            var list = await _context.RoomLocations
+                .Include(r => r.Room)
+                    .ThenInclude(r => r.Condition)
+                .Include(r => r.Registereds)
+                .ThenInclude(r => r.Event)
+                .ToListAsync();
+
+            var result = list.Select(x => new RoomLocationViewDTO
+            {
+                Id = x.Id,
+
+                // Registered
+                Name = x.Registereds?.Name,
+                Phone = x.Registereds?.NumberId,
+                Event = x.Registereds?.Event?.Event,
+
+                // Room
+                RoomNum = x.Room?.RoomNum ?? 0,
+                Floor = x.Room?.Floor ?? 0,
+                RoomCondition = x.Room?.Condition?.Option
+            });
+
+            return Ok(result);
+        }
+
         // עדכון החדר או האורח
         [HttpPatch("{id}")]
         public async Task<IActionResult> Update(Guid id, RoomLocationDTO dto)

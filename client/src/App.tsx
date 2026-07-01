@@ -8,13 +8,14 @@ import BookingPreview from './component/BookingPreview/BookingPreview.tsx';
 
 import Root from './root';
 import DataBase from './component/dataBase/dataBase.tsx';
+import RoomLocationsTable from './component/FinalRegistration/FinalRegistration.tsx';
 
 const router = createBrowserRouter([{
   path: "/",
   element: <Root />,
   children: [
 
-    { index: true, element: <Login /> }, 
+    { index: true, element: <Login /> },
 
 
 
@@ -27,9 +28,13 @@ const router = createBrowserRouter([{
       element: <Basis />,
     },
     {
-  path: "/bookingPreview",
-  element: <BookingPreview />,
-},
+      path: "/bookingPreview",
+      element: <BookingPreview />,
+    },
+    {
+      path: "/FinalRegistration",
+      element: <RoomLocationsTable />,
+    },
     {
       path: "/about",
       element: <About />

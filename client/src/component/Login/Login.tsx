@@ -9,6 +9,7 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [idNumber, setIdNumber] = useState("");
   const [touched, setTouched] = useState(false);
+  const [errror, setError] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -33,9 +34,9 @@ export default function Login() {
           },
         }
       );
-      const result =  await response.json();
-      if(result===false){
-        setTouched("אין אפשרות להתחיל ברישום אם אתה עובד פנה למנהל")
+      const result = await response.json();
+      if (result === false) {
+        setError("אין אפשרות להתחיל ברישום אם אתה עובד פנה למנהל")
       }
     }
     catch (err) {
@@ -48,8 +49,8 @@ export default function Login() {
   useEffect(() => {
     if (status === 'succeeded') {
       const code = type;
-      if (Number(code) === 2 ) {
-        navigate("/dataBase");
+      if (Number(code) === 2) {
+        navigate("/FinalRegistration");
       }
       else if (Number(code) === 1) {
         navigate("/basis");
@@ -75,72 +76,77 @@ export default function Login() {
     setIdNumber("");
     navigate("/");
   };
+  if (errror == "") {
+    return (
 
-  return (
-    <div className="page">
-      <div className="loginCard">
-        <h1 className="title">מערכת כניסה</h1>
+      <div className="page">
 
-        {/* <p className="subtitle">
-          התחבר למערכת עדכון פרטי ההרשמה
-        </p> */}
-        {!user.type ? (
-          <>
-            <div className="inputGroup">
-              <label>שם משתמש</label>
-              <input
-                value={username}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setUsername(e.target.value)
-                }
-                onBlur={() => setTouched(true)}
-                className="input"
-              />
-            </div>
 
-            <div className="inputGroup">
-              <label>תעודת זהות</label>
-              <input
-                value={idNumber}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setIdNumber(e.target.value)
-                }
-                onBlur={() => setTouched(true)}
-                className="input"
-              />
-            </div>
+        <div className="loginCard">
+          <h1 className="title">מערכת כניסה</h1>
 
-            {showError && (
-              <div className="errorText">
-                יש למלא את כל השדות לפני ההמשך
+          {!user.type ? (
+            <>
+              <div className="inputGroup">
+                <label>שם משתמש</label>
+                <input
+                  value={username}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setUsername(e.target.value)
+                  }
+                  onBlur={() => setTouched(true)}
+                  className="input"
+                />
               </div>
-            )}
 
-            <button
-              onClick={handleLogin}
-              disabled={!isFormValid || status === "loading"}
-              className="loginBtn"
-            >
-              {status === "loading" ? "מתחבר..." : "כניסה למערכת"}
-            </button>
+              <div className="inputGroup">
+                <label>תעודת זהות</label>
+                <input
+                  value={idNumber}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setIdNumber(e.target.value)
+                  }
+                  onBlur={() => setTouched(true)}
+                  className="input"
+                />
+              </div>
 
-            {error && <div className="errorText">{error}</div>}
-          </>
-        ) : (
-          <div className="userBox">
-            <h3>משתמש מחובר</h3>
+              {showError && (
+                <div className="errorText">
+                  יש למלא את כל השדות לפני ההמשך
+                </div>
+              )}
 
-            <p>שם משתמש: {user.username}</p>
-            <p>תעודת זהות: {user.idNumber}</p>
-            <p>סוג משתמש: {user.type}</p>
+              <button
+                onClick={handleLogin}
+                disabled={!isFormValid || status === "loading"}
+                className="loginBtn"
+              >
+                {status === "loading" ? "מתחבר..." : "כניסה למערכת"}
+              </button>
 
-            <button onClick={handleLogout} className="logoutBtn">
-              התנתקות
-            </button>
-          </div>
-        )}
+              {error && <div className="errorText">{error}</div>}
+            </>
+          ) : (
+            <div className="userBox">
+              <h3>משתמש מחובר</h3>
+
+              <p>שם משתמש: {user.username}</p>
+              <p>תעודת זהות: {user.idNumber}</p>
+              <p>סוג משתמש: {user.type}</p>
+
+              <button onClick={handleLogout} className="logoutBtn">
+                התנתקות
+              </button>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
 
-  );
+    );
+  }
+  else {
+    <div>{errror}
+    </div>
+  }
 }

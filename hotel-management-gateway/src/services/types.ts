@@ -76,3 +76,12 @@ export interface Condition {
     option: string;        // שם האופציה (לדוגמה "אקסטרה")
     price: number;
 }
+
+export interface RoomLocationViewDTO {
+    id: string;
+    name: string;
+    phone: string;
+    roomNum: number;
+    floor: number;
+    roomCondition: string;
+}

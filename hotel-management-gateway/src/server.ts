@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import bookingRoutes from "./routes/bookingRoutes";
+import roomLocationRoutes from "./routes/roomLocationRoutes";
 
 import roleRoutes from "./routes/Role.routes";
 import dataRoutes from "./routes/dataRoutes";
@@ -18,7 +19,7 @@ app.use(express.json());
 
 // Routes ישנים
 
-app.get('/', (req, res)=>{
+app.get('/', (req, res) => {
   res.status(200).send('server works')
 })
 // app נוסף (registereds)
@@ -35,8 +36,9 @@ app.use("/api/booking", bookingRoutes);
 app.use("/api/Role", roleRoutes);
 app.use("/api/data", dataRoutes);
 app.use("/api/proxy", proxyRoutes);
+app.use("/api/room-location", roomLocationRoutes);
 
-const PORT = Number(process.env.PORT) ||3001 ;
+const PORT = Number(process.env.PORT) || 3001;
 app.listen(PORT, () => {
   console.log(`Node server running on port ${PORT}`);
 });
