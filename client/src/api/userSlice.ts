@@ -16,8 +16,7 @@ export const loginUser = createAsyncThunk(
       }
 
       const data = await response.json();
-
-      // מצפים שיחזור: { type, username, idNumber }
+   // מצפים שיחזור: { type, username, idNumber }
       return data;
     }
      catch (error) {

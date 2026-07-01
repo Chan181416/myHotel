@@ -21,11 +21,11 @@ const router = createBrowserRouter([{
 
 
     {
-      path: "/home",
+      path: "home",
       element: <Home />,
     },
     {
-      path: "/basis",
+      path: "basis",
       element: <Basis />,
     },
     {

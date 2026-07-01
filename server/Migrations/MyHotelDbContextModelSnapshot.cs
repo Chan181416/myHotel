@@ -24,9 +24,11 @@ namespace server.Migrations
 
             modelBuilder.Entity("server.Model.Condition", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Option")
                         .HasColumnType("nvarchar(max)");
@@ -251,7 +253,7 @@ namespace server.Migrations
                     b.Navigation("Room");
                 });
 
-            modelBuilder.Entity("server.model.RoomsDB", b =>
+            modelBuilder.Entity("server.model.RoomDB", b =>
                 {
                     b.HasOne("server.Model.Condition", "Condition")
                         .WithMany()
