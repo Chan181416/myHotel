@@ -44,8 +44,6 @@ export default function Login() {
     }
   }
 
-  check()
-
   useEffect(() => {
     if (status === 'succeeded') {
       const code = type;
@@ -57,6 +55,9 @@ export default function Login() {
       }
     }
   }, [status])
+  useEffect(() => {
+    check();
+  }, []);
 
   const handleLogin = async () => {
     setTouched(true);
@@ -66,8 +67,11 @@ export default function Login() {
     const resultAction = dispatch(
       loginUser({ username, idNumber })
     );
+  };
 
-
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    handleLogin();
   };
 
   const handleLogout = () => {
@@ -86,7 +90,7 @@ export default function Login() {
           <h1 className="title">מערכת כניסה</h1>
 
           {!user.type ? (
-            <>
+            <form onSubmit={handleSubmit}>
               <div className="inputGroup">
                 <label>שם משתמש</label>
                 <input
@@ -107,6 +111,13 @@ export default function Login() {
                     setIdNumber(e.target.value)
                   }
                   onBlur={() => setTouched(true)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      console.log("Enter");
+                      e.preventDefault();
+                      handleLogin();
+                    }
+                  }}
                   className="input"
                 />
               </div>
@@ -118,7 +129,7 @@ export default function Login() {
               )}
 
               <button
-                onClick={handleLogin}
+                type="submit"
                 disabled={!isFormValid || status === "loading"}
                 className="loginBtn"
               >
@@ -126,7 +137,7 @@ export default function Login() {
               </button>
 
               {error && <div className="errorText">{error}</div>}
-            </>
+            </form>
           ) : (
             <div className="userBox">
               <h3>משתמש מחובר</h3>

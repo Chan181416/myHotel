@@ -3,6 +3,7 @@ using server.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5044";
 Console.WriteLine("CONFIG VIEW:");
 Console.WriteLine(builder.Configuration.GetDebugView());
 
@@ -16,8 +17,7 @@ if (string.IsNullOrEmpty(connectionString))
 }
 
 builder.Services.AddDbContext<MyHotelDbContext>(options =>
-    options.UseSqlServer(connectionString)
-);
+options.UseNpgsql(connectionString));
 
 builder.Services.AddControllers();
 
@@ -38,6 +38,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 
+app.Urls.Add($"http://0.0.0.0:{port}");
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
