@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.4" />
+
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.0">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -20,3 +21,4 @@
       <Compile Remove="server.Tests\**\*.cs" />
     </ItemGroup>
 </Project>
+
