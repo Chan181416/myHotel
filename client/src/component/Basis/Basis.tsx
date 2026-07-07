@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import "./Basis.css";
 
 const baseUrl = import.meta.env.VITE_API_URL;
@@ -16,6 +17,7 @@ function Basis() {
         guests: 1
     });
     const navigate = useNavigate();
+    const user = useSelector((state: any) => state.user);
     const [errors, setErrors] = useState({
         id: "",
         name: "",
@@ -367,6 +369,14 @@ function Basis() {
                             ? "מחפש חדרים..."
                             : "לאישור"}
                     </button>
+                    {user.type === 2 && (
+                        <button
+                            type="button"
+                            onClick={() => navigate("/admin")}
+                        >
+                            חזרה ללוח הבקרה
+                        </button>
+                    )}
                 </div>
             </div>
 
