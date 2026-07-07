@@ -13,11 +13,25 @@ Console.WriteLine(connectionString);
 
 if (string.IsNullOrEmpty(connectionString))
 {
-    throw new Exception("DefaultConnection is missing in appsettings.json");
+    throw new Exception("DefaultConnection is missing in configuration");
 }
 
+var lowerConnectionString = connectionString.ToLowerInvariant();
+var usePostgres = lowerConnectionString.Contains("host=") || lowerConnectionString.Contains("username=") || lowerConnectionString.Contains("ssl mode=");
+Console.WriteLine($"Environment: {builder.Environment.EnvironmentName}");
+Console.WriteLine($"Using EF provider: {(usePostgres ? "PostgreSQL" : "SqlServer")}");
+
 builder.Services.AddDbContext<MyHotelDbContext>(options =>
-options.UseNpgsql(connectionString));
+{
+    if (usePostgres)
+    {
+        options.UseNpgsql(connectionString);
+    }
+    else
+    {
+        options.UseSqlServer(connectionString);
+    }
+});
 
 builder.Services.AddControllers();
 

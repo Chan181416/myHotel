@@ -15,9 +15,9 @@ namespace server.Migrations
                 name: "Conditions",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Option = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Price = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Option = table.Column<string>(type: "text", nullable: true),
+                    Price = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -28,11 +28,11 @@ namespace server.Migrations
                 name: "PricesListHistories",
                 columns: table => new
                 {
-                    IdHistory = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdPrice = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Price = table.Column<int>(type: "int", nullable: false),
-                    Event = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    IdHistory = table.Column<Guid>(type: "uuid", nullable: false),
+                    IdPrice = table.Column<Guid>(type: "uuid", nullable: false),
+                    Price = table.Column<int>(type: "integer", nullable: false),
+                    Event = table.Column<string>(type: "text", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -43,9 +43,9 @@ namespace server.Migrations
                 name: "PricesLists",
                 columns: table => new
                 {
-                    IdPrice = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Price = table.Column<int>(type: "int", nullable: false),
-                    Event = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    IdPrice = table.Column<Guid>(type: "uuid", nullable: false),
+                    Price = table.Column<int>(type: "integer", nullable: false),
+                    Event = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -56,15 +56,15 @@ namespace server.Migrations
                 name: "RegisteredsHistory",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OriginalRegisteredId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    NumberId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SumPlace = table.Column<int>(type: "int", nullable: false),
-                    TotalPrice = table.Column<int>(type: "int", nullable: false),
-                    PriceListId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ConditionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    OriginalRegisteredId = table.Column<Guid>(type: "uuid", nullable: false),
+                    NumberId = table.Column<string>(type: "text", nullable: true),
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    SumPlace = table.Column<int>(type: "integer", nullable: false),
+                    TotalPrice = table.Column<int>(type: "integer", nullable: false),
+                    PriceListId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ConditionId = table.Column<Guid>(type: "uuid", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -75,10 +75,10 @@ namespace server.Migrations
                 name: "Roles",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IdNumber = table.Column<int>(type: "int", nullable: false),
-                    Code = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    IdNumber = table.Column<int>(type: "integer", nullable: false),
+                    Code = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -89,11 +89,11 @@ namespace server.Migrations
                 name: "RoomsDBs",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RoomNum = table.Column<int>(type: "int", nullable: false),
-                    Floor = table.Column<int>(type: "int", nullable: false),
-                    ConditionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Sumbed = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    RoomNum = table.Column<int>(type: "integer", nullable: false),
+                    Floor = table.Column<int>(type: "integer", nullable: false),
+                    ConditionId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Sumbed = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -110,13 +110,13 @@ namespace server.Migrations
                 name: "Registereds",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    NumberId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SumPlace = table.Column<int>(type: "int", nullable: false),
-                    TotalPrice = table.Column<int>(type: "int", nullable: false),
-                    PriceListId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ConditionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    NumberId = table.Column<string>(type: "text", nullable: true),
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    SumPlace = table.Column<int>(type: "integer", nullable: false),
+                    TotalPrice = table.Column<int>(type: "integer", nullable: false),
+                    PriceListId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ConditionId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -139,9 +139,9 @@ namespace server.Migrations
                 name: "RoomLocations",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Rooms = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RegisteredsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Rooms = table.Column<Guid>(type: "uuid", nullable: false),
+                    RegisteredsId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
