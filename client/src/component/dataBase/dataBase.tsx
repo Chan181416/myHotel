@@ -1,7 +1,8 @@
 
-
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import "./dataBase.css";
+import "../../STYLES/Style.css"
 import { Navigate, useNavigate } from "react-router-dom";
 
 const baseUrl = import.meta.env.VITE_API_URL;
@@ -41,6 +42,7 @@ export default function DataBase() {
   const [roomMessage, setRoomMessage] = useState("");
   const [globalMessage, setGlobalMessage] = useState("");
   const navigate = useNavigate()
+  const user = useSelector((state: any) => state.user);
   /* הוספת שורה */
   const addRow = (setter: any, state: any, newRow: any) => {
     setter([...state, newRow]);
@@ -696,7 +698,7 @@ export default function DataBase() {
                 roomNum: 0,
                 floor: 0,
                 beds: 0,
-                condition:""
+                condition: ""
               })
             }
           >
@@ -735,6 +737,17 @@ export default function DataBase() {
         )}
 
       </div>
+
+      {user.type === 2 && (
+        <button
+          type="button"
+          className="adminHomeBtn"
+          onClick={() => navigate("/admin")}
+        >
+          <span className="icon">🏠</span>
+          <span className="text">ללוח הבקרה</span>
+        </button>
+      )}
 
     </div >
   );

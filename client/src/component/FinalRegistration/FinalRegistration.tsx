@@ -1,4 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import "../../STYLES/Style.css";
 
 export interface RoomLocationViewDTO {
     id: string;
@@ -7,12 +10,16 @@ export interface RoomLocationViewDTO {
     roomNum: number;
     floor: number;
     roomCondition: string;
+    event: string;
 }
 
 export default function RoomLocationsTable() {
     const [data, setData] = useState<RoomLocationViewDTO[]>([]);
     const [search, setSearch] = useState("");
     const baseUrl = import.meta.env.VITE_API_URL;
+
+    const navigate = useNavigate();
+    const user = useSelector((state: any) => state.user);
 
     useEffect(() => {
         fetch(`${baseUrl}/api/room-location/view`)
@@ -75,6 +82,18 @@ export default function RoomLocationsTable() {
                     ))}
                 </tbody>
             </table>
+
+            {user.type === 2 && (
+                <button
+                    type="button"
+                    className="adminHomeBtn"
+                    onClick={() => navigate("/admin")}
+                >
+                    <span className="icon">🏠</span>
+                    <span className="text">לוח הבקרה</span>
+                </button>
+            )}
+            
         </div>
     );
 }
