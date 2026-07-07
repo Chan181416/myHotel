@@ -416,14 +416,19 @@ export default function DataBase() {
               ))}
             </tbody>
           </table>
-          <button
-            onClick={() =>
-              addRow(setRoles, roles, { name: "", idNumber: 0, code: 1 })
-            }
-          >
-            הוסף
-          </button>
-          <button onClick={handleSaveRoles}>שמור</button>
+          <div className="table-actions">
+            <button className="add-btn"
+              onClick={() =>
+                addRow(setRoles, roles, { name: "", idNumber: 0, code: 1 })
+              }
+            >
+              הוסף
+            </button>
+
+            <button className="confirm-btn" onClick={handleSaveRoles}>
+              שמור
+            </button>
+          </div>
           {rolesMessage && <p className="saveMessage">{rolesMessage}</p>}
         </div>
       </div>
@@ -441,7 +446,7 @@ export default function DataBase() {
               <tr>
                 <th>אירוע</th>
                 <th>מחיר</th>
-                <th></th>
+
               </tr>
             </thead>
 

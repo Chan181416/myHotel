@@ -12,13 +12,18 @@
     --radius: 18px;
 }
 
-* {
+body {
+    margin: 0;
+    outline: 10px solid red !important;
+}
+
+/* * {
     box-sizing: border-box;
     font-family: Arial, sans-serif;
     background: linear-gradient(135deg, #1c87a1, #2a5298);
     display: flex;
     flex-direction: column;
-}
+} */
 
 #welcome {
     min-height: 100vh;
@@ -99,7 +104,8 @@ select:focus {
 }
 
 button {
-    width: 100%;
+    width: auto;
+    display: inline-flex;
     margin-top: 10px;
     padding: 16px;
     border: none;
@@ -133,6 +139,7 @@ button:disabled {
     .contain {
         padding: 30px;
     }
+
     .row {
         flex-direction: column;
         gap: 0;
@@ -148,38 +155,38 @@ button:disabled {
 }
 
 .rowActions {
-  text-align: center;
-  width: 40px;
+    text-align: center;
+    width: 40px;
 }
 
 .rowActions .deleteBtn {
-  opacity: 0;
-  transform: scale(0.8);
-  pointer-events: none;
-  transition: all 0.2s ease;
+    opacity: 0;
+    transform: scale(0.8);
+    pointer-events: none;
+    transition: all 0.2s ease;
 }
 
 tr:hover .rowActions .deleteBtn {
-  opacity: 1;
-  transform: scale(1);
-  pointer-events: auto;
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
 }
 
 tr {
-  transition: background 0.2s ease;
+    transition: background 0.2s ease;
 }
 
 tr:hover {
-  background: rgba(79, 195, 247, 0.08);
+    background: rgba(79, 195, 247, 0.08);
 }
 
 .deleteBtn {
-  background: transparent;
-  border: none;
-  color: #ff5c5c;
-  font-size: 18px;
-  cursor: pointer;
-  transition: 0.2s;
+    background: transparent;
+    border: none;
+    color: #ff5c5c;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
 }
 
 /* קונטיינר הכפתורים מתחת לטבלה */
@@ -188,11 +195,13 @@ tr:hover {
     justify-content: space-between;
     align-items: center;
     margin-top: 16px;
-    width: 100%;
+    /* width: 100%; */
 }
 
 /* ביטול רוחב מלא לכפתורים בתוך אזור פעולות */
 .table-actions button {
+    flex: 0 0 auto;
+
     width: auto;
     min-width: 140px;
 }
